@@ -1,24 +1,19 @@
-cat << 'EOF' > fetch_delaware_census.py
 import pandas as pd
 import requests
 import os
 
-# 1. Load Strategy Blueprint Excel file
+# 1. Load Blueprint
 excel_files = [f for f in os.listdir('.') if f.endswith('.xlsx') and 'Rural Health' in f]
 if not excel_files:
     raise FileNotFoundError("Could not find Rural Health Strategy Excel file.")
 
-file_path = excel_files[0]
-print(f"Reading strategy blueprint from: {file_path}")
-df_strategy = pd.read_excel(file_path, sheet_name="Second Draft")
+df_strategy = pd.read_excel(excel_files[0], sheet_name="Second Draft")
 
-# Forward fill category hierarchies
 if 'SDOH Domain' in df_strategy.columns:
     df_strategy['SDOH Domain'] = df_strategy['SDOH Domain'].ffill()
 if 'Concept' in df_strategy.columns:
     df_strategy['Concept'] = df_strategy['Concept'].ffill()
 
-# Clean code strings
 df_strategy['Clean_Code'] = (
     df_strategy["Code (if available)"]
     .dropna()
@@ -27,7 +22,6 @@ df_strategy['Clean_Code'] = (
     .str.rstrip(',')
 )
 
-# Build Mapping Dictionary: Code -> Descriptive Label
 code_to_label = {}
 for _, row in df_strategy.iterrows():
     code = row['Clean_Code']
@@ -41,59 +35,41 @@ for _, row in df_strategy.iterrows():
         label = " | ".join(label_parts) if label_parts else code_e
         code_to_label[code_e] = label
 
-# Separate base tract tables from race-iterated tables (letters A-I in table prefix)
+# 2. Filter out race-iterated codes & B16001 (detailed language, not at tract level)
 all_codes = sorted(list(code_to_label.keys()))
 valid_tract_codes = [
     c for c in all_codes 
     if not (len(c.split('_')[0]) > 6 and c.split('_')[0][6].isalpha())
+    and not c.startswith("B16001_")  # B16001 is county/state level only
 ]
-ignored_race_codes = len(all_codes) - len(valid_tract_codes)
 
-print(f"Identified {len(valid_tract_codes)} valid tract-level base variables.")
-print(f"Pre-filtered {ignored_race_codes} race-iterated variables unsupported at tract level.")
-
-# 2. Query Census API for valid tract variables in chunks of 20
+# 3. Query Census API in clean 20-variable batches
 base_url = "https://api.census.gov/data/2022/acs/acs5"
 chunk_size = 20
 dfs = []
 
+print(f"Downloading {len(valid_tract_codes)} tract metrics for Delaware in bulk...")
 for i in range(0, len(valid_tract_codes), chunk_size):
     chunk = valid_tract_codes[i:i + chunk_size]
-    batch_num = i // chunk_size + 1
-    total_batches = (len(valid_tract_codes) + chunk_size - 1) // chunk_size
-    
-    params = {
-        "get": f"NAME,{','.join(chunk)}",
-        "for": "tract:*",
-        "in": "state:10",
-    }
+    params = {"get": f"NAME,{','.join(chunk)}", "for": "tract:*", "in": "state:10"}
     
     resp = requests.get(base_url, params=params)
     if resp.status_code == 200 and "application/json" in resp.headers.get("content-type", ""):
         data = resp.json()
         df_chunk = pd.DataFrame(data[1:], columns=data[0])
         df_chunk["GEOID"] = df_chunk["state"] + df_chunk["county"] + df_chunk["tract"]
-        
         keep_cols = ["GEOID"] + [c for c in chunk if c in df_chunk.columns]
         dfs.append(df_chunk[keep_cols].set_index("GEOID"))
-        print(f"Batch {batch_num}/{total_batches}: Downloaded {len(chunk)} metrics...")
-    else:
-        print(f"Batch {batch_num}/{total_batches}: API Error {resp.status_code}")
 
-# 3. Save Final Formatted CSV
+# 4. Merge and Save Final Dataset
 if dfs:
     final_df = pd.concat(dfs, axis=1).reset_index()
     final_df = final_df.loc[:, ~final_df.columns.duplicated()]
     
     metric_cols = [c for c in final_df.columns if c != "GEOID"]
     final_df[metric_cols] = final_df[metric_cols].apply(pd.to_numeric, errors='coerce')
-    
     renamed_df = final_df.rename(columns=code_to_label)
     
     output_filename = "Real_Delaware_Health_Force_Tracts.csv"
     renamed_df.to_csv(output_filename, index=False)
-    print(f"\nSUCCESS! Retained {len(renamed_df.columns) - 1} valid metrics across {len(renamed_df)} Delaware Census Tracts.")
-    print(f"Saved cleanly formatted dataset to '{output_filename}'")
-else:
-    print("\nNo data retrieved.")
-EOF
+    print(f"\nSUCCESS! File saved to '{output_filename}' with {len(renamed_df)} tracts and {len(renamed_df.columns)-1} variables.")
