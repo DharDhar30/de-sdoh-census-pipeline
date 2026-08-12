@@ -1,4 +1,3 @@
-cat << 'EOF' > fetch_delaware_census.py
 import pandas as pd
 import requests
 import os
@@ -41,59 +40,67 @@ for _, row in df_strategy.iterrows():
         label = " | ".join(label_parts) if label_parts else code_e
         code_to_label[code_e] = label
 
-# Separate base tract tables from race-iterated tables (letters A-I in table prefix)
-all_codes = sorted(list(code_to_label.keys()))
-valid_tract_codes = [
-    c for c in all_codes 
-    if not (len(c.split('_')[0]) > 6 and c.split('_')[0][6].isalpha())
-]
-ignored_race_codes = len(all_codes) - len(valid_tract_codes)
+candidate_vars = sorted(list(code_to_label.keys()))
+print(f"Extracted {len(candidate_vars)} candidate variables from blueprint.")
 
-print(f"Identified {len(valid_tract_codes)} valid tract-level base variables.")
-print(f"Pre-filtered {ignored_race_codes} race-iterated variables unsupported at tract level.")
-
-# 2. Query Census API for valid tract variables in chunks of 20
+# 2. Adaptive Census API Fetcher
 base_url = "https://api.census.gov/data/2022/acs/acs5"
-chunk_size = 20
 dfs = []
 
-for i in range(0, len(valid_tract_codes), chunk_size):
-    chunk = valid_tract_codes[i:i + chunk_size]
-    batch_num = i // chunk_size + 1
-    total_batches = (len(valid_tract_codes) + chunk_size - 1) // chunk_size
+def fetch_variable_batch(vars_list):
+    """Fetch variables from Census API. Recursively split batches if API rejects invalid codes."""
+    if not vars_list:
+        return
     
     params = {
-        "get": f"NAME,{','.join(chunk)}",
+        "get": f"NAME,{','.join(vars_list)}",
         "for": "tract:*",
         "in": "state:10",
     }
     
     resp = requests.get(base_url, params=params)
+    
     if resp.status_code == 200 and "application/json" in resp.headers.get("content-type", ""):
-        data = resp.json()
-        df_chunk = pd.DataFrame(data[1:], columns=data[0])
-        df_chunk["GEOID"] = df_chunk["state"] + df_chunk["county"] + df_chunk["tract"]
-        
-        keep_cols = ["GEOID"] + [c for c in chunk if c in df_chunk.columns]
-        dfs.append(df_chunk[keep_cols].set_index("GEOID"))
-        print(f"Batch {batch_num}/{total_batches}: Downloaded {len(chunk)} metrics...")
+        try:
+            data = resp.json()
+            df_chunk = pd.DataFrame(data[1:], columns=data[0])
+            df_chunk["GEOID"] = df_chunk["state"] + df_chunk["county"] + df_chunk["tract"]
+            
+            keep_cols = ["GEOID"] + [c for c in vars_list if c in df_chunk.columns]
+            dfs.append(df_chunk[keep_cols].set_index("GEOID"))
+            print(f" Successfully fetched {len(vars_list)} variables.")
+        except Exception:
+            pass
     else:
-        print(f"Batch {batch_num}/{total_batches}: API Error {resp.status_code}")
+        # If batch contains invalid tract codes, divide batch in half
+        if len(vars_list) > 1:
+            mid = len(vars_list) // 2
+            fetch_variable_batch(vars_list[:mid])
+            fetch_variable_batch(vars_list[mid:])
+        else:
+            print(f" Skipping variable {vars_list[0]} (not available at Census Tract level).")
 
-# 3. Save Final Formatted CSV
+# Process in initial chunks of 25
+chunk_size = 25
+print("Starting adaptive API retrieval...")
+for i in range(0, len(candidate_vars), chunk_size):
+    fetch_variable_batch(candidate_vars[i:i + chunk_size])
+
+# 3. Merge, Format Data Types, and Save
 if dfs:
     final_df = pd.concat(dfs, axis=1).reset_index()
     final_df = final_df.loc[:, ~final_df.columns.duplicated()]
     
+    # Convert numerical metric columns from strings to numbers
     metric_cols = [c for c in final_df.columns if c != "GEOID"]
     final_df[metric_cols] = final_df[metric_cols].apply(pd.to_numeric, errors='coerce')
     
+    # Apply human-readable column headers
     renamed_df = final_df.rename(columns=code_to_label)
     
     output_filename = "Real_Delaware_Health_Force_Tracts.csv"
     renamed_df.to_csv(output_filename, index=False)
     print(f"\nSUCCESS! Retained {len(renamed_df.columns) - 1} valid metrics across {len(renamed_df)} Delaware Census Tracts.")
-    print(f"Saved cleanly formatted dataset to '{output_filename}'")
+    print(f"Saved formatted dataset to '{output_filename}'")
 else:
-    print("\nNo data retrieved.")
-EOF
+    print("\nNo valid data retrieved.")
