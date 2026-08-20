@@ -1,24 +1,20 @@
 import os
+import geopandas as gpd
 import pandas as pd
 import pygris
 import requests
 from dotenv import load_dotenv
 
-# ---------------------------------------------------------------------------
-# LOAD ENVIRONMENT VARIABLES
-# ---------------------------------------------------------------------------
-load_dotenv()  # Reads the .env file in your current folder
+load_dotenv()
 CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
 
 if not CENSUS_API_KEY:
-    raise SystemExit(
-        "CENSUS_API_KEY not found! Please check your .env file."
-    )
+    raise SystemExit("CENSUS_API_KEY not found!")
 
-STATE_FIPS = "10"  # Delaware FIPS code
-YEAR = 2022  # ACS 5-Year Estimates year
+STATE_FIPS = "10"
+STATE_ABBR = "DE"
+YEAR = 2022
 
-# Map ACS API variable codes to human-readable Tableau column names
 VARIABLE_MAP = {
     "DP05_0001E": "Total_Population",
     "DP05_0018E": "Median_Age",
@@ -34,86 +30,61 @@ VARIABLE_MAP = {
 NULL_CODES = ["-", "**", "***", "(X)", "N", "null", "-666666666"]
 
 
-# ---------------------------------------------------------------------------
-# 1. FETCH SPATIAL BOUNDARIES VIA PYGRIS
-# ---------------------------------------------------------------------------
 def fetch_spatial_boundaries():
-    print("Fetching Delaware Census Tract boundaries using Pygris...")
-    de_tracts = pygris.tracts(state=STATE_FIPS, year=2020, cache=True)
-    de_tracts["GEOID"] = de_tracts["GEOID"].astype(str)
-    return de_tracts[["GEOID", "NAMELSAD", "COUNTYFP", "geometry"]]
+    de_zctas = pygris.zctas(state=STATE_ABBR, year=2020, cache=True)
+
+    de_zctas["ALAND"] = pd.to_numeric(de_zctas["ALAND"], errors="coerce")
+    de_zctas = de_zctas[de_zctas["ALAND"] > 0].copy()
+
+    zcta_col = "ZCTA5CE20" if "ZCTA5CE20" in de_zctas.columns else "GEOID20"
+    de_zctas["ZCTA"] = de_zctas[zcta_col].astype(str).str.zfill(5)
+
+    return de_zctas[["ZCTA", "ALAND", "AWATER", "geometry"]]
 
 
-# ---------------------------------------------------------------------------
-# 2. PROGRAMMATIC ACS DATA EXTRACT VIA CENSUS API
-# ---------------------------------------------------------------------------
 def fetch_acs_data(api_key: str):
-    print("Programmatically extracting ACS Data Profile metrics via Census API...")
     var_list = ",".join(VARIABLE_MAP.keys())
     url = f"https://api.census.gov/data/{YEAR}/acs/acs5/profile"
+
     params = {
         "get": f"NAME,{var_list}",
-        "for": "tract:*",
-        "in": f"state:{STATE_FIPS}",
+        "for": "zip code tabulation area:*",
         "key": api_key,
     }
 
     response = requests.get(url, params=params)
 
     if response.status_code != 200:
-        print(f"\nCensus API Error ({response.status_code}):")
-        print(response.text)
-        raise SystemExit(
-            "Please check your CENSUS_API_KEY in .env and verify parameter validity."
-        )
+        print(f"\nCensus API Error ({response.status_code}):\n{response.text}")
+        raise SystemExit("Please check your CENSUS_API_KEY and parameters.")
 
     data = response.json()
-    headers = data[0]
-    rows = data[1:]
+    df = pd.DataFrame(data[1:], columns=data[0])
 
-    df = pd.DataFrame(rows, columns=headers)
-
-    # Build 11-digit GEOID (State[2] + County[3] + Tract[6])
-    df["GEOID"] = df["state"] + df["county"] + df["tract"]
-
-    # Clean geography headers
-    name_parts = df["NAME"].str.split(",", expand=True)
-    df["Geography_Name"] = name_parts[0].str.strip()
-    df["County"] = name_parts[1].str.strip() if name_parts.shape[1] > 1 else ""
-    df["State"] = name_parts[2].str.strip() if name_parts.shape[1] > 2 else ""
-
-    # Rename variables to readable column names
+    df["ZCTA"] = df["zip code tabulation area"].astype(str).str.zfill(5)
     df = df.rename(columns=VARIABLE_MAP)
 
-    # Clean missing values and suppress null placeholders
     metric_cols = list(VARIABLE_MAP.values())
     for col in metric_cols:
         df[col] = df[col].replace(NULL_CODES, pd.NA)
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
-    keep_cols = ["GEOID", "Geography_Name", "County", "State"] + metric_cols
-    return df[keep_cols]
+    return df[["ZCTA"] + metric_cols]
 
 
-# ---------------------------------------------------------------------------
-# 3. MERGE & EXPORT
-# ---------------------------------------------------------------------------
 def main():
     gdf_boundaries = fetch_spatial_boundaries()
     df_metrics = fetch_acs_data(CENSUS_API_KEY)
 
-    print("Merging spatial boundaries with ACS health metrics...")
+    master_gdf = gdf_boundaries.merge(df_metrics, on="ZCTA", how="inner")
 
-    # Export Tabular CSV
-    output_csv = "Delaware_Tract_Health_Data_Programmatic.csv"
-    df_metrics.to_csv(output_csv, index=False)
-    print(f"Successfully generated {output_csv} ({len(df_metrics)} tracts).")
+    output_csv = "Delaware_ZCTA_Health_Data_Master.csv"
+    master_gdf.drop(columns=["geometry"]).to_csv(output_csv, index=False)
+    print(f"Generated {output_csv} ({len(master_gdf)} ZCTAs).")
 
-    # Export Spatial GeoJSON for Tableau / GIS mapping
-    output_geojson = "Delaware_Tracts_Spatial_Health.geojson"
-    gdf_merged = gdf_boundaries.merge(df_metrics, on="GEOID", how="inner")
-    gdf_merged.to_file(output_geojson, driver="GeoJSON")
-    print(f"Successfully generated {output_geojson} for spatial mapping.")
+    output_geojson = "Delaware_ZCTA_Spatial_Health_Master.geojson"
+    master_gdf.to_file(output_geojson, driver="GeoJSON")
+    print(f"Generated {output_geojson}.")
 
 
 if __name__ == "__main__":
