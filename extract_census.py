@@ -31,15 +31,24 @@ NULL_CODES = ["-", "**", "***", "(X)", "N", "null", "-666666666"]
 
 
 def fetch_spatial_boundaries():
-    de_zctas = pygris.zctas(state=STATE_ABBR, year=2020, cache=True)
+    # Load Delaware state boundary for spatial filtering
+    de_boundary = pygris.states(cb=True, year=2020, cache=True)
+    de_boundary = de_boundary[de_boundary["STATEFP"] == STATE_FIPS]
 
-    de_zctas["ALAND"] = pd.to_numeric(de_zctas["ALAND"], errors="coerce")
+    # Download national ZCTAs and spatially clip to Delaware
+    all_zctas = pygris.zctas(year=2020, cache=True)
+    de_zctas = gpd.clip(all_zctas, de_boundary)
+
+    # Filter out pure-water geometries
+    de_zctas["ALAND"] = pd.to_numeric(de_zctas["ALAND20"], errors="coerce")
     de_zctas = de_zctas[de_zctas["ALAND"] > 0].copy()
 
-    zcta_col = "ZCTA5CE20" if "ZCTA5CE20" in de_zctas.columns else "GEOID20"
-    de_zctas["ZCTA"] = de_zctas[zcta_col].astype(str).str.zfill(5)
+    # Standardize ZCTA column name
+    de_zctas["ZCTA"] = de_zctas["ZCTA5CE20"].astype(str).str.zfill(5)
 
-    return de_zctas[["ZCTA", "ALAND", "AWATER", "geometry"]]
+    return de_zctas[["ZCTA", "ALAND", "AWATER20", "geometry"]].rename(
+        columns={"AWATER20": "AWATER"}
+    )
 
 
 def fetch_acs_data(api_key: str):
