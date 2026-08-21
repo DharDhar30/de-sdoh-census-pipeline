@@ -110,7 +110,7 @@ def main():
     master_gdf["Land_Area_SqMi"] = (master_gdf["ALAND"] / 2_589_988.110336).round(2)
     master_gdf["Water_Area_SqMi"] = (master_gdf["AWATER"] / 2_589_988.110336).round(2)
 
-    # Offload calculations from Tableau
+    # Derived population metrics
     master_gdf["Population_Density_SqMi"] = (
         master_gdf["Total_Population"] / master_gdf["Land_Area_SqMi"]
     ).round(1)
@@ -135,17 +135,17 @@ def main():
     # Drop spatial geometries for tabular outputs
     df_out = master_gdf.drop(columns=["geometry"])
 
-    # CSV Export
+    # 1. Save CSV
     output_csv = "Delaware_ZCTA_Health_Master_Wide.csv"
     df_out.to_csv(output_csv, index=False)
     print(f"--> Saved Wide Master CSV: {output_csv} ({len(df_out)} ZCTAs)")
 
-    # Excel Export
+    # 2. Save Excel Workbook (.xlsx)
     output_excel = "Delaware_ZCTA_Health_Master_Wide.xlsx"
     df_out.to_excel(output_excel, index=False, sheet_name="ZCTA_Health_Master")
     print(f"--> Saved Wide Master Excel: {output_excel}")
 
-    # GeoJSON Export
+    # 3. Save GeoJSON for Spatial Maps
     output_geojson = "Delaware_ZCTA_Health_Master_Spatial.geojson"
     master_gdf.to_file(output_geojson, driver="GeoJSON")
     print(f"--> Saved Master GeoJSON: {output_geojson}")
