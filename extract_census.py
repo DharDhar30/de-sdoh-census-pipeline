@@ -122,19 +122,17 @@ def main():
     acs_df = fetch_acs_data(CENSUS_API_KEY)
     chr_df = load_county_health_rankings()
     
-    # Merge Census Demographics
     master_gdf = spatial_gdf.merge(acs_df, on="ZCTA", how="inner")
     
-    # Merge County Health Rankings (Physical, Dental, Behavioral)
     master_gdf = master_gdf.merge(chr_df, on="County_FIPS", how="left")
     
-    # Derived Calculations
+
     master_gdf["Population_Density_SqMi"] = (master_gdf["Total_Population"] / master_gdf["Land_Area_SqMi"]).round(2)
     master_gdf["Uninsured_Population_Count"] = ((master_gdf["Pct_No_Health_Insurance"] / 100) * master_gdf["Total_Population"]).round(0)
     master_gdf["Poverty_Population_Count"] = ((master_gdf["Pct_Below_Poverty"] / 100) * master_gdf["Total_Population"]).round(0)
     master_gdf["Seniors_65_Plus_Count"] = ((master_gdf["Pct_Age_65_Plus"] / 100) * master_gdf["Total_Population"]).round(0)
 
-    # Export Tabular & Spatial Files
+
     print("Exporting updated master datasets...")
     tabular_df = pd.DataFrame(master_gdf.drop(columns=["geometry"]))
     tabular_df.to_csv("Delaware_ZCTA_Health_Master_Wide.csv", index=False)
