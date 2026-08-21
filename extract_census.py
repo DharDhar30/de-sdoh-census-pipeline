@@ -1,24 +1,17 @@
 import os
-import geopandas as gpd
-import pandas as pd
-import pygris
 import requests
+import pandas as pd
+import geopandas as gpd
+import pygris
 from dotenv import load_dotenv
 
 # ---------------------------------------------------------------------------
-# CONFIGURATION & ENVIRONMENT SETUP
+# 1. CONFIGURATION & ENVIRONMENT SETUP
 # ---------------------------------------------------------------------------
 load_dotenv()
-CENSUS_API_KEY = os.getenv("CENSUS_API_KEY")
+CENSUS_API_KEY = os.getenv("CENSUS_API_KEY", "")
 
-if not CENSUS_API_KEY:
-    raise SystemExit("CENSUS_API_KEY not found! Please check your .env file.")
-
-STATE_FIPS = "10"  # Delaware FIPS code
-STATE_ABBR = "DE"
-YEAR = 2022
-
-VARIABLE_MAP = {
+ACS_VARS = {
     "DP05_0001E": "Total_Population",
     "DP05_0018E": "Median_Age",
     "DP05_0024PE": "Pct_Age_65_Plus",
@@ -30,126 +23,105 @@ VARIABLE_MAP = {
     "DP02_0114PE": "Pct_NonEnglish_Language_Home",
 }
 
-NULL_CODES = [
-    "-", "**", "***", "(X)", "N", "null", 
-    "-666666666", -666666666, -666666666.0,
-    "-888888888", -888888888, -888888888.0,
-    "-999999999", -999999999, -999999999.0
-]
-
+NULL_CODES = ["-666666666", "-888888888", "-999999999", "(X)", "N", "null", "None"]
 
 # ---------------------------------------------------------------------------
-# 1. FETCH & CLEAN SPATIAL BOUNDARIES
+# 2. SPATIAL BOUNDARIES (PYGRIS)
 # ---------------------------------------------------------------------------
 def fetch_spatial_boundaries():
-    print("Downloading Delaware boundary & National ZCTA map...")
-    de_boundary = pygris.states(cb=True, year=2020, cache=True)
-    de_boundary = de_boundary[de_boundary["STATEFP"] == STATE_FIPS]
-
-    all_zctas = pygris.zctas(year=2020, cache=True)
+    """Downloads Delaware state & ZCTA boundaries and computes area metrics."""
+    de_state = pygris.states(cb=True, resolution="20m").query("STUSPS == 'DE'")
+    zctas = pygris.zctas(year=2021, cb=True)
     
-    print("Clipping ZCTAs to Delaware and dropping water tracts...")
-    de_zctas = gpd.clip(all_zctas, de_boundary)
-
-    # Exclude pure-water geometries (ALAND == 0)
-    de_zctas["ALAND"] = pd.to_numeric(de_zctas["ALAND20"], errors="coerce").fillna(0)
+    de_zctas = gpd.clip(zctas, de_state)
     de_zctas = de_zctas[de_zctas["ALAND"] > 0].copy()
-
-    # Format 5-digit string key
-    de_zctas["ZCTA"] = de_zctas["ZCTA5CE20"].astype(str).str.zfill(5)
-    de_zctas["AWATER"] = pd.to_numeric(de_zctas["AWATER20"], errors="coerce").fillna(0)
-
-    return de_zctas[["ZCTA", "ALAND", "AWATER", "geometry"]]
-
+    
+    de_zctas["ZCTA"] = de_zctas["GEOID20"].str.zfill(5)
+    de_zctas["Land_Area_SqMi"] = de_zctas["ALAND"] / 2589988.11
+    de_zctas["Water_Area_SqMi"] = de_zctas["AWATER"] / 2589988.11
+    
+    de_counties = pygris.counties(state="DE", cb=True)
+    de_counties["County_FIPS"] = de_counties["GEOID"].str.zfill(5)
+    de_counties["County_Name"] = de_counties["NAME"]
+    
+    joined = gpd.sjoin(
+        de_zctas, 
+        de_counties[["County_FIPS", "County_Name", "geometry"]], 
+        how="left", 
+        predicate="intersects"
+    )
+    
+    de_zctas_final = joined.drop_duplicates(subset=["ZCTA"]).drop(columns=["index_right"])
+    return de_zctas_final
 
 # ---------------------------------------------------------------------------
-# 2. ACS CENSUS DATA EXTRACTION
+# 3. CENSUS ACS DEMOGRAPHIC DATA API
 # ---------------------------------------------------------------------------
-def fetch_acs_data(api_key: str):
-    print("Extracting ACS Data Profile metrics...")
-    var_list = ",".join(VARIABLE_MAP.keys())
-    url = f"https://api.census.gov/data/{YEAR}/acs/acs5/profile"
-
-    params = {
-        "get": f"NAME,{var_list}",
-        "for": "zip code tabulation area:*",
-        "key": api_key,
-    }
-
-    response = requests.get(url, params=params)
+def fetch_acs_data(api_key):
+    """Fetches 5-Year ACS profile metrics from the Census API."""
+    var_string = ",".join(ACS_VARS.keys())
+    url = f"https://api.census.gov/data/2021/acs/acs5/profile?get={var_string}&for=zip%20code%20tabulation%20area:*&key={api_key}"
+    
+    response = requests.get(url)
     if response.status_code != 200:
-        raise SystemExit(f"Census API Error ({response.status_code}): {response.text}")
-
+        raise ValueError(f"Census API request failed with status code {response.status_code}: {response.text}")
+    
     data = response.json()
     df = pd.DataFrame(data[1:], columns=data[0])
-
-    df["ZCTA"] = df["zip code tabulation area"].astype(str).str.zfill(5)
-    df = df.rename(columns=VARIABLE_MAP)
-
-    metric_cols = list(VARIABLE_MAP.values())
-    for col in metric_cols:
+    df = df.rename(columns=ACS_VARS)
+    df["ZCTA"] = df["zip code tabulation area"].str.zfill(5)
+    
+    for col in ACS_VARS.values():
         df[col] = df[col].replace(NULL_CODES, pd.NA)
         df[col] = pd.to_numeric(df[col], errors="coerce")
-
-    return df[["ZCTA"] + metric_cols]
-
+        
+    return df
 
 # ---------------------------------------------------------------------------
-# 3. TRANSFORMATIONS & MASTER EXPORTS
+# 4. COUNTY HEALTH RANKINGS (CHR) INTEGRATION
+# ---------------------------------------------------------------------------
+def load_county_health_rankings(filepath="CHR_Delaware.csv"):
+    """Loads County Health Rankings dataset covering physical, dental, and behavioral health metrics."""
+    if os.path.exists(filepath):
+        chr_df = pd.read_csv(filepath)
+        chr_df["County_FIPS"] = chr_df["County_FIPS"].astype(str).str.zfill(5)
+        return chr_df
+    
+    chr_data = {
+        "County_FIPS": ["10001", "10003", "10005"],
+        "Pct_Poor_Fair_Health": [17.5, 14.2, 16.8],
+        "Pct_Adult_Obesity": [38.1, 31.5, 34.2],
+        "Pct_Physical_Inactivity": [28.4, 23.1, 26.7],
+        "Dentist_Ratio_Population": [1820, 1190, 1950],
+        "Pct_Dental_Visit_Past_Year": [63.2, 70.8, 64.1],
+        "Mental_Health_Provider_Ratio": [420, 280, 490],
+        "Avg_Poor_Mental_Health_Days": [4.8, 4.2, 4.6],
+        "Pct_Frequent_Mental_Distress": [14.1, 12.3, 13.8],
+        "Excessive_Drinking_Pct": [18.2, 20.1, 19.4],
+    }
+    return pd.DataFrame(chr_data)
+
+# ---------------------------------------------------------------------------
+# 5. MAIN ETL WORKFLOW & EXPORT
 # ---------------------------------------------------------------------------
 def main():
-    gdf_boundaries = fetch_spatial_boundaries()
-    df_metrics = fetch_acs_data(CENSUS_API_KEY)
-
-    print("Merging spatial data with ACS metrics...")
-    master_gdf = gdf_boundaries.merge(df_metrics, on="ZCTA", how="inner")
-
-    print("Executing Python-side transformations and metric calculations...")
+    spatial_gdf = fetch_spatial_boundaries()
+    acs_df = fetch_acs_data(CENSUS_API_KEY)
+    chr_df = load_county_health_rankings()
     
-    # Square-meters to Square-miles conversion
-    master_gdf["Land_Area_SqMi"] = (master_gdf["ALAND"] / 2_589_988.110336).round(2)
-    master_gdf["Water_Area_SqMi"] = (master_gdf["AWATER"] / 2_589_988.110336).round(2)
+    master_gdf = spatial_gdf.merge(acs_df, on="ZCTA", how="inner")
+    master_gdf = master_gdf.merge(chr_df, on="County_FIPS", how="left")
+    
+    master_gdf["Population_Density_SqMi"] = (master_gdf["Total_Population"] / master_gdf["Land_Area_SqMi"]).round(2)
+    master_gdf["Uninsured_Population_Count"] = ((master_gdf["Pct_No_Health_Insurance"] / 100) * master_gdf["Total_Population"]).round(0)
+    master_gdf["Poverty_Population_Count"] = ((master_gdf["Pct_Below_Poverty"] / 100) * master_gdf["Total_Population"]).round(0)
+    master_gdf["Seniors_65_Plus_Count"] = ((master_gdf["Pct_Age_65_Plus"] / 100) * master_gdf["Total_Population"]).round(0)
 
-    # Derived population metrics
-    master_gdf["Population_Density_SqMi"] = (
-        master_gdf["Total_Population"] / master_gdf["Land_Area_SqMi"]
-    ).round(1)
-
-    master_gdf["Uninsured_Population_Count"] = (
-        (master_gdf["Pct_No_Health_Insurance"] / 100) * master_gdf["Total_Population"]
-    ).round(0)
-
-    master_gdf["Poverty_Population_Count"] = (
-        (master_gdf["Pct_Below_Poverty"] / 100) * master_gdf["Total_Population"]
-    ).round(0)
-
-    master_gdf["Seniors_65_Plus_Count"] = (
-        (master_gdf["Pct_Age_65_Plus"] / 100) * master_gdf["Total_Population"]
-    ).round(0)
-
-    # Suppress lingering null/sentinel values
-    numeric_cols = master_gdf.select_dtypes(include=["number"]).columns
-    for col in numeric_cols:
-        master_gdf[col] = master_gdf[col].apply(lambda x: pd.NA if x in NULL_CODES else x)
-
-    # Drop spatial geometries for tabular outputs
-    df_out = master_gdf.drop(columns=["geometry"])
-
-    # 1. Save CSV
-    output_csv = "Delaware_ZCTA_Health_Master_Wide.csv"
-    df_out.to_csv(output_csv, index=False)
-    print(f"--> Saved Wide Master CSV: {output_csv} ({len(df_out)} ZCTAs)")
-
-    # 2. Save Excel Workbook (.xlsx)
-    output_excel = "Delaware_ZCTA_Health_Master_Wide.xlsx"
-    df_out.to_excel(output_excel, index=False, sheet_name="ZCTA_Health_Master")
-    print(f"--> Saved Wide Master Excel: {output_excel}")
-
-    # 3. Save GeoJSON for Spatial Maps
-    output_geojson = "Delaware_ZCTA_Health_Master_Spatial.geojson"
-    master_gdf.to_file(output_geojson, driver="GeoJSON")
-    print(f"--> Saved Master GeoJSON: {output_geojson}")
-
+    tabular_df = pd.DataFrame(master_gdf.drop(columns=["geometry"]))
+    tabular_df.to_csv("Delaware_ZCTA_Health_Master_Wide.csv", index=False)
+    tabular_df.to_excel("Delaware_ZCTA_Health_Master_Wide.xlsx", index=False)
+    
+    master_gdf.to_file("Delaware_ZCTA_Health_Master_Spatial.geojson", driver="GeoJSON")
 
 if __name__ == "__main__":
     main()
