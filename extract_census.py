@@ -31,17 +31,28 @@ NULL_CODES = ["-666666666", "-888888888", "-999999999", "(X)", "N", "null", "Non
 def fetch_spatial_boundaries():
     """Downloads Delaware state & ZCTA boundaries and computes area metrics."""
     de_state = pygris.states(cb=True, resolution="20m").query("STUSPS == 'DE'")
-    zctas = pygris.zctas(year=2021, cb=True)
+    # Fixed: Set year=2020 because Census cartographic boundaries (cb=True) for ZCTAs are built on 2020
+    zctas = pygris.zctas(year=2020, cb=True)
     
+    # Ensure CRS alignment before clipping shapes
+    if zctas.crs != de_state.crs:
+        zctas = zctas.to_crs(de_state.crs)
+        
     de_zctas = gpd.clip(zctas, de_state)
     de_zctas = de_zctas[de_zctas["ALAND"] > 0].copy()
     
-    de_zctas["ZCTA"] = de_zctas["GEOID20"].str.zfill(5)
+    # Identify ZCTA column key based on Census output schema
+    zcta_col = "ZCTA5CE20" if "ZCTA5CE20" in de_zctas.columns else "GEOID20"
+    de_zctas["ZCTA"] = de_zctas[zcta_col].astype(str).str.zfill(5)
+    
     de_zctas["Land_Area_SqMi"] = de_zctas["ALAND"] / 2589988.11
     de_zctas["Water_Area_SqMi"] = de_zctas["AWATER"] / 2589988.11
     
     de_counties = pygris.counties(state="DE", cb=True)
-    de_counties["County_FIPS"] = de_counties["GEOID"].str.zfill(5)
+    if de_counties.crs != de_zctas.crs:
+        de_counties = de_counties.to_crs(de_zctas.crs)
+        
+    de_counties["County_FIPS"] = de_counties["GEOID"].astype(str).str.zfill(5)
     de_counties["County_Name"] = de_counties["NAME"]
     
     joined = gpd.sjoin(
@@ -69,7 +80,7 @@ def fetch_acs_data(api_key):
     data = response.json()
     df = pd.DataFrame(data[1:], columns=data[0])
     df = df.rename(columns=ACS_VARS)
-    df["ZCTA"] = df["zip code tabulation area"].str.zfill(5)
+    df["ZCTA"] = df["zip code tabulation area"].astype(str).str.zfill(5)
     
     for col in ACS_VARS.values():
         df[col] = df[col].replace(NULL_CODES, pd.NA)
