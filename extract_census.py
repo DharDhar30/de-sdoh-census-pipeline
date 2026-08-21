@@ -30,6 +30,7 @@ NULL_CODES = ["-666666666", "-888888888", "-999999999", "(X)", "N", "null", "Non
 # ---------------------------------------------------------------------------
 def fetch_spatial_boundaries():
     """Downloads Delaware state & ZCTA boundaries and computes area metrics."""
+    print("Fetching spatial boundaries via pygris...")
     de_state = pygris.states(cb=True, resolution="20m").query("STUSPS == 'DE'")
     zctas = pygris.zctas(year=2020, cb=True)
     
@@ -38,13 +39,11 @@ def fetch_spatial_boundaries():
         
     de_zctas = gpd.clip(zctas, de_state)
     
-    # Handle Census column variations for Area and ZCTA keys
     aland_col = "ALAND20" if "ALAND20" in de_zctas.columns else "ALAND"
     awater_col = "AWATER20" if "AWATER20" in de_zctas.columns else "AWATER"
     zcta_col = "ZCTA5CE20" if "ZCTA5CE20" in de_zctas.columns else ("GEOID20" if "GEOID20" in de_zctas.columns else "GEOID")
     
     de_zctas = de_zctas[de_zctas[aland_col] > 0].copy()
-    
     de_zctas["ZCTA"] = de_zctas[zcta_col].astype(str).str.zfill(5)
     de_zctas["Land_Area_SqMi"] = de_zctas[aland_col] / 2589988.11
     de_zctas["Water_Area_SqMi"] = de_zctas[awater_col] / 2589988.11
@@ -71,6 +70,7 @@ def fetch_spatial_boundaries():
 # ---------------------------------------------------------------------------
 def fetch_acs_data(api_key):
     """Fetches 5-Year ACS profile metrics from the Census API."""
+    print("Fetching Census ACS 5-Year demographic metrics...")
     var_string = ",".join(ACS_VARS.keys())
     url = f"https://api.census.gov/data/2021/acs/acs5/profile?get={var_string}&for=zip%20code%20tabulation%20area:*&key={api_key}"
     
@@ -94,6 +94,7 @@ def fetch_acs_data(api_key):
 # ---------------------------------------------------------------------------
 def load_county_health_rankings(filepath="CHR_Delaware.csv"):
     """Loads County Health Rankings dataset covering physical, dental, and behavioral health metrics."""
+    print("Loading County Health Rankings (CHR) metrics...")
     if os.path.exists(filepath):
         chr_df = pd.read_csv(filepath)
         chr_df["County_FIPS"] = chr_df["County_FIPS"].astype(str).str.zfill(5)
@@ -121,19 +122,26 @@ def main():
     acs_df = fetch_acs_data(CENSUS_API_KEY)
     chr_df = load_county_health_rankings()
     
+    # Merge Census Demographics
     master_gdf = spatial_gdf.merge(acs_df, on="ZCTA", how="inner")
+    
+    # Merge County Health Rankings (Physical, Dental, Behavioral)
     master_gdf = master_gdf.merge(chr_df, on="County_FIPS", how="left")
     
+    # Derived Calculations
     master_gdf["Population_Density_SqMi"] = (master_gdf["Total_Population"] / master_gdf["Land_Area_SqMi"]).round(2)
     master_gdf["Uninsured_Population_Count"] = ((master_gdf["Pct_No_Health_Insurance"] / 100) * master_gdf["Total_Population"]).round(0)
     master_gdf["Poverty_Population_Count"] = ((master_gdf["Pct_Below_Poverty"] / 100) * master_gdf["Total_Population"]).round(0)
     master_gdf["Seniors_65_Plus_Count"] = ((master_gdf["Pct_Age_65_Plus"] / 100) * master_gdf["Total_Population"]).round(0)
 
+    # Export Tabular & Spatial Files
+    print("Exporting updated master datasets...")
     tabular_df = pd.DataFrame(master_gdf.drop(columns=["geometry"]))
     tabular_df.to_csv("Delaware_ZCTA_Health_Master_Wide.csv", index=False)
     tabular_df.to_excel("Delaware_ZCTA_Health_Master_Wide.xlsx", index=False)
     
     master_gdf.to_file("Delaware_ZCTA_Health_Master_Spatial.geojson", driver="GeoJSON")
+    print("Successfully exported all files with County Health Rankings added!")
 
 if __name__ == "__main__":
     main()
