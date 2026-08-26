@@ -40,6 +40,24 @@ CENSUS_API_KEY="your_census_api_key_here"
 Run the master ETL script from your terminal:
 python3 extract_census.py
 
+## Sector Export UI (Pick & Choose)
+
+Instead of hunting through generated spreadsheets, use the bundled Streamlit UI
+to pick the sectors you care about and export cleanly separated files:
+
+1. Double-click start_ui.command (macOS) or run:  bash start_ui.sh
+2. Click "⚡ Run ETL & refresh" to regenerate data (outputs are auto-moved into ./outputs/),
+   or upload your own Excel/CSV.
+3. Tick the sectors you want — Demographics, Socioeconomic, Health Access,
+   CHR - Physical Health, CHR - Dental Care, CHR - Behavioral Health, Calculated,
+   Geographic — and refine individual columns if you like.
+4. Preview the result, then export as one Excel workbook (a sheet per sector),
+   separate per-sector CSVs/Excels, or a single combined file.
+
+Exports land in ./exports/ (and can be downloaded straight from the browser) so
+your workspace never fills up with loose spreadsheets. Nothing in the ETL logic
+changed — extract_census.py is called exactly as before.
+
 ## Derived Metrics & Formulas
 
 - Population Density: Total Population / Land Area (Sq. Miles)
