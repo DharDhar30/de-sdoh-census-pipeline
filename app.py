@@ -44,7 +44,7 @@ GENERATED_FILES = [
     "Delaware_ZCTA_Health_Master_Wide.csv",
 ]
 
-st.set_page_config(page_title="DE Health Sector Exporter", page_icon="🏥", layout="wide")
+st.set_page_config(page_title="DE Health Sector Exporter", page_icon=None, layout="wide")
 
 
 # ---------------------------------------------------------------------------
@@ -151,11 +151,11 @@ def main() -> None:
                 st.caption(f"Loaded `{os.path.relpath(source_path, ROOT)}`")
 
         st.divider()
-        if st.button("⚡ Run ETL & refresh", width="stretch"):
-            with st.spinner("Running extract_census.py …"):
+        if st.button("Run ETL & Refresh Data", use_container_width=True):
+            with st.spinner("Running extract_census.py..."):
                 new_source, log = run_etl()
             if new_source:
-                st.success("Pipeline finished — outputs moved to outputs/.")
+                st.success("Pipeline finished - outputs moved to outputs/.")
                 st.session_state["last_etl_log"] = log
                 st.rerun()
             else:
@@ -222,7 +222,7 @@ def main() -> None:
     combined = build_combined(df, picked_columns, include_keys=include_keys)
     preview_choice = st.selectbox("Preview table", ["Combined"] + list(tables.keys()))
     preview_df = combined if preview_choice == "Combined" else tables[preview_choice]
-    st.dataframe(preview_df, width="stretch", height=360)
+    st.dataframe(preview_df, use_container_width=True, height=360)
     st.caption(
         f"{len(tables)} sector tables · {len(picked_columns)} selected columns · "
         f"{len(df)} ZCTA rows"
@@ -243,7 +243,7 @@ def main() -> None:
     )
 
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    if st.button("💾 Export", type="primary", width="stretch"):
+    if st.button("Export Data", type="primary", use_container_width=True):
         os.makedirs(EXPORTS_DIR, exist_ok=True)
         try:
             if fmt.startswith("One Excel workbook"):
@@ -268,12 +268,12 @@ def main() -> None:
             st.error(f"Export failed: {exc}")
             st.stop()
 
-        st.success("Exported ✓")
+        st.success("Export completed successfully.")
         for path in downloads:
             rel = os.path.relpath(path, ROOT)
             with open(path, "rb") as fh:
                 st.download_button(
-                    f"⬇️ {rel}",
+                    f"Download: {rel}",
                     data=fh.read(),
                     file_name=os.path.basename(path),
                     mime=(
@@ -281,16 +281,16 @@ def main() -> None:
                         if path.endswith(".xlsx")
                         else "text/csv"
                     ),
-                    width="stretch",
+                    use_container_width=True,
                 )
 
         if len(downloads) > 1:
             st.download_button(
-                "⬇️ Download all as ZIP",
+                "Download all as ZIP archive",
                 data=zip_paths(downloads).getvalue(),
                 file_name=f"DE_Health_Exports_{stamp}.zip",
                 mime="application/zip",
-                width="stretch",
+                use_container_width=True,
             )
 
 

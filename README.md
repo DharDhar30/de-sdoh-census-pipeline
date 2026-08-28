@@ -20,43 +20,44 @@ The pipeline outputs ready-to-use tabular and spatial datasets specifically form
 - requirements.txt: Python dependencies
 - Delaware_ZCTA_Health_Master_Spatial.geojson: Master Spatial GeoJSON for Tableau
 
-## Installation & Setup
+## Installation & Local Execution Instructions
 
-1. Clone the Repository:
+Run the following exact terminal commands from your terminal to run the pipeline and interactive UI locally:
+
+```bash
+# 1. Clone the repository
 git clone https://github.com/DharDhar30/de-sdoh-census-pipeline.git
 cd de-sdoh-census-pipeline
 
-2. Set Up Virtual Environment & Install Dependencies:
+# 2. Set up virtual environment and install dependencies
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 
-3. Configure API Key:
-Create a .env file in the root directory and add your U.S. Census Bureau API key:
-CENSUS_API_KEY="your_census_api_key_here"
+# 3. Configure API key (optional but recommended for Census API rate limits)
+# Create a .env file in the root directory with:
+# CENSUS_API_KEY="your_census_api_key_here"
 
-## Execution
-
-Run the master ETL script from your terminal:
+# 4. Run the master ETL pipeline script
 python3 extract_census.py
 
-## Sector Export UI (Pick & Choose)
+# 5. Launch the Interactive UI Locally
+streamlit run app.py
+```
 
-Instead of hunting through generated spreadsheets, use the bundled Streamlit UI
-to pick the sectors you care about and export cleanly separated files:
+Alternatively, you can launch the UI using the provided shell script:
+```bash
+bash start_ui.sh
+```
 
-1. Double-click start_ui.command (macOS) or run:  bash start_ui.sh
-2. Click "⚡ Run ETL & refresh" to regenerate data (outputs are auto-moved into ./outputs/),
-   or upload your own Excel/CSV.
-3. Tick the sectors you want — Demographics, Socioeconomic, Health Access,
-   CHR - Physical Health, CHR - Dental Care, CHR - Behavioral Health, Calculated,
-   Geographic — and refine individual columns if you like.
-4. Preview the result, then export as one Excel workbook (a sheet per sector),
-   separate per-sector CSVs/Excels, or a single combined file.
+## Sector Export UI Usage
 
-Exports land in ./exports/ (and can be downloaded straight from the browser) so
-your workspace never fills up with loose spreadsheets. Nothing in the ETL logic
-changed — extract_census.py is called exactly as before.
+1. Launch the Streamlit app using the terminal command above (`streamlit run app.py`).
+2. Click "Run ETL & Refresh Data" in the sidebar to regenerate data, or upload your own Excel/CSV.
+3. Select the sectors you want (Demographics, Socioeconomic, Health Access, CHR - Physical Health, CHR - Dental Care, CHR - Behavioral Health, Calculated, Geographic) and refine individual columns as needed.
+4. Preview the result in the interactive table, then export as an Excel workbook with one sheet per sector, separate per-sector CSV/Excel files, or a single combined file.
+
+Exports are saved in `./exports/` so your workspace stays clean.
 
 ## Derived Metrics & Formulas
 
