@@ -6,9 +6,5 @@ openpyxl>=3.1
 requests>=2.31
 python-dotenv>=1.0
 
-# Sector Export UI (Streamlit)
+# Interactive UI (Streamlit)
 streamlit>=1.40
-
-# React UI backend API (Flask)
-flask>=3.0
-flask-cors>=4.0
