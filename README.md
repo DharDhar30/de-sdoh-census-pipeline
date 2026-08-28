@@ -29,7 +29,7 @@ Run the following exact terminal commands from your terminal to run the pipeline
 git clone https://github.com/DharDhar30/de-sdoh-census-pipeline.git
 cd de-sdoh-census-pipeline
 
-# 2. Set up virtual environment and install dependencies
+# 2. Set up virtual environment and install Python dependencies
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -40,20 +40,50 @@ pip install -r requirements.txt
 
 # 4. Run the master ETL pipeline script
 python3 extract_census.py
+```
 
-# 5. Launch the Interactive UI Locally
+### Option A: Streamlit UI (Python)
+
+```bash
+# 5a. Launch the Streamlit UI locally
 streamlit run app.py
 ```
 
-Alternatively, you can launch the UI using the provided shell script:
+Or use the provided shortcut script:
 ```bash
 bash start_ui.sh
 ```
 
+### Option B: React + Flask UI (modern web app)
+
+```bash
+# 5b. Install the React frontend dependencies
+cd frontend
+npm install
+cd ..
+
+# 6b. Launch both the React frontend (port 3000) and Flask API backend (port 5001)
+bash start_react.sh
+```
+
+Or run them in two separate terminal windows:
+
+```bash
+# Terminal 1 - Flask API backend
+source venv/bin/activate
+python3 api.py
+
+# Terminal 2 - React frontend
+cd frontend
+npm start
+```
+
+Then open http://localhost:3000 in your browser. The React app proxies `/api` requests to the Flask backend on port 5001, so the two services talk to each other automatically.
+
 ## Sector Export UI Usage
 
-1. Launch the Streamlit app using the terminal command above (`streamlit run app.py`).
-2. Click "Run ETL & Refresh Data" in the sidebar to regenerate data, or upload your own Excel/CSV.
+1. Launch the UI (either the Streamlit app with `streamlit run app.py`, or the React app with `bash start_react.sh`).
+2. Click "Run ETL & Refresh Data" to regenerate data, or upload your own Excel/CSV.
 3. Select the sectors you want (Demographics, Socioeconomic, Health Access, CHR - Physical Health, CHR - Dental Care, CHR - Behavioral Health, Calculated, Geographic) and refine individual columns as needed.
 4. Preview the result in the interactive table, then export as an Excel workbook with one sheet per sector, separate per-sector CSV/Excel files, or a single combined file.
 
@@ -90,3 +120,5 @@ Exports are saved in `./exports/` so your workspace stays clean.
 - Tableau Field Mismatches Warning Icons: If red exclamation marks appear on fields when opening Tableau, clear all existing worksheet fields, navigate to Data Sources, and ensure Delaware_ZCTA_Health_Master_Spatial.geojson is selected as the active primary source.
 - Missing Geometry Fields in CSV Exports: The tabular CSV and Excel outputs drop spatial polygon geometry by design to optimize file sizes for analytical spreadsheets. To build polygon maps, always connect directly to the generated .geojson spatial file.
 - Census API Rate Limits: If running bulk extractions repeatedly, populate your CENSUS_API_KEY in the .env file to prevent Census API request throttling.
+- Port 5000 is busy on macOS (AirPlay Receiver): The React/Flask app deliberately uses port 5001 for the Flask API backend to avoid the macOS ControlCenter conflict. If port 5001 is also busy, change `port=5001` in `api.py` and the `"proxy"` value in `frontend/package.json` to a free port.
+- React frontend shows "No dataset loaded": Make sure the Flask backend (`python3 api.py`) is running on port 5001 before opening http://localhost:3000, or run `bash start_react.sh` to start both together.
