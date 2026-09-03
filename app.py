@@ -1,10 +1,10 @@
 """Delaware ZCTA Health · Sector Export UI
 
 Streamlit app that loads the master dataset, lets you pick and choose columns
-grouped by sector (County Health Ratings, Dental Care, Behavioral Health,
-Demographics, Socioeconomic, Health Access, Calculated Metrics, Geographic),
-previews the result, and exports as either one multi-sheet Excel workbook or
-separate per-sector files.
+grouped by sector (BRFSS State Level, CHR Health Outcomes / Behaviors /
+Clinical Care, Demographics, Socioeconomic, Health Access, Calculated Metrics,
+Geographic), previews the result, and exports as either one multi-sheet Excel
+workbook or separate per-sector files.
 
 Generated files are written to ./exports and ./outputs (both git-ignored) so
 the working tree stays clean - no more spreadsheets piling up in the repo.
