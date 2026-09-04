@@ -32,7 +32,7 @@ from exporter import (
     load_master_data,
     normalize_master,
 )
-from sector_definitions import SECTORS, all_sector_columns, CITY_KEY_COLUMNS
+from sector_definitions import SECTORS, all_sector_columns, CITY_KEY_COLUMNS, COUNTY_KEY_COLUMNS
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUTPUTS_DIR = os.path.join(ROOT, "outputs")
@@ -40,6 +40,7 @@ EXPORTS_DIR = os.path.join(ROOT, "exports")
 ETL_SCRIPT = os.path.join(ROOT, "extract_census.py")
 GEOJSON_PATH = os.path.join(ROOT, "Delaware_ZCTA_Health_Master_Spatial.geojson")
 PLACES_CITY_PATH = os.path.join(ROOT, "PLACES_Delaware_City.csv")
+COUNTY_CHR_PATH = os.path.join(ROOT, "Delaware_County_CHR.csv")
 GENERATED_FILES = [
     "Delaware_ZCTA_Health_Master_Wide.xlsx",
     "Delaware_ZCTA_Health_Master_Wide.csv",
@@ -138,20 +139,22 @@ def main() -> None:
         # Data source options
         data_source = st.radio(
             "Choose dataset",
-            ["ZCTA Master (ETL)", "CDC PLACES (City-Level)"],
-            help="ZCTA Master: Census tract-level data from ACS/CHR\nCDC PLACES: City-level health estimates from CDC",
+            ["ZCTA Master (ETL)", "CDC PLACES (City-Level)", "CHR (County-Level)"],
+            help="ZCTA Master: Census tract-level data from ACS/CHR\nCDC PLACES: City-level health estimates from CDC\nCHR: County-level health rankings for 3 DE counties",
         )
 
         uploaded = st.file_uploader("Upload Excel / CSV", type=["xlsx", "xls", "csv"])
 
         df: pd.DataFrame = pd.DataFrame()
         is_city_level = False
+        is_county_level = False
 
         if uploaded is not None:
             try:
                 df = load_upload_cached(uploaded.name, uploaded.getvalue())
                 st.caption(f"Using **{uploaded.name}**")
                 is_city_level = "City_Name" in df.columns
+                is_county_level = "County_Name" in df.columns and "ZCTA" not in df.columns
             except Exception as exc:  # noqa: BLE001
                 st.error(f"Could not read upload: {exc}")
         elif data_source == "CDC PLACES (City-Level)":
@@ -161,6 +164,13 @@ def main() -> None:
                 st.caption("Loaded CDC PLACES city-level data (79 cities)")
             else:
                 st.warning("PLACES_Delaware_City.csv not found. Run fetch_places.py")
+        elif data_source == "CHR (County-Level)":
+            if os.path.exists(COUNTY_CHR_PATH):
+                df = load_path_cached(COUNTY_CHR_PATH, os.path.getmtime(COUNTY_CHR_PATH))
+                is_county_level = True
+                st.caption("Loaded CHR county-level data (3 counties)")
+            else:
+                st.warning("Delaware_County_CHR.csv not found. Run generate_county_chr.py")
         else:
             source_path = find_latest_source()
             if source_path is None:
@@ -185,7 +195,12 @@ def main() -> None:
 
         st.divider()
         if not df.empty:
-            row_label = "Rows (Cities)" if is_city_level else "Rows (ZCTAs)"
+            if is_city_level:
+                row_label = "Rows (Cities)"
+            elif is_county_level:
+                row_label = "Rows (Counties)"
+            else:
+                row_label = "Rows (ZCTAs)"
             st.metric(row_label, len(df))
             st.metric("Columns", len(df.columns))
 
@@ -230,6 +245,8 @@ def main() -> None:
 
     if is_city_level:
         include_keys = st.toggle("Include city keys (City_Name · State)", value=True)
+    elif is_county_level:
+        include_keys = st.toggle("Include county keys (County_Name · County_FIPS)", value=True)
     else:
         include_keys = st.toggle(
             "Include geographic keys (ZCTA · County_FIPS · County_Name)", value=True
@@ -248,7 +265,7 @@ def main() -> None:
     st.dataframe(preview_df, use_container_width=True, height=360)
     st.caption(
         f"{len(tables)} sector tables · {len(picked_columns)} selected columns · "
-        f"{len(df)} {'cities' if is_city_level else 'ZCTA'} rows"
+        f"{len(df)} {'cities' if is_city_level else 'counties' if is_county_level else 'ZCTA'} rows"
     )
 
 # ---- 4. Export ---------------------------------------------------------

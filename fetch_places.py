@@ -3,9 +3,6 @@
 Fetches city/place-level health estimates from CDC PLACES (Local Data for Better Health).
 PLACES provides model-based estimates for chronic disease risk factors, health outcomes,
 and prevention services at the city/place level for the entire United States.
-
-Data source: https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-City/9av7-hnsx
-API endpoint: https://data.cdc.gov/api/v3/views/eav7-hnsx/query.json
 """
 
 import os

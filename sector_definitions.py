@@ -192,6 +192,57 @@ SECTORS: dict[str, list[str]] = {
         "PLACES_Pct_Food_Stamps",
         "PLACES_Pct_Utility_Shutoff_Threat",
     ],
+    "CHR - County Level": [
+        "Pct_Poor_Fair_Health",
+        "Pct_Poor_Fair_Health_LowCI",
+        "Pct_Poor_Fair_Health_HighCI",
+        "Pct_Poor_Fair_Health_Quartile",
+        "Avg_Poor_Physical_Health_Days",
+        "Avg_Poor_Physical_Health_Days_LowCI",
+        "Avg_Poor_Physical_Health_Days_HighCI",
+        "Avg_Poor_Physical_Health_Days_Quartile",
+        "Avg_Poor_Mental_Health_Days",
+        "Avg_Poor_Mental_Health_Days_LowCI",
+        "Avg_Poor_Mental_Health_Days_HighCI",
+        "Avg_Poor_Mental_Health_Days_Quartile",
+        "CHR_YPLL_Rate",
+        "CHR_Premature_Deaths_Count",
+        "CHR_Pct_Low_Birthweight",
+        "CHR_Pct_Low_Birthweight_Quartile",
+        "CHR_STI_Chlamydia_Rate",
+        "CHR_Teen_Birth_Rate",
+        "Pct_Adult_Smoking",
+        "Pct_Adult_Smoking_LowCI",
+        "Pct_Adult_Smoking_HighCI",
+        "Pct_Adult_Smoking_Quartile",
+        "Pct_Adult_Obesity",
+        "Pct_Adult_Obesity_LowCI",
+        "Pct_Adult_Obesity_HighCI",
+        "Pct_Adult_Obesity_Quartile",
+        "Pct_Physical_Inactivity",
+        "Pct_Physical_Inactivity_LowCI",
+        "Pct_Physical_Inactivity_HighCI",
+        "Pct_Physical_Inactivity_Quartile",
+        "Excessive_Drinking_Pct",
+        "Excessive_Drinking_Pct_LowCI",
+        "Excessive_Drinking_Pct_HighCI",
+        "Excessive_Drinking_Pct_Quartile",
+        "CHR_Food_Environment_Index",
+        "CHR_Access_Exercise_Opportunities_Pct",
+        "CHR_Alcohol_Impaired_Driving_Deaths_Pct",
+        "CHR_Uninsured_Pct",
+        "CHR_Uninsured_Pct_LowCI",
+        "CHR_Uninsured_Pct_HighCI",
+        "CHR_Uninsured_Pct_Quartile",
+        "CHR_PCP_Ratio_Population",
+        "Dentist_Ratio_Population",
+        "Mental_Health_Provider_Ratio",
+        "CHR_Preventable_Hospital_Stays_Rate",
+        "CHR_Mammography_Screening_Pct",
+        "CHR_Mammography_Screening_Pct_Quartile",
+        "CHR_Flu_Vaccination_Pct",
+        "CHR_Flu_Vaccination_Pct_Quartile",
+    ],
 }
 
 # Key columns always kept in every export so rows stay joinable.
@@ -199,6 +250,9 @@ KEY_COLUMNS = ["ZCTA", "County_FIPS", "County_Name"]
 
 # City-level data uses City_Name as the key instead of ZCTA
 CITY_KEY_COLUMNS = ["City_Name", "State"]
+
+# County-level data uses County_Name as the key
+COUNTY_KEY_COLUMNS = ["County_Name", "County_FIPS"]
 
 
 def sector_of(column: str) -> str | None:

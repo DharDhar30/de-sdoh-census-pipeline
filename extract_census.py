@@ -28,7 +28,6 @@ NULL_CODES = ["-666666666", "-888888888", "-999999999", "(X)", "N", "null", "Non
 # BRFSS state-level indicators pulled from the CDC BRFSS Prevalence dataset
 # (Chronic disease / PUBLIC HEALTH measures only - no demographics, education,
 # employment, income, or commute noise).
-# Tuple = (output column stem, question substring, exact response value).
 BRFSS_MEASURES = [
     ("BRFSS_Pct_Cigarette_Smoking", "Adults who are current smokers", "Yes"),
     ("BRFSS_Pct_Smoke_Every_Day", "Four Level Smoking Status", "Smoke everyday"),

@@ -8,22 +8,19 @@ from typing import Iterable
 
 import pandas as pd
 
-from sector_definitions import KEY_COLUMNS, SECTORS
+from sector_definitions import KEY_COLUMNS, SECTORS, CITY_KEY_COLUMNS, COUNTY_KEY_COLUMNS
 
 
 def _get_key_columns(df: pd.DataFrame) -> list[str]:
     """Return the appropriate key columns based on what's in the DataFrame."""
-    # Check for city-level data first
+    # Check for county-level data first
+    if "County_Name" in df.columns and "ZCTA" not in df.columns:
+        return [c for c in COUNTY_KEY_COLUMNS if c in df.columns]
+    # Check for city-level data
     if "City_Name" in df.columns:
-        from sector_definitions import CITY_KEY_COLUMNS
         return [c for c in CITY_KEY_COLUMNS if c in df.columns]
     return [c for c in KEY_COLUMNS if c in df.columns]
 
-
-# ---------------------------------------------------------------------------
-# Compatibility fix for pandas >= 2.2 where io.excel.zip.reader config option
-# was removed but the ExcelFile init code still tries to look it up.
-# ---------------------------------------------------------------------------
 def _fix_pandas_excel_config() -> None:
     """Register the missing io.excel.zip.reader config option if needed."""
     from pandas._config import config as _config
