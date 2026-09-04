@@ -11,6 +11,26 @@ import pandas as pd
 from sector_definitions import KEY_COLUMNS, SECTORS
 
 
+# ---------------------------------------------------------------------------
+# Compatibility fix for pandas >= 2.2 where io.excel.zip.reader config option
+# was removed but the ExcelFile init code still tries to look it up.
+# ---------------------------------------------------------------------------
+def _fix_pandas_excel_config() -> None:
+    """Register the missing io.excel.zip.reader config option if needed."""
+    from pandas._config import config as _config
+
+    try:
+        _config.get_option("io.excel.zip.reader", silent=True)
+    except Exception:
+        try:
+            _config.register_option("io.excel.zip.reader", "openpyxl", validator=str)
+        except Exception:
+            pass  # already registered by a previous call
+
+
+_fix_pandas_excel_config()
+
+
 def normalize_master(df: pd.DataFrame) -> pd.DataFrame:
     """Drop geometry (spatial-only) and normalise ZCTA keys to 5-digit strings."""
     if "geometry" in df.columns:

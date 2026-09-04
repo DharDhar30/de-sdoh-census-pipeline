@@ -1,5 +1,7 @@
 # Delaware SDOH & Census Health Data Pipeline
-pandas>=1.5
+# NOTE: pandas 2.2.x has a bug with io.excel.zip.reader config option
+# Using pandas 2.3.x which fixes this issue
+pandas>=2.3,<2.4
 geopandas>=0.14
 pygris>=0.2
 openpyxl>=3.1
