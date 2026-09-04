@@ -150,10 +150,55 @@ SECTORS: dict[str, list[str]] = {
     "Calculated Metrics": [
         "Population_Density_SqMi",
     ],
+    "CDC PLACES (City-Level)": [
+        "PLACES_Pct_Teeth_Lost_65Plus",
+        "PLACES_Pct_Arthritis",
+        "PLACES_Pct_Cancer_NonSkin",
+        "PLACES_Pct_COPD",
+        "PLACES_Pct_Coronary_Heart_Disease",
+        "PLACES_Pct_Current_Asthma",
+        "PLACES_Pct_Depression",
+        "PLACES_Pct_Diabetes",
+        "PLACES_Pct_High_Blood_Pressure",
+        "PLACES_Pct_High_Cholesterol",
+        "PLACES_Pct_Obesity",
+        "PLACES_Pct_Stroke",
+        "PLACES_Pct_Binge_Drinking",
+        "PLACES_Pct_Current_Smoking",
+        "PLACES_Pct_Physical_Inactivity",
+        "PLACES_Pct_Short_Sleep",
+        "PLACES_Pct_Fair_Poor_Health",
+        "PLACES_Pct_Frequent_Mental_Distress",
+        "PLACES_Pct_Frequent_Physical_Distress",
+        "PLACES_Pct_Cholesterol_Screening",
+        "PLACES_Pct_Colorectal_Screening",
+        "PLACES_Pct_Uninsured_18_64",
+        "PLACES_Pct_Mammography",
+        "PLACES_Pct_BP_Medication",
+        "PLACES_Pct_Dental_Visit",
+        "PLACES_Pct_Routine_Checkup",
+        "PLACES_Pct_Any_Disability",
+        "PLACES_Pct_Cognitive_Disability",
+        "PLACES_Pct_Hearing_Disability",
+        "PLACES_Pct_Independent_Living_Disability",
+        "PLACES_Pct_Mobility_Disability",
+        "PLACES_Pct_Self_Care_Disability",
+        "PLACES_Pct_Vision_Disability",
+        "PLACES_Pct_Food_Insecurity",
+        "PLACES_Pct_Housing_Insecurity",
+        "PLACES_Pct_Transportation_Barrier",
+        "PLACES_Pct_Lack_Social_Support",
+        "PLACES_Pct_Loneliness",
+        "PLACES_Pct_Food_Stamps",
+        "PLACES_Pct_Utility_Shutoff_Threat",
+    ],
 }
 
 # Key columns always kept in every export so rows stay joinable.
 KEY_COLUMNS = ["ZCTA", "County_FIPS", "County_Name"]
+
+# City-level data uses City_Name as the key instead of ZCTA
+CITY_KEY_COLUMNS = ["City_Name", "State"]
 
 
 def sector_of(column: str) -> str | None:
