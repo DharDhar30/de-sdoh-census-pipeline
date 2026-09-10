@@ -1,0 +1,456 @@
+Year,LocationID,LocationName,Geography_Type,County,DataSource,Category,Measure,Short_Question_Text,MeasureId,Data_Value,Low_Confidence_Limit,High_Confidence_Limit,Data_Value_Unit,Data_Value_Type,TotalPop18plus,TotalPopulation,Latitude,Longitude
+2023,19901,19901,ZCTA,Kent,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,36.8,33.0,40.8,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,16.3,14.5,18.3,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.7,6.0,7.5,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.1,9.0,11.3,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,17.2,15.5,19.0,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.5,4.2,4.9,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.3,5.8,6.9,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19902,19902,ZCTA,Kent,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,31.5,27.6,35.6,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,20.8,18.4,23.4,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,2.6,2.3,3.0,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.7,6.8,8.7,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,2.9,2.5,3.4,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,1.1,1.0,1.2,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.7,3.2,4.1,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19904,19904,ZCTA,Kent,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,36.4,32.6,40.3,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.4,13.7,17.2,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.9,6.2,7.8,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.7,8.7,10.7,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,17.6,15.8,19.5,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.5,4.2,4.9,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.1,5.6,6.6,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19701,19701,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,27.4,24.2,30.6,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,12.8,11.4,14.2,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.0,4.4,5.6,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.2,6.4,7.9,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.7,11.3,14.2,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.3,3.1,3.7,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.4,4.0,4.7,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19702,19702,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,26.9,23.8,30.0,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,13.3,11.9,14.8,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,4.4,3.9,5.0,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.3,6.5,8.0,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,11.8,10.5,13.2,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.3,3.0,3.6,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.5,4.1,4.9,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19703,19703,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,27.5,24.2,30.9,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,13.1,11.5,14.6,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.0,4.4,5.6,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.2,6.4,8.0,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.2,10.8,13.6,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.2,2.9,3.5,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.3,3.9,4.7,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19706,19706,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,30.6,26.7,34.6,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.1,12.2,16.1,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.6,5.8,7.4,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.9,6.9,9.0,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,14.1,12.2,16.1,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.5,3.1,3.9,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.5,4.0,5.0,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19707,19707,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,23.4,20.6,26.6,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,8.7,7.7,9.9,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.3,5.6,7.1,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,5.0,4.4,5.7,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,10.6,9.2,12.1,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.2,2.0,2.5,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,2.9,2.6,3.3,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19709,19709,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,25.0,21.9,28.2,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,11.6,10.3,13.0,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,4.8,4.3,5.4,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.3,5.6,7.0,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,11.1,9.8,12.4,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.8,2.6,3.1,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.6,3.3,4.0,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19710,19710,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,23.5,19.7,27.9,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,8.3,6.7,10.3,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.9,5.1,7.0,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,5.1,4.0,6.4,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,11.3,9.1,14.0,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.3,1.8,2.9,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,2.9,2.3,3.6,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19711,19711,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,27.9,24.6,31.1,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,13.8,12.3,15.4,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.5,4.9,6.2,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.6,6.8,8.4,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,11.0,9.8,12.3,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.9,2.6,3.1,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.2,3.8,4.6,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19713,19713,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,31.4,28.0,34.9,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.7,13.0,16.3,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.2,5.5,7.0,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.5,7.6,9.4,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,14.7,13.1,16.3,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.9,3.5,4.2,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.3,4.8,5.7,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19717,19717,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.4,29.8,39.3,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,25.8,22.2,29.7,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,2.2,1.9,2.6,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,13.1,11.1,15.4,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,4.7,3.9,5.7,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.0,1.7,2.4,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.8,4.9,6.7,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19720,19720,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,32.0,28.6,35.5,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.1,13.5,16.8,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.4,4.8,6.1,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.9,8.0,9.8,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.6,14.0,17.3,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.3,4.0,4.7,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.8,5.3,6.3,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19730,19730,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,24.0,20.4,28.0,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,10.3,8.6,12.1,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.5,4.7,6.3,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,5.4,4.6,6.5,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,10.4,8.5,12.6,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.3,1.9,2.8,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.0,2.5,3.5,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19731,19731,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,25.6,21.8,29.4,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,11.4,9.6,13.2,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.7,4.9,6.6,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.0,5.0,7.0,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,11.2,9.2,13.3,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.6,2.2,3.1,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.2,2.8,3.8,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19732,19732,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,22.1,18.7,26.0,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,8.2,6.9,9.9,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.5,5.6,7.5,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,4.5,3.7,5.5,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,9.5,7.8,11.7,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.1,1.7,2.6,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,2.5,2.1,3.1,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19733,19733,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,30.5,26.0,35.1,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.2,11.9,16.6,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.9,5.1,6.7,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.3,6.9,9.9,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.3,12.5,18.3,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.8,3.2,4.6,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.7,3.9,5.5,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19734,19734,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,26.5,23.3,29.7,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,12.4,10.9,14.0,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.3,4.7,5.9,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.7,5.9,7.5,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,11.7,10.3,13.2,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.0,2.7,3.3,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.7,3.4,4.1,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19801,19801,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,38.7,34.5,42.4,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,19.7,17.5,21.8,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.2,4.6,5.8,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,13.4,12.1,14.8,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,20.8,18.7,22.8,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,7.3,6.7,8.0,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,9.6,8.8,10.4,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19802,19802,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,36.1,32.5,39.8,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,17.1,15.3,18.9,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.2,4.6,5.8,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,11.5,10.3,12.7,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,19.3,17.3,21.4,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,6.2,5.6,6.7,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,8.1,7.4,8.8,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19803,19803,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,25.1,22.0,28.3,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,9.7,8.6,11.0,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.5,5.7,7.3,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,5.7,5.0,6.4,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,11.6,10.2,13.2,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.5,2.3,2.8,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.2,2.9,3.6,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19804,19804,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,32.0,28.4,35.5,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.1,13.4,16.9,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.4,5.7,7.2,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.6,7.7,9.6,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.0,13.3,16.7,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.0,3.6,4.3,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.4,4.9,5.9,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19805,19805,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.2,30.6,37.6,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,17.0,15.3,18.8,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.8,5.1,6.4,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.3,9.3,11.3,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.5,14.7,18.1,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,5.0,4.6,5.5,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,7.1,6.6,7.7,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19806,19806,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,26.2,23.2,29.5,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,10.7,9.4,12.3,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.2,5.5,7.0,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.4,5.7,7.2,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.1,10.7,13.7,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.9,2.6,3.2,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.9,3.5,4.3,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19807,19807,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,25.4,22.4,28.6,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,9.0,7.8,10.2,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.2,6.4,8.1,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,5.5,4.8,6.3,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.0,10.5,13.7,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.5,2.3,2.9,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.3,2.9,3.7,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19808,19808,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,27.5,24.3,30.7,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,11.9,10.5,13.3,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.3,5.5,7.0,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.7,6.0,7.4,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.6,11.2,14.2,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.0,2.7,3.2,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.9,3.6,4.3,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19809,19809,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,27.4,24.0,30.6,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,12.2,10.7,13.6,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,5.7,5.0,6.4,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.0,6.2,7.8,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.8,11.3,14.3,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.2,2.9,3.5,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.1,3.7,4.5,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19810,19810,ZCTA,New Castle,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,26.1,23.2,29.2,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,10.5,9.3,11.8,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.3,5.6,7.1,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.1,5.5,6.8,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.2,10.8,13.6,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.8,2.5,3.0,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.6,3.2,3.9,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19930,19930,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,26.2,23.1,29.5,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,7.2,6.3,8.1,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,9.6,8.6,10.7,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,5.2,4.5,5.8,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,13.1,11.4,14.8,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.6,2.3,2.9,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.2,2.9,3.6,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19931,19931,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,41.0,36.4,45.6,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.9,13.8,18.4,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,12.3,10.9,13.7,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,12.1,10.4,14.0,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,23.7,20.5,27.0,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,6.5,5.6,7.5,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,7.9,6.9,9.1,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19933,19933,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.7,30.8,38.7,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.8,13.0,16.6,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.6,7.6,9.6,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.9,8.7,11.0,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,18.1,16.0,20.3,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,5.1,4.6,5.7,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.6,6.0,7.3,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19934,19934,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,33.1,29.5,37.1,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,13.6,12.1,15.3,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.9,6.1,7.8,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.0,7.2,8.9,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.6,13.8,17.4,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.7,3.3,4.0,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.8,4.3,5.2,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19936,19936,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,41.7,36.9,46.4,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,17.4,15.1,19.9,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.8,7.6,9.9,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,11.5,10.0,13.2,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,22.2,19.2,25.1,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,5.7,5.0,6.6,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,7.8,6.9,8.9,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19938,19938,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,32.9,29.2,36.8,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.7,12.9,16.6,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.4,5.7,7.1,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.3,7.3,9.3,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.0,13.1,16.8,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.7,3.3,4.1,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.7,4.2,5.2,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19939,19939,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,31.6,27.7,35.6,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,11.9,10.2,13.5,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,9.3,8.1,10.4,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.0,6.9,9.0,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.3,14.0,18.6,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.0,3.5,4.5,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.9,4.3,5.6,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19940,19940,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,31.3,27.7,35.3,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.4,12.7,16.3,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.4,6.6,8.3,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.8,7.8,9.9,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,14.8,13.1,16.8,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.0,3.6,4.5,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.1,4.6,5.7,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19941,19941,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,33.8,30.0,37.7,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.9,13.9,17.9,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.1,6.3,7.9,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.0,8.9,11.2,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.7,14.7,18.6,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,5.0,4.5,5.5,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.5,5.9,7.2,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19943,19943,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.1,30.5,38.0,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.3,12.7,16.1,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.0,6.2,7.8,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.4,7.6,9.4,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.1,14.3,18.0,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.9,3.5,4.3,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.0,4.5,5.5,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19944,19944,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,29.6,25.2,34.7,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,8.5,7.0,10.4,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,10.7,9.1,12.3,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.3,5.1,7.8,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.2,12.3,18.5,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.0,2.4,3.8,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.8,3.1,4.7,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19945,19945,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,28.5,25.1,31.9,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,11.3,10.0,12.8,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.6,6.7,8.5,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.1,6.3,7.9,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,13.9,12.2,15.7,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.5,3.1,3.9,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.4,4.0,4.9,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19946,19946,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.6,30.7,38.5,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.4,12.6,16.1,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.2,6.4,8.1,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.6,7.6,9.6,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.5,14.6,18.6,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.0,3.6,4.4,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.3,4.8,5.8,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19947,19947,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.4,30.8,38.2,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,16.5,14.7,18.3,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.6,6.8,8.5,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.1,9.1,11.2,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.2,14.5,18.0,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,5.0,4.6,5.4,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,7.2,6.6,7.8,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19950,19950,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,35.6,32.1,39.0,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.7,14.0,17.4,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.6,7.7,9.5,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.0,9.0,11.0,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,17.8,15.9,19.7,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.7,4.3,5.2,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.0,5.5,6.6,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19951,19951,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,29.3,25.8,33.0,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,10.7,9.4,12.2,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.7,7.7,9.8,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.1,6.2,8.0,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,14.9,13.0,16.8,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.6,3.2,4.0,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.4,3.9,4.9,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19952,19952,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,35.5,31.7,39.6,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.0,13.2,16.9,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.4,6.6,8.4,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.1,8.1,10.2,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,17.1,15.2,19.1,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.2,3.8,4.6,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.3,4.8,5.8,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19953,19953,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,38.4,34.2,43.0,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,17.3,14.9,19.7,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.0,7.0,9.0,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.1,8.7,11.5,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,18.2,15.8,20.8,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.5,3.9,5.2,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.7,5.0,6.5,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19954,19954,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,39.6,35.0,44.2,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,16.0,13.9,18.2,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,9.0,7.9,10.2,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.2,8.9,11.7,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,20.3,17.6,23.0,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,5.0,4.3,5.7,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.4,5.6,7.2,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19955,19955,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,36.8,32.0,41.9,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.6,13.3,18.5,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.7,6.7,8.9,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.5,8.1,11.3,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,18.2,15.5,21.3,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.5,3.8,5.3,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.5,4.7,6.4,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19956,19956,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.1,30.3,37.9,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,16.0,14.2,17.9,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.9,7.0,8.8,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.1,9.0,11.2,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.7,14.8,18.6,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.8,4.3,5.3,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.2,5.6,6.8,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19958,19958,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,29.1,25.9,32.7,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,9.6,8.5,10.9,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,9.2,8.2,10.3,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.7,6.0,7.5,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.2,13.4,17.1,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.4,3.1,3.7,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.2,3.8,4.6,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19960,19960,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,32.3,28.6,36.1,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.6,12.9,16.5,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,7.1,6.3,8.0,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.1,8.1,10.1,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.9,13.9,17.7,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.5,4.0,4.9,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.8,5.3,6.4,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19962,19962,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,32.4,28.7,36.2,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,13.8,12.2,15.5,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.2,5.5,7.0,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.1,7.2,9.0,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.0,13.3,16.8,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.7,3.3,4.0,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.9,4.4,5.3,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19963,19963,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,34.1,30.8,37.3,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,14.3,12.9,15.8,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.1,7.3,8.9,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.2,8.3,10.0,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,17.0,15.3,18.6,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.4,4.0,4.8,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.8,5.3,6.3,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19964,19964,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,39.1,34.9,43.6,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,16.9,14.6,19.1,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.4,7.4,9.5,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.2,8.8,11.6,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,19.1,16.7,21.8,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.6,4.0,5.2,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.9,5.2,6.7,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19966,19966,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,32.4,28.9,36.1,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,12.6,11.2,14.1,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,9.0,8.0,10.0,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.5,7.6,9.4,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.9,15.1,18.8,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.2,3.9,4.6,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.3,4.9,5.8,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19967,19967,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,29.5,25.3,33.9,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,9.6,8.0,11.2,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,9.2,8.0,10.4,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.8,5.7,7.9,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.0,13.3,18.7,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.6,3.0,4.2,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.2,3.6,4.9,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19968,19968,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,29.3,25.8,33.0,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,11.0,9.7,12.5,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.4,7.4,9.4,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.3,6.4,8.2,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,14.9,13.1,16.9,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.6,3.2,4.0,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.5,4.0,5.0,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19970,19970,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,31.0,27.1,34.7,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,9.7,8.4,11.1,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,10.3,9.1,11.5,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,7.2,6.2,8.1,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,16.8,14.5,19.0,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.7,3.3,4.2,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.6,4.0,5.1,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19971,19971,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,25.7,22.5,28.9,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,8.5,7.4,9.7,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.2,7.3,9.2,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,5.6,4.9,6.3,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,12.6,11.0,14.3,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,2.8,2.5,3.1,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,3.4,3.1,3.8,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19973,19973,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,35.3,31.7,39.0,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.6,13.9,17.3,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.4,7.5,9.3,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,10.4,9.4,11.5,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,18.3,16.4,20.3,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,5.2,4.8,5.7,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,6.8,6.2,7.4,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19975,19975,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,29.7,26.3,33.4,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,10.1,8.9,11.4,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,9.1,8.1,10.2,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,6.9,6.1,7.7,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.3,13.5,17.3,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.5,3.1,3.8,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,4.4,3.9,4.8,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19977,19977,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,32.8,29.4,36.4,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,13.9,12.5,15.6,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,6.2,5.6,6.9,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,8.1,7.4,9.0,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,15.3,13.7,16.9,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,3.8,3.5,4.1,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.0,4.6,5.4,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19979,19979,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,36.5,32.0,41.0,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.3,13.1,17.7,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.0,7.0,9.1,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.2,8.0,10.6,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,17.5,15.1,20.0,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.2,3.6,4.8,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.4,4.7,6.1,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19980,19980,ZCTA,Sussex,BRFSS,Disability,Any disability among adults,Any Disability,DISABILITY,37.9,33.1,42.4,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Disability,Cognitive disability among adults,Cognitive Disability,COGNITION,15.2,13.0,17.5,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Disability,Hearing disability among adults,Hearing Disability,HEARING,8.6,7.5,9.7,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Disability,Independent living disability among adults,Independent Living Disability,INDEPLIVE,9.5,8.1,11.0,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Disability,Mobility disability among adults,Mobility Disability,MOBILITY,18.9,16.2,21.7,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Disability,Self-care disability among adults,Self-care Disability,SELFCARE,4.4,3.8,5.2,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Disability,Vision disability among adults,Vision Disability,VISION,5.6,4.8,6.5,%,Crude prevalence,200,235,39.0735222,-75.5701686
