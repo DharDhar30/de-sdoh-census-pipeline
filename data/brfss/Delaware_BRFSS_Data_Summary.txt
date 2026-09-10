@@ -1,0 +1,23 @@
+DELAWARE BRFSS CLEANING SUMMARY
+==================================================
+
+Source: Delaware_ZCTA_PLACES2025.csv
+Rows: 2597
+
+Geography: ZCTA=2597, Tract=0, Statewide=0
+Years: {'2022': 322, '2023': 2275}
+Unique ZCTAs: 65
+Measures: 40
+
+Categories:
+  Disability: 455
+  Health Outcomes: 779
+  Health Risk Behaviors: 260
+  Health Status: 195
+  Health-Related Social Needs: 455
+  Prevention: 453
+
+Counties:
+  Kent: 3 ZCTAs -> 19901, 19902, 19904
+  New Castle: 26 ZCTAs -> 19701, 19702, 19703, 19706, 19707, 19709, 19710, 19711, 19713, 19717, 19720, 19730, 19731, 19732, 19733, 19734, 19801, 19802, 19803, 19804, 19805, 19806, 19807, 19808, 19809, 19810
+  Sussex: 36 ZCTAs -> 19930, 19931, 19933, 19934, 19936, 19938, 19939, 19940, 19941, 19943, 19944, 19945, 19946, 19947, 19950, 19951, 19952, 19953, 19954, 19955, 19956, 19958, 19960, 19962, 19963, 19964, 19966, 19967, 19968, 19970, 19971, 19973, 19975, 19977, 19979, 19980

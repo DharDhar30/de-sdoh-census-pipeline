@@ -1,0 +1,196 @@
+Year,LocationID,LocationName,Geography_Type,County,DataSource,Category,Measure,Short_Question_Text,MeasureId,Data_Value,Low_Confidence_Limit,High_Confidence_Limit,Data_Value_Unit,Data_Value_Type,TotalPop18plus,TotalPopulation,Latitude,Longitude
+2023,19901,19901,ZCTA,Kent,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,22.8,20.4,25.3,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,19.0,17.0,21.2,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19901,19901,ZCTA,Kent,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.9,13.4,16.5,%,Crude prevalence,28448,36839,39.1815422,-75.4735201
+2023,19902,19902,ZCTA,Kent,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,13.5,11.5,15.6,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,23.2,20.8,25.8,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19902,19902,ZCTA,Kent,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,8.1,7.1,9.1,%,Crude prevalence,104,108,39.127656,-75.4669115
+2023,19904,19904,ZCTA,Kent,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,22.4,20.1,24.8,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.2,16.3,20.2,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19904,19904,ZCTA,Kent,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.0,13.4,16.6,%,Crude prevalence,28683,36880,39.1712793,-75.587619
+2023,19701,19701,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,16.9,15.1,18.9,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,15.6,14.0,17.4,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19701,19701,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,12.0,10.7,13.4,%,Crude prevalence,33580,42717,39.5838947,-75.6969951
+2023,19702,19702,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.1,15.2,19.0,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.2,14.4,18.0,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19702,19702,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.6,10.3,12.9,%,Crude prevalence,42790,55653,39.6181998,-75.7297243
+2023,19703,19703,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,16.6,14.7,18.6,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.0,14.2,17.9,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19703,19703,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.7,10.4,13.0,%,Crude prevalence,12679,16175,39.8015141,-75.4538529
+2023,19706,19706,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.8,15.4,20.3,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.7,14.7,18.9,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19706,19706,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.4,11.8,15.2,%,Crude prevalence,1528,1938,39.5749538,-75.5906758
+2023,19707,19707,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,11.8,10.4,13.6,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.5,10.3,13.0,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19707,19707,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,10.0,8.9,11.3,%,Crude prevalence,13825,17274,39.785594,-75.68364
+2023,19709,19709,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,14.6,12.9,16.3,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,14.9,13.2,16.7,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19709,19709,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.0,9.8,12.2,%,Crude prevalence,36764,49599,39.4943689,-75.67747
+2023,19710,19710,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,11.7,9.3,14.7,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.4,9.6,13.4,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19710,19710,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,10.3,8.6,12.4,%,Crude prevalence,93,108,39.789573,-75.5846839
+2023,19711,19711,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,15.5,13.8,17.3,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.5,14.8,18.3,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19711,19711,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.4,10.2,12.7,%,Crude prevalence,40581,48477,39.7137809,-75.7408261
+2023,19713,19713,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,19.7,17.5,21.8,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.7,14.9,18.5,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19713,19713,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.5,12.0,14.9,%,Crude prevalence,25160,31867,39.6707511,-75.7101225
+2023,19717,19717,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.3,14.5,20.5,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,28.2,24.8,31.6,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19717,19717,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,9.6,8.3,11.2,%,Crude prevalence,6185,6201,39.678689,-75.7499623
+2023,19720,19720,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,21.2,19.0,23.5,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.1,15.3,19.0,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19720,19720,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.7,12.3,15.2,%,Crude prevalence,47558,61043,39.6454667,-75.6044962
+2023,19730,19730,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,12.7,10.5,15.3,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,13.6,11.7,15.5,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19730,19730,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,10.5,9.0,12.3,%,Crude prevalence,379,472,39.4549542,-75.6610367
+2023,19731,19731,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,13.9,11.5,16.5,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,14.4,12.5,16.2,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19731,19731,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.6,9.9,13.3,%,Crude prevalence,276,329,39.5094336,-75.6012906
+2023,19732,19732,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,10.5,8.6,13.0,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.2,9.6,12.9,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19732,19732,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,9.6,8.2,11.3,%,Crude prevalence,200,223,39.8002958,-75.5745993
+2023,19733,19733,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,18.4,15.2,21.9,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.1,14.7,19.4,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19733,19733,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.5,12.3,16.8,%,Crude prevalence,256,320,39.5590847,-75.6515225
+2023,19734,19734,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,15.3,13.5,17.2,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,15.6,13.8,17.5,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19734,19734,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.6,10.4,13.0,%,Crude prevalence,10550,14116,39.3816439,-75.6533217
+2023,19801,19801,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,29.5,26.6,32.2,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,20.6,18.3,22.7,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19801,19801,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,16.4,14.7,18.0,%,Crude prevalence,12255,16219,39.723588,-75.5412081
+2023,19802,19802,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,26.2,23.6,28.9,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.4,16.5,20.4,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19802,19802,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.0,13.5,16.6,%,Crude prevalence,20206,26189,39.7550415,-75.5264624
+2023,19803,19803,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,13.0,11.5,14.8,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,12.6,11.2,14.2,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19803,19803,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,10.9,9.6,12.2,%,Crude prevalence,17562,21886,39.7998719,-75.5422315
+2023,19804,19804,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,20.3,18.0,22.5,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.0,15.2,18.9,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19804,19804,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.0,12.5,15.6,%,Crude prevalence,14502,18292,39.7187601,-75.6218662
+2023,19805,19805,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,24.0,21.6,26.3,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.3,16.4,20.1,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19805,19805,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.7,13.2,16.2,%,Crude prevalence,29744,39985,39.7452101,-75.593712
+2023,19806,19806,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,14.2,12.5,16.1,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,13.6,12.0,15.2,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19806,19806,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,10.8,9.6,12.1,%,Crude prevalence,8977,10083,39.7625423,-75.5632982
+2023,19807,19807,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,12.8,11.2,14.6,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.5,10.1,12.9,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19807,19807,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,10.7,9.5,12.1,%,Crude prevalence,6615,8089,39.7965002,-75.6128401
+2023,19808,19808,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,15.7,13.9,17.5,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,14.4,12.9,16.1,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19808,19808,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,12.0,10.7,13.4,%,Crude prevalence,31618,39285,39.7376151,-75.6670572
+2023,19809,19809,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,16.0,14.1,18.0,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,15.2,13.5,16.9,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19809,19809,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,12.0,10.7,13.4,%,Crude prevalence,11773,14658,39.7566739,-75.5010351
+2023,19810,19810,ZCTA,New Castle,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,14.2,12.6,15.9,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,13.3,11.8,14.8,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19810,19810,ZCTA,New Castle,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.3,10.1,12.6,%,Crude prevalence,20500,25270,39.818682,-75.5061826
+2023,19930,19930,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,12.9,11.2,14.6,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,9.1,8.0,10.2,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19930,19930,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.6,10.3,13.0,%,Crude prevalence,2503,2657,38.5528625,-75.069397
+2023,19931,19931,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,27.6,23.9,31.6,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.3,14.3,18.4,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19931,19931,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,19.3,17.1,21.8,%,Crude prevalence,217,258,38.569298,-75.6104506
+2023,19933,19933,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,23.8,21.1,26.6,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,15.9,14.1,17.8,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19933,19933,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,16.1,14.4,18.0,%,Crude prevalence,7377,9784,38.7330183,-75.603361
+2023,19934,19934,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,19.3,17.1,21.6,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.8,15.0,18.8,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19934,19934,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.2,12.7,15.8,%,Crude prevalence,10977,14243,39.0847274,-75.6273547
+2023,19936,19936,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,27.2,23.7,31.0,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.8,16.6,21.0,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19936,19936,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,18.1,15.8,20.4,%,Crude prevalence,250,329,39.2186348,-75.5851142
+2023,19938,19938,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,19.6,17.2,22.0,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.1,16.1,20.3,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19938,19938,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.4,12.8,16.0,%,Crude prevalence,7555,10131,39.2564647,-75.6988217
+2023,19939,19939,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,19.2,16.6,21.9,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,13.6,12.0,15.3,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19939,19939,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.7,13.0,16.6,%,Crude prevalence,6170,7357,38.568957,-75.207538
+2023,19940,19940,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,20.1,17.8,22.7,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.6,14.7,18.6,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19940,19940,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.6,13.1,16.4,%,Crude prevalence,4898,6541,38.4775616,-75.5649307
+2023,19941,19941,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,23.7,21.0,26.4,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.5,15.5,19.6,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19941,19941,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.7,14.0,17.5,%,Crude prevalence,2135,2857,38.7936579,-75.4260621
+2023,19943,19943,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,20.2,17.9,22.6,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.4,15.5,19.4,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19943,19943,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.7,13.1,16.4,%,Crude prevalence,9765,12523,39.0044358,-75.6069858
+2023,19944,19944,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,15.3,12.2,18.8,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,10.0,8.5,11.4,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19944,19944,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,12.9,10.8,15.1,%,Crude prevalence,485,519,38.4778676,-75.0530825
+2023,19945,19945,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.3,15.2,19.5,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,13.6,12.0,15.2,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19945,19945,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.4,11.9,15.0,%,Crude prevalence,6693,8041,38.4978939,-75.2290333
+2023,19946,19946,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,20.8,18.4,23.3,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.3,15.4,19.4,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19946,19946,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.8,13.2,16.6,%,Crude prevalence,3794,4932,39.0348019,-75.4495848
+2023,19947,19947,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,24.7,22.2,27.2,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.8,15.0,18.7,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19947,19947,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.8,14.1,17.4,%,Crude prevalence,15895,20964,38.6702663,-75.4046629
+2023,19950,19950,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,23.0,20.7,25.5,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.3,15.7,19.0,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19950,19950,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,16.3,14.7,17.9,%,Crude prevalence,5618,7095,38.8184505,-75.5967427
+2023,19951,19951,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.5,15.2,19.8,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,12.8,11.2,14.3,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19951,19951,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.8,12.2,15.4,%,Crude prevalence,1625,1986,38.6852574,-75.2551535
+2023,19952,19952,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,21.3,18.8,23.9,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.0,16.0,20.2,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19952,19952,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.4,13.8,17.3,%,Crude prevalence,8244,10621,38.9166995,-75.6121042
+2023,19953,19953,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,23.7,20.4,27.2,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,19.6,17.4,22.0,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19953,19953,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,16.9,14.9,19.0,%,Crude prevalence,3387,4500,39.152487,-75.6941327
+2023,19954,19954,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,24.6,21.3,28.1,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.9,15.9,20.1,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19954,19954,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,17.1,15.1,19.3,%,Crude prevalence,1308,1629,38.8970097,-75.5204569
+2023,19955,19955,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,22.2,18.7,26.2,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.5,16.1,21.0,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19955,19955,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,16.4,14.2,18.9,%,Crude prevalence,143,191,39.2269685,-75.664724
+2023,19956,19956,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,23.1,20.5,25.7,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.6,15.7,19.6,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19956,19956,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.9,14.2,17.7,%,Crude prevalence,12211,16327,38.5476448,-75.5381863
+2023,19958,19958,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,16.5,14.6,18.6,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.5,10.2,13.0,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19958,19958,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.5,12.1,15.1,%,Crude prevalence,24522,27911,38.728714,-75.1685078
+2023,19960,19960,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,21.8,19.2,24.3,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.4,14.5,18.4,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19960,19960,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.0,13.3,16.7,%,Crude prevalence,5272,7121,38.8509127,-75.4087158
+2023,19962,19962,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,19.3,17.1,21.6,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.2,15.2,19.2,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19962,19962,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.8,12.2,15.3,%,Crude prevalence,10232,13692,39.0688084,-75.4883882
+2023,19963,19963,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,21.6,19.5,23.6,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.3,14.8,17.9,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19963,19963,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.2,13.8,16.6,%,Crude prevalence,16395,20827,38.9432534,-75.362567
+2023,19964,19964,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,24.0,20.8,27.4,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.9,16.8,21.1,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19964,19964,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,17.2,15.2,19.3,%,Crude prevalence,1034,1298,39.0960269,-75.7254632
+2023,19966,19966,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,20.3,18.1,22.5,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,14.3,12.7,16.0,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19966,19966,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.2,13.6,16.8,%,Crude prevalence,26925,32520,38.579422,-75.277196
+2023,19967,19967,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.2,14.4,20.3,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.5,10.0,13.1,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19967,19967,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.4,12.4,16.5,%,Crude prevalence,1664,1802,38.5397161,-75.1208459
+2023,19968,19968,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.7,15.5,20.0,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,13.2,11.6,14.8,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19968,19968,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.8,12.3,15.5,%,Crude prevalence,11480,13800,38.7829203,-75.2798022
+2023,19970,19970,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.8,15.4,20.2,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.3,9.9,12.7,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19970,19970,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,14.4,12.6,16.1,%,Crude prevalence,7701,8591,38.5549727,-75.0994048
+2023,19971,19971,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,13.9,12.1,15.8,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,10.8,9.5,12.2,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19971,19971,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,11.9,10.5,13.3,%,Crude prevalence,12899,14348,38.6945036,-75.0996997
+2023,19973,19973,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,24.2,21.8,26.8,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,16.8,15.1,18.7,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19973,19973,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,16.3,14.7,18.1,%,Crude prevalence,19726,25550,38.6344621,-75.6235719
+2023,19975,19975,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,17.3,15.2,19.6,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,11.8,10.5,13.3,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19975,19975,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.8,12.3,15.4,%,Crude prevalence,9182,10476,38.4683272,-75.1668798
+2023,19977,19977,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,19.8,17.9,22.0,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.1,15.4,18.9,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19977,19977,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,13.8,12.4,15.2,%,Crude prevalence,21311,27505,39.2989462,-75.5461219
+2023,19979,19979,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,21.7,18.6,24.9,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,18.1,15.9,20.5,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19979,19979,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,15.7,13.8,17.7,%,Crude prevalence,581,722,39.0503674,-75.5764624
+2023,19980,19980,ZCTA,Sussex,BRFSS,Health Status,Fair or poor self-rated health status among adults,General Health,GHLTH,22.5,19.1,25.9,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Health Status,Frequent mental distress among adults,Frequent Mental Distress,MHLTH,17.6,15.4,19.8,%,Crude prevalence,200,235,39.0735222,-75.5701686
+2023,19980,19980,ZCTA,Sussex,BRFSS,Health Status,Frequent physical distress among adults,Frequent Physical Distress,PHLTH,16.4,14.2,18.6,%,Crude prevalence,200,235,39.0735222,-75.5701686
