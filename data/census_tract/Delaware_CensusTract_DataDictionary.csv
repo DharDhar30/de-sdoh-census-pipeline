@@ -1,0 +1,41 @@
+Column Name in this workbook,Full Definition (from CDC),Category
+Pct_All_Teeth_Lost,All teeth lost among adults aged >=65 years,Health Outcomes
+Pct_Annual_Checkup,Visits to doctor for routine checkup within the past year among adults,Prevention
+Pct_Any_Disability,Any disability among adults,Disability
+Pct_Arthritis,Arthritis among adults,Health Outcomes
+Pct_Binge_Drinking,Binge drinking among adults,Health Risk Behaviors
+Pct_COPD,Chronic obstructive pulmonary disease among adults,Health Outcomes
+Pct_Cancer_(non_skin)_or_Melanoma,Cancer (non-skin) or melanoma among adults,Health Outcomes
+Pct_Cholesterol_Screening,Cholesterol screening among adults,Prevention
+Pct_Cognitive_Disability,Cognitive disability among adults,Disability
+Pct_Colorectal_Cancer_Screening,Colorectal cancer screening among adults aged 45–75 years,Prevention
+Pct_Coronary_Heart_Disease,Coronary heart disease among adults,Health Outcomes
+Pct_Current_Asthma,Current asthma among adults,Health Outcomes
+Pct_Current_Cigarette_Smoking,Current cigarette smoking among adults,Health Risk Behaviors
+Pct_Dental_Visit,Visited dentist or dental clinic in the past year among adults,Prevention
+Pct_Depression,Depression among adults,Health Outcomes
+Pct_Diabetes,Diagnosed diabetes among adults,Health Outcomes
+Pct_Food_Insecurity,Food insecurity in the past 12 months among adults,Health-Related Social Needs
+Pct_Food_Stamps,Received food stamps in the past 12 months among adults,Health-Related Social Needs
+Pct_Frequent_Mental_Distress,Frequent mental distress among adults,Health Status
+Pct_Frequent_Physical_Distress,Frequent physical distress among adults,Health Status
+Pct_General_Health,Fair or poor self-rated health status among adults,Health Status
+Pct_Health_Insurance,Current lack of health insurance among adults aged 18-64 years,Prevention
+Pct_Hearing_Disability,Hearing disability among adults,Disability
+Pct_High_Blood_Pressure,High blood pressure among adults,Health Outcomes
+Pct_High_Blood_Pressure_Medication,Taking medicine to control high blood pressure among adults with high blood pressure,Prevention
+Pct_High_Cholesterol,High cholesterol among adults who have ever been screened,Health Outcomes
+Pct_Housing_Insecurity,Housing insecurity in the past 12 months among adults,Health-Related Social Needs
+Pct_Independent_Living_Disability,Independent living disability among adults,Disability
+Pct_Lack_of_Social_Emotional_Support,Lack of social and emotional support among adults,Health-Related Social Needs
+Pct_Loneliness,Loneliness among adults,Health-Related Social Needs
+Pct_Mammography,Mammography use among women aged 50-74 years,Prevention
+Pct_Mobility_Disability,Mobility disability among adults,Disability
+Pct_Obesity,Obesity among adults,Health Outcomes
+Pct_Physical_Inactivity,No leisure-time physical activity among adults,Health Risk Behaviors
+Pct_Self_care_Disability,Self-care disability among adults,Disability
+Pct_Short_Sleep_Duration,Short sleep duration among adults,Health Risk Behaviors
+Pct_Stroke,Stroke among adults,Health Outcomes
+Pct_Transportation_Barriers,Lack of reliable transportation in the past 12 months among adults,Health-Related Social Needs
+Pct_Utility_Services_Threat,Utility services shut-off threat in the past 12 months among adults,Health-Related Social Needs
+Pct_Vision_Disability,Vision disability among adults,Disability

@@ -40,6 +40,7 @@ EXPORTS_DIR = os.path.join(ROOT, "exports")
 ETL_SCRIPT = os.path.join(ROOT, "extract_census.py")
 GEOJSON_PATH = os.path.join(ROOT, "Delaware_ZCTA_Health_Master_Spatial.geojson")
 PLACES_CITY_PATH = os.path.join(ROOT, "PLACES_Delaware_City.csv")
+PLACES_TRACT_PATH = os.path.join(ROOT, "data/census_tract/Delaware_CensusTract_PLACES.csv")
 COUNTY_CHR_PATH = os.path.join(ROOT, "Delaware_County_CHR.csv")
 GENERATED_FILES = [
     "Delaware_ZCTA_Health_Master_Wide.xlsx",
@@ -143,8 +144,8 @@ def main() -> None:
 
         data_source = st.radio(
             "Choose dataset",
-            ["ZCTA Master (ETL)", "CDC PLACES (City-Level)", "CHR (County-Level)"],
-            help="ZCTA Master: Census tract-level data from ACS/CHR\nCDC PLACES: City-level health estimates from CDC\nCHR: County-level health rankings for 3 DE counties",
+            ["ZCTA Master (ETL)", "CDC PLACES (Census Tract)", "CDC PLACES (City-Level)", "CHR (County-Level)"],
+            help="ZCTA Master: ZCTA-level ACS/BRFSS/CHR data\nCDC PLACES Census Tract: Tract-level health data (257 tracts)\nCDC PLACES City-Level: City-level health data (79 cities)\nCHR: County-level health rankings (3 counties)",
         )
 
         uploaded = st.file_uploader("Upload Excel / CSV", type=["xlsx", "xls", "csv"])
@@ -152,6 +153,7 @@ def main() -> None:
         df: pd.DataFrame = pd.DataFrame()
         is_city_level = False
         is_county_level = False
+        is_census_tract_level = False
 
         if uploaded is not None:
             try:
@@ -159,8 +161,16 @@ def main() -> None:
                 st.success(f"Using **{uploaded.name}**")
                 is_city_level = "City_Name" in df.columns
                 is_county_level = "County_Name" in df.columns and "ZCTA" not in df.columns
-            except Exception as exc:  # noqa: BLE001
+                is_census_tract_level = "CensusTractFIPS" in df.columns
+            except Exception as exc:
                 st.error(f"Could not read upload: {exc}")
+        elif data_source == "CDC PLACES (Census Tract)":
+            if os.path.exists(PLACES_TRACT_PATH):
+                df = load_path_cached(PLACES_TRACT_PATH, os.path.getmtime(PLACES_TRACT_PATH))
+                is_census_tract_level = True
+                st.success("Loaded CDC PLACES Census Tract (257 tracts)")
+            else:
+                st.warning("Census tract data not found.")
         elif data_source == "CDC PLACES (City-Level)":
             if os.path.exists(PLACES_CITY_PATH):
                 df = load_path_cached(PLACES_CITY_PATH, os.path.getmtime(PLACES_CITY_PATH))
@@ -185,9 +195,16 @@ def main() -> None:
 
         st.divider()
         if not df.empty:
-            row_label = "Cities" if is_city_level else "Counties" if is_county_level else "ZCTAs"
+            if is_city_level:
+                lbl = "Cities"
+            elif is_county_level:
+                lbl = "Counties"
+            elif is_census_tract_level:
+                lbl = "Tracts"
+            else:
+                lbl = "ZCTAs"
             c1, c2 = st.columns(2)
-            c1.metric(row_label, len(df))
+            c1.metric(lbl, len(df))
             c2.metric("Columns", len(df.columns))
         st.divider()
         if st.button("\U0001f504 Run ETL & Refresh", use_container_width=True):
@@ -207,134 +224,84 @@ def main() -> None:
         st.info("👉 Pick a dataset or upload a file to get started.")
         st.stop()
 
-    tab1, tab2, tab3 = st.tabs(["  1 │ Select Sectors  ", "  2 │ Preview  ", "  3 │ Export  "])
-
+    tab1, tab2, tab3 = st.tabs(["  1 \u2502 Select Sectors  ", "  2 \u2502 Preview  ", "  3 \u2502 Export  "])
     with tab1:
         st.subheader("Choose sectors & columns")
         st.caption("Pick entire sectors or drill in to individual columns. Key columns always included.")
-    all_sectors = list(SECTORS.keys())
-    selected_sectors = st.multiselect(
-        "Sectors to include",
-        all_sectors,
-        default=[s for s in all_sectors if s not in ("Geographic", "Calculated Metrics")],
-    )
-
-    picked_columns: list[str] = []
-    if selected_sectors:
-        st.markdown("#### Refine columns per sector")
-        for sector in selected_sectors:
-            available = [c for c in SECTORS[sector] if c in df.columns]
-            if not available:
-                continue
-            chosen = st.multiselect(
-                f"{sector} — {len(available)} columns",
-                available,
-                default=available,
-                key=f"cols::{sector}",
-            )
-            picked_columns.extend(chosen)
-
-    extra_columns = [c for c in df.columns if c not in all_sector_columns()]
-    if extra_columns:
-        with st.expander(f"Other columns ({len(extra_columns)})", expanded=False):
-            picked_columns.extend(
-                st.multiselect("Ungrouped", extra_columns, key="cols::extra")
-            )
-
-    if not picked_columns:
-        st.info("Select at least one sector (or column) to continue.")
-        st.stop()
-
-    if is_city_level:
-        include_keys = st.toggle("Include city keys (City_Name · State)", value=True)
-    elif is_county_level:
-        include_keys = st.toggle("Include county keys (County_Name · County_FIPS)", value=True)
-    else:
-        include_keys = st.toggle(
-            "Include geographic keys (ZCTA · County_FIPS · County_Name)", value=True
+        all_sectors = list(SECTORS.keys())
+        selected_sectors = st.multiselect(
+            "Sectors to include",
+            all_sectors,
+            default=[s for s in all_sectors if s not in ("Geographic", "Calculated Metrics")],
         )
-
-    # ---- 3. Preview --------------------------------------------------------
-    st.header("3 · Preview")
-    tables = build_sector_tables(df, picked_columns, include_keys=include_keys)
-    if not tables:
-        st.info("No columns matched in the current dataset.")
-        st.stop()
-
-    combined = build_combined(df, picked_columns, include_keys=include_keys)
-    preview_choice = st.selectbox("Preview table", ["Combined"] + list(tables.keys()))
-    preview_df = combined if preview_choice == "Combined" else tables[preview_choice]
-    st.dataframe(preview_df, use_container_width=True, height=360)
-    st.caption(
-        f"{len(tables)} sector tables · {len(picked_columns)} selected columns · "
-        f"{len(df)} {'cities' if is_city_level else 'counties' if is_county_level else 'ZCTA'} rows"
-    )
-
-# ---- 4. Export ---------------------------------------------------------
-    st.header("4 · Export")
-    fmt = st.radio(
-        "Output format",
-        [
-            "One Excel workbook (one sheet per sector)",
-            "Separate CSV files (one per sector)",
-            "Separate Excel files (one per sector)",
-            "One combined CSV",
-            "One combined Excel",
-        ],
-        horizontal=True,
-    )
-
-    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    if st.button("Export Data", type="primary", use_container_width=True):
-        os.makedirs(EXPORTS_DIR, exist_ok=True)
-        try:
-            if fmt.startswith("One Excel workbook"):
-                out_path = os.path.join(EXPORTS_DIR, f"DE_Health_SectorExport_{stamp}.xlsx")
-                export_multi_sheet_excel(tables, out_path)
-                downloads = [out_path]
-            elif fmt.startswith("Separate CSV"):
-                out_dir = os.path.join(EXPORTS_DIR, f"DE_Health_CSV_{stamp}")
-                downloads = export_separate_files(tables, out_dir, fmt="csv")
-            elif fmt.startswith("Separate Excel"):
-                out_dir = os.path.join(EXPORTS_DIR, f"DE_Health_Excel_{stamp}")
-                downloads = export_separate_files(tables, out_dir, fmt="xlsx")
-            elif fmt == "One combined CSV":
-                out_path = os.path.join(EXPORTS_DIR, f"DE_Health_Combined_{stamp}.csv")
-                export_combined(combined, out_path)
-                downloads = [out_path]
-            else:
-                out_path = os.path.join(EXPORTS_DIR, f"DE_Health_Combined_{stamp}.xlsx")
-                export_combined(combined, out_path)
-                downloads = [out_path]
-        except Exception as exc:  # noqa: BLE001
-            st.error(f"Export failed: {exc}")
+        picked_columns: list[str] = []
+        if selected_sectors:
+            st.write("")
+            for sector in selected_sectors:
+                available = [c for c in SECTORS[sector] if c in df.columns]
+                if not available:
+                    continue
+                with st.expander(f"{sector} ({len(available)} columns)", expanded=False):
+                    chosen = st.multiselect(
+                        "Columns", available, default=available,
+                        key=f"cols::{sector}", label_visibility="collapsed",
+                    )
+                    picked_columns.extend(chosen)
+        extra_columns = [c for c in df.columns if c not in all_sector_columns()]
+        if extra_columns:
+            with st.expander(f"Other columns ({len(extra_columns)})", expanded=False):
+                picked_columns.extend(st.multiselect("Ungrouped", extra_columns, key="cols::extra"))
+        if not picked_columns:
+            st.info("Select at least one sector.")
             st.stop()
+        if is_city_level:
+            include_keys = st.toggle("Include city keys", value=True)
+        elif is_county_level:
+            include_keys = st.toggle("Include county keys", value=True)
+        elif is_census_tract_level:
+            include_keys = st.toggle("Include tract keys (CensusTractFIPS \u00b7 County)", value=True)
+        else:
+            include_keys = st.toggle("Include geographic keys (ZCTA \u00b7 County_FIPS \u00b7 County_Name)", value=True)
 
-        st.success("Export completed.")
-        for path in downloads:
-            rel = os.path.relpath(path, ROOT)
-            with open(path, "rb") as fh:
-                st.download_button(
-                    f"Download: {rel}",
-                    data=fh.read(),
-                    file_name=os.path.basename(path),
-                    mime=(
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        if path.endswith(".xlsx")
-                        else "text/csv"
-                    ),
-                    use_container_width=True,
-                )
+    with tab2:
+        tables = build_sector_tables(df, picked_columns, include_keys=include_keys)
+        if not tables:
+            st.info("No columns matched.")
+            st.stop()
+        combined = build_combined(df, picked_columns, include_keys=include_keys)
+        st.subheader("Data Preview")
+        preview_choice = st.selectbox("View table", ["Combined"] + list(tables.keys()))
+        preview_df = combined if preview_choice == "Combined" else tables[preview_choice]
+        st.dataframe(preview_df, use_container_width=True, height=420)
+        st.caption(f"{len(tables)} sector tables \u00b7 {len(picked_columns)} columns \u00b7 {len(df)} rows")
 
-        if len(downloads) > 1:
-            st.download_button(
-                "Download all as ZIP archive",
-                data=zip_paths(downloads).getvalue(),
-                file_name=f"DE_Health_Exports_{stamp}.zip",
-                mime="application/zip",
-                use_container_width=True,
-            )
-
+    with tab3:
+        st.subheader("Export Options")
+        st.caption("Export your selection as Excel, CSV, or a ZIP archive.")
+        fmt = st.radio("Output format", ["One Excel workbook", "Separate CSVs", "Separate Excel files", "One combined CSV", "One combined Excel"], horizontal=True)
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        if st.button("\U0001f4e6 Export Data", type="primary", use_container_width=True):
+            os.makedirs(EXPORTS_DIR, exist_ok=True)
+            try:
+                if fmt.startswith("One Excel workbook"):
+                    out_path = os.path.join(EXPORTS_DIR, f"DE_Health_SectorExport_{stamp}.xlsx"); export_multi_sheet_excel(tables, out_path); downloads = [out_path]
+                elif fmt.startswith("Separate CSV"):
+                    out_dir = os.path.join(EXPORTS_DIR, f"DE_Health_CSV_{stamp}"); downloads = export_separate_files(tables, out_dir, fmt="csv")
+                elif fmt.startswith("Separate Excel"):
+                    out_dir = os.path.join(EXPORTS_DIR, f"DE_Health_Excel_{stamp}"); downloads = export_separate_files(tables, out_dir, fmt="xlsx")
+                elif fmt == "One combined CSV":
+                    out_path = os.path.join(EXPORTS_DIR, f"DE_Health_Combined_{stamp}.csv"); export_combined(combined, out_path); downloads = [out_path]
+                else:
+                    out_path = os.path.join(EXPORTS_DIR, f"DE_Health_Combined_{stamp}.xlsx"); export_combined(combined, out_path); downloads = [out_path]
+            except Exception as exc:
+                st.error(f"Export failed: {exc}"); st.stop()
+            st.success("Export completed.")
+            for path in downloads:
+                rel = os.path.relpath(path, ROOT)
+                with open(path, "rb") as fh:
+                    st.download_button(f"Download: {rel}", data=fh.read(), file_name=os.path.basename(path), use_container_width=True)
+            if len(downloads) > 1:
+                st.download_button("Download all as ZIP", data=zip_paths(downloads).getvalue(), file_name=f"DE_Health_Exports_{stamp}.zip", mime="application/zip", use_container_width=True)
 
 if __name__ == "__main__":
     main()
