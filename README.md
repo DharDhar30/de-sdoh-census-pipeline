@@ -90,6 +90,14 @@ Exports are saved in `./exports/` so your workspace stays clean.
 - CHR - Clinical Care: CHR_Uninsured_Pct, CHR_PCP_Ratio_Population, Dentist_Ratio_Population, Mental_Health_Provider_Ratio, CHR_Preventable_Hospital_Stays_Rate, CHR_Mammography_Screening_Pct, CHR_Flu_Vaccination_Pct
 - Calculated Metrics: Population_Density_SqMi, Uninsured_Population_Count, No_Broadband_Households_Estimate (Derived volume & density counts)
 
+## Data Sources
+
+- U.S. Census Bureau Cartographic Boundary Files (ZCTA) — Current year via pygris
+- U.S. Census Bureau American Community Survey (ACS) 5-Year Data Profile — 2023 (DP02, DP03, DP05 tables)
+- CDC Behavioral Risk Factor Surveillance System (BRFSS) Prevalence Data — 2024, Delaware state-level
+- County Health Rankings & Roadmaps (CHR) — 2024 Data Document (underlying data year: 2022), Delaware counties (Kent, New Castle, Sussex)
+- CDC PLACES: Local Data for Better Health — City/place-level model-based estimates for Delaware
+
 ## Tableau Visualization Guide
 
 1. Open Tableau and select Connect -> Spatial File.
