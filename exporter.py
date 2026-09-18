@@ -8,11 +8,20 @@ from typing import Iterable
 
 import pandas as pd
 
-from sector_definitions import KEY_COLUMNS, SECTORS, CITY_KEY_COLUMNS, COUNTY_KEY_COLUMNS
+from sector_definitions import (
+    KEY_COLUMNS,
+    SECTORS,
+    CITY_KEY_COLUMNS,
+    COUNTY_KEY_COLUMNS,
+    TRACT_KEY_COLUMNS,
+)
 
 
 def _get_key_columns(df: pd.DataFrame) -> list[str]:
     """Return the appropriate key columns based on what's in the DataFrame."""
+    # Tract-level data keys on CensusTractFIPS
+    if "CensusTractFIPS" in df.columns:
+        return [c for c in TRACT_KEY_COLUMNS if c in df.columns]
     # Check for county-level data first
     if "County_Name" in df.columns and "ZCTA" not in df.columns:
         return [c for c in COUNTY_KEY_COLUMNS if c in df.columns]
