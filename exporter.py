@@ -3,6 +3,9 @@
 Pandas-only (no Streamlit dependency) so it can also be reused from scripts.
 """
 
+# Keep the annotations lazy so "list[str]" / "X | None" work on Python 3.9 too.
+from __future__ import annotations
+
 import os
 from typing import Iterable
 

@@ -25,6 +25,8 @@ The pipeline outputs ready-to-use tabular and spatial datasets specifically form
 
 ## Installation & Local Execution Instructions
 
+**Requirements:** Python **3.9 or newer** (3.10+ recommended). macOS ships `/usr/bin/python3` as 3.9.6, which works, but a newer python.org or Homebrew Python pulls in the newest pandas/Streamlit. Check yours with `python3 --version`.
+
 Run the following exact terminal commands from your terminal to run the pipeline and interactive UI locally:
 
 ```bash
@@ -59,6 +61,8 @@ Or use the provided shortcut script:
 ```bash
 bash start_ui.sh
 ```
+
+`start_ui.sh` creates `.venv` on first run (or rebuilds it when it was built by an unsupported Python), installs `requirements.txt`, and prints the Python version it launches with - so the manual venv steps above are optional when you only need the UI.
 
 Then open the URL printed by Streamlit (default http://localhost:8501).
 
@@ -111,3 +115,4 @@ Exports are saved in `./exports/` so your workspace stays clean.
 - Tableau Field Mismatches Warning Icons: If red exclamation marks appear on fields when opening Tableau, clear all existing worksheet fields, navigate to Data Sources, and ensure Delaware_ZCTA_Health_Master_Spatial.geojson is selected as the active primary source.
 - Missing Geometry Fields in CSV Exports: The tabular CSV and Excel outputs drop spatial polygon geometry by design to optimize file sizes for analytical spreadsheets. To build polygon maps, always connect directly to the generated .geojson spatial file.
 - Census API Rate Limits: If running bulk extractions repeatedly, populate your CENSUS_API_KEY in the .env file to prevent Census API request throttling.
+- `TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'` pointing at a line such as `def sector_of(column: str) -> str | None:`: the app is being imported by Python 3.9 or older (PEP 604 unions like `X | None` need 3.10+, and macOS's stock `/usr/bin/python3` is 3.9.6), or you are running an older checkout of `main`. Fix: pull the latest `main`, then rebuild the environment with `rm -rf .venv && bash start_ui.sh`. The UI modules now use `from __future__ import annotations`, so Python 3.9 works, and `start_ui.sh` refuses to reuse a `.venv` built by an unsupported interpreter.

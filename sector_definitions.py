@@ -13,6 +13,10 @@ sectors. Columns not listed here are treated as "Other" and can still be picked
 manually in the UI.
 """
 
+# Keep the annotations below lazy so the PEP 604 unions ("str | None") and
+# builtin generics ("list[str]") work on Python 3.9 as well as 3.10+.
+from __future__ import annotations
+
 # ---------------------------------------------------------------------------
 # BRFSS state-level measure stems (CDC BRFSS Prevalence 2024, Delaware)
 # ---------------------------------------------------------------------------

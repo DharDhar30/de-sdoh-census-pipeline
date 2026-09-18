@@ -12,11 +12,26 @@ the working tree stays clean - no more spreadsheets piling up in the repo.
 Run:  streamlit run app.py   (or double-click start_ui.command)
 """
 
+# Keep the annotations lazy so "str | None" / "tuple[str | None, str]" work on
+# Python 3.9 as well as 3.10+.
+from __future__ import annotations
+
+import sys
+
+# Fail with an actionable message instead of a cryptic typing error on Python
+# 3.8 and older (PEP 604 unions such as "str | None" are only evaluated by the
+# interpreter when annotations are not lazy).
+if sys.version_info < (3, 9):  # pragma: no cover - environment guard
+    raise RuntimeError(
+        "Python 3.9 or newer is required, but this environment is running "
+        f"{sys.version_info.major}.{sys.version_info.minor}. "
+        "Rebuild the environment with a newer python3:  rm -rf .venv && bash start_ui.sh"
+    )
+
 import io
 import os
 import shutil
 import subprocess
-import sys
 import zipfile
 from datetime import datetime
 
