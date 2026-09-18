@@ -12,13 +12,24 @@ The pipeline outputs ready-to-use tabular and spatial datasets specifically form
 - County Health Rankings (CHR): Merges medical / public-health indicators across Delaware's 3 counties (New Castle, Kent, Sussex) - health outcomes (poor/fair health, premature death, low birth weight, STIs, teen births), health behaviors (smoking, obesity, inactivity, excessive drinking, food environment, exercise access, alcohol-impaired driving deaths), and clinical care (uninsured, provider ratios, preventable hospital stays, screening & vaccination rates).
 - Automated Transformations: Computes derived population counts and land density metrics directly in Python.
 - Multi-Format Export: Generates wide-format outputs in CSV, Excel, and spatial GeoJSON formats simultaneously.
+- Selectable Data Sources: Rather than one hardcoded merge, every source is registered with the geography level it belongs to, so the UI and CLI can assemble a master from any chosen subset and report exactly how each source joined.
+- Tableau-Ready Outputs: A stable-filename bundle (flat CSV plus WGS84 MultiPolygon GeoJSON, geographic-role helper columns, centroid coordinates, and a field manifest) removes the manual source blending and field fixing that used to happen inside Tableau.
 
 ## Project Structure
 
-- extract_census.py: Main ETL Pipeline Script (merges spatial, ACS, BRFSS, CHR, and calculated metrics)
+- data_sources.py: Registry of every data source, the geography level(s) it can merge at, its join key, and its loader
+- master_builder.py: Builds a master from a selected subset of sources and writes the Tableau export bundle
+- extract_census.py: Command-line entry point (thin wrapper over data_sources.py + master_builder.py)
+- app.py: Streamlit UI - build the master, then pick sectors and export
+- exporter.py: Pandas-only export engine (sector tables, workbooks, separate files)
+- sector_definitions.py: Sector groupings, key columns, and column-to-sector mapping
 - gen_health_data.py: Downloads BRFSS (CDC API) and CHR (County Health Rankings website) CSV files from official sources
+- fetch_places.py: Downloads CDC PLACES city-level estimates for Delaware
+- generate_county_chr.py: Rolls the ZCTA master up to county level (Delaware_County_CHR.csv)
 - BRFSS_Delaware.csv: CDC BRFSS 2024 Delaware state-level prevalence (public-health measures)
 - CHR_Delaware.csv: County Health Rankings 2022 medical/public-health indicators
+- data/brfss/: Cleaned CDC BRFSS ZCTA-level extracts (long format, 40 measures)
+- data/census_tract/: CDC PLACES census tract estimates (257 tracts)
 - .env: API key configuration
 - requirements.txt: Python dependencies
 - Delaware_ZCTA_Health_Master_Spatial.geojson: Master Spatial GeoJSON for Tableau
@@ -44,8 +55,15 @@ pip install -r requirements.txt
 # 4. (Optional) Re-download BRFSS & CHR data from official sources:
 python3 gen_health_data.py
 
-# 5. Run the master ETL pipeline script
+# 5. Build the master and write the Tableau exports
 python3 extract_census.py
+
+# See every source and the level it merges at
+python3 extract_census.py --list
+
+# Build a different level, or hand-pick the sources
+python3 extract_census.py --level tract
+python3 extract_census.py --sources spatial_zcta,acs,brfss_zcta,metrics
 ```
 
 ### Interactive UI (Streamlit)
@@ -62,14 +80,65 @@ bash start_ui.sh
 
 Then open the URL printed by Streamlit (default http://localhost:8501).
 
+## Choosing Data Sources (Master Builder)
+
+The master is no longer hardcoded. Tab 1 of the UI, or the `extract_census.py` CLI, lets you choose
+exactly which sources are merged, so source blending no longer has to happen in Tableau.
+
+Sources are offered only at geography levels where their join key exists:
+
+| Source | zcta | tract | city | county | Join key |
+|---|---|---|---|---|---|
+| ZCTA boundaries (Census cartographic, pygris) | base | - | - | - | ZCTA |
+| Census ACS 5-Year Data Profile | yes | - | - | - | ZCTA |
+| CDC BRFSS state prevalence (2024) | broadcast | broadcast | - | broadcast | every row |
+| County Health Rankings (CHR) | yes | yes | - | base | County_FIPS |
+| CDC BRFSS ZCTA-level estimates | yes | - | - | - | ZCTA |
+| CDC PLACES census tract estimates | - | base | - | - | CensusTractFIPS |
+| CDC PLACES city-level estimates | - | - | base | - | City_Name |
+| County CHR rollup (derived) | - | - | - | optional | County_FIPS |
+| Derived metrics (density, counts) | yes | - | - | - | computed |
+
+Tract and city data cannot be keyed to ZCTAs, so each level builds its own master instead of
+mixing geographies. Every build reports per-source join diagnostics: rows in, rows matched, rows
+unmatched, duplicate keys, and columns added.
+
+## Tableau Connection Guide
+
+Tab 1 writes a bundle to `./tableau_exports/` using stable filenames, so a Tableau live connection
+keeps working after a rebuild:
+
+- `DE_Health_<LEVEL>_Master.csv` - one flat table, one row per geography, all selected attributes
+- `DE_Health_<LEVEL>_Master.xlsx` - the same table for spreadsheet work
+- `DE_Health_<LEVEL>_Master.geojson` - ZCTA level only, WGS84 geometry plus all attributes
+- `DE_Health_<LEVEL>_Field_Manifest.csv` - which source produced each column
+
+The exports are prepared for Tableau on purpose:
+
+- One flat table per level, so no data blending is required
+- GeoJSON reprojected to EPSG:4326 (Tableau reads GeoJSON as WGS84) and normalised to a single
+  MultiPolygon geometry type with one feature per geography
+- `ZIP`, `State` and `County_Name` columns so Tableau assigns geographic roles automatically
+- `Latitude` / `Longitude` centroid columns for point maps and dual-axis geometry plus points
+- Measures stay numeric and identifiers stay text, so ZIP codes keep their leading zeros
+- ASCII-only, unique column names, with the geography keys first
+
+To connect: Tableau -> Connect -> To a File -> Spatial file for the GeoJSON, or Text file for the
+CSV. Because the filenames never change, use Data -> Refresh to pick up a new build instead of
+repointing the connection. Timestamped copies of every build are archived in `./outputs/`.
+
 ## Sector Export UI Usage
 
 1. Launch the UI with `streamlit run app.py` (or `bash start_ui.sh`).
-2. Click "Run ETL & Refresh Data" to regenerate data, or upload your own Excel/CSV.
-3. Select the sectors you want (Demographics, Socioeconomic, Health Access, BRFSS (State Level), CHR - Health Outcomes, CHR - Health Behaviors, CHR - Clinical Care, Calculated Metrics, Geographic) and refine individual columns as needed.
-4. Preview the result in the interactive table, then export as an Excel workbook with one sheet per sector, separate per-sector CSV/Excel files, or a single combined file.
+2. In tab 1, choose the geography level and sources, build the master, then write the Tableau
+   files. Or pick a dataset, or upload a file, in the sidebar to work with something else.
+3. In tab 2, select the sectors you want (Demographics, Socioeconomic, Health Access, BRFSS
+   (State Level), CHR - Health Outcomes, CHR - Health Behaviors, CHR - Clinical Care, Calculated
+   Metrics, Geographic) and refine individual columns as needed.
+4. Preview in tab 3, then export in tab 4 as an Excel workbook with one sheet per sector,
+   separate per-sector CSV/Excel files, or a single combined file.
 
-Exports are saved in `./exports/` so your workspace stays clean.
+Exports are saved in `./exports/` and `./tableau_exports/` so your workspace stays clean.
 
 ## Derived Metrics & Formulas
 
@@ -92,22 +161,41 @@ Exports are saved in `./exports/` so your workspace stays clean.
 
 ## Data Sources
 
-- U.S. Census Bureau Cartographic Boundary Files (ZCTA) — Current year via pygris
-- U.S. Census Bureau American Community Survey (ACS) 5-Year Data Profile — 2023 (DP02, DP03, DP05 tables)
-- CDC Behavioral Risk Factor Surveillance System (BRFSS) Prevalence Data — 2024, Delaware state-level
-- County Health Rankings & Roadmaps (CHR) — 2024 Data Document (underlying data year: 2022), Delaware counties (Kent, New Castle, Sussex)
-- CDC PLACES: Local Data for Better Health — City/place-level model-based estimates for Delaware
+- U.S. Census Bureau Cartographic Boundary Files (ZCTA) - Current year via pygris
+- U.S. Census Bureau American Community Survey (ACS) 5-Year Data Profile - 2023 (DP02, DP03, DP05 tables)
+- CDC Behavioral Risk Factor Surveillance System (BRFSS) Prevalence Data - 2024, Delaware state-level
+- CDC Behavioral Risk Factor Surveillance System (BRFSS) - ZCTA-level model-based estimates (40 measures)
+- County Health Rankings & Roadmaps (CHR) - 2024 Data Document (underlying data year: 2022), Delaware counties (Kent, New Castle, Sussex)
+- CDC PLACES: Local Data for Better Health - City/place-level and census tract-level model-based estimates for Delaware
 
 ## Tableau Visualization Guide
 
 1. Open Tableau and select Connect -> Spatial File.
-2. Select Delaware_ZCTA_Health_Master_Spatial.geojson.
+2. Select `tableau_exports/DE_Health_ZCTA_Master.geojson` (or the repo-root
+   Delaware_ZCTA_Health_Master_Spatial.geojson).
 3. Open a new Worksheet and double-click Geometry.
-4. Drag Zcta (or Zcta5Ce20) onto Detail on the Marks Card to display individual ZIP code boundaries.
+4. Drag ZIP (or ZCTA) onto Detail on the Marks Card to display individual ZIP code boundaries.
 5. Drag any health metric onto Color.
+
+Prefer the `tableau_exports/` bundle: those filenames never change, so a saved workbook keeps
+working after a rebuild. The attribute table is also in the GeoJSON, so a single spatial connection
+carries every measure and no blending is needed.
 
 ## Troubleshooting
 
-- Tableau Field Mismatches Warning Icons: If red exclamation marks appear on fields when opening Tableau, clear all existing worksheet fields, navigate to Data Sources, and ensure Delaware_ZCTA_Health_Master_Spatial.geojson is selected as the active primary source.
-- Missing Geometry Fields in CSV Exports: The tabular CSV and Excel outputs drop spatial polygon geometry by design to optimize file sizes for analytical spreadsheets. To build polygon maps, always connect directly to the generated .geojson spatial file.
-- Census API Rate Limits: If running bulk extractions repeatedly, populate your CENSUS_API_KEY in the .env file to prevent Census API request throttling.
+- Tableau Field Mismatches Warning Icons: if red exclamation marks appear on fields, the connection
+  is probably still pointing at a file that was renamed. Point Tableau at `tableau_exports/` instead:
+  those filenames never change, so use Data -> Refresh rather than repointing. Geometry-related
+  warnings are also avoided because the GeoJSON is written as a single MultiPolygon geometry type in
+  EPSG:4326.
+- Missing Geometry Fields in CSV Exports: the tabular CSV and Excel outputs drop spatial polygon
+  geometry by design to keep file sizes workable in spreadsheets. To build polygon maps, connect to
+  the generated .geojson spatial file; to build point maps, the CSV carries Latitude and Longitude.
+- A Source Was Skipped in the Build: the join diagnostics table in tab 1 names the missing key. The
+  usual cause is choosing a source whose key is not present at that geography level, for example
+  County Health Rankings at ZCTA level without the boundary source that supplies County_FIPS.
+- Unmatched Rows in a Build: unmatched counts mean the source genuinely has no record for that
+  geography. ZIP 19901 to 19999 style ZCTAs outside a source's coverage are the common case, for
+  example the 7 ZCTAs with no county CHR record.
+- Census API Rate Limits: if running bulk extractions repeatedly, populate your CENSUS_API_KEY in the
+  .env file to prevent Census API request throttling.

@@ -254,6 +254,10 @@ CITY_KEY_COLUMNS = ["City_Name", "State"]
 # County-level data uses County_Name as the key
 COUNTY_KEY_COLUMNS = ["County_Name", "County_FIPS"]
 
+# Tract-level data uses CensusTractFIPS as the key. County_Name is the
+# Tableau-friendly spelling; CountyName / CountyFIPS match the raw PLACES file.
+TRACT_KEY_COLUMNS = ["CensusTractFIPS", "County_Name", "CountyName", "CountyFIPS"]
+
 
 def sector_of(column: str) -> str | None:
     """Return the sector a column belongs to, or None if it is ungrouped."""
