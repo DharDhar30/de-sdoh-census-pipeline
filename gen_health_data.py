@@ -27,6 +27,16 @@ BRFSS_API_URL = (
 CHR_XLSX_URL = (
     "https://www.countyhealthrankings.org/"
     "sites/default/files/media/document/"
+    "2024_county_health_release_data_-_v1.xlsx"
+)
+# Legacy (retired) document URL kept for provenance — CHR removed the old
+# "/sites/default/files/...2024 County Health Rankings Data Document_2024.xls"
+# path during their 2025-2026 site redesign (now HTTP 404). The v1.xlsx above
+# is the live replacement on the Data & Documentation page:
+# https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation
+CHR_XLSX_URL_LEGACY_RETIRED = (
+    "https://www.countyhealthrankings.org/"
+    "sites/default/files/media/document/"
     "2024%20County%20Health%20Rankings%20Data%20Document_2024.xls"
 )
 BRFSS_OUT = "BRFSS_Delaware.csv"
@@ -105,55 +115,62 @@ def build_brfss() -> pd.DataFrame:
     return pd.DataFrame([out])
 
 
-# CHR: output-column -> source-column-name inside the "Ranked Measure Data" sheet
+# CHR: output-column -> source-column-name inside the "Select Measure Data"
+# sheet of the 2024 County Health Release workbook (v1.xlsx). The retired
+# "Ranked Measure Data" layout used different header text (e.g. lowercase
+# "Fair or poor health__%", "Smoking__%", quartile columns) and no longer
+# exists upstream; quartile columns were dropped from the release file, so
+# those outputs are now NaN (schema preserved for downstream consumers).
 CHR_TARGETS = {
-    "Pct_Poor_Fair_Health": "Fair or poor health__%",
-    "Pct_Poor_Fair_Health_LowCI": "Fair or poor health__95% CI - Low",
-    "Pct_Poor_Fair_Health_HighCI": "Fair or poor health__95% CI - High",
-    "Pct_Poor_Fair_Health_Quartile": "Fair or poor health__Quartile",
-    "Avg_Poor_Physical_Health_Days": "Physical health days (1-30 days) (incl. 0 days)__Average",
-    "Avg_Poor_Physical_Health_Days_LowCI": "Physical health days (1-30 days) (incl. 0 days)__95% CI - Low",
-    "Avg_Poor_Physical_Health_Days_HighCI": "Physical health days (1-30 days) (incl. 0 days)__95% CI - High",
-    "Avg_Poor_Physical_Health_Days_Quartile": "Physical health days (1-30 days) (incl. 0 days)__Quartile",
-    "Avg_Poor_Mental_Health_Days": "Mental health days (1-30 days) (incl. 0 days)__Average",
-    "Avg_Poor_Mental_Health_Days_LowCI": "Mental health days (1-30 days) (incl. 0 days)__95% CI - Low",
-    "Avg_Poor_Mental_Health_Days_HighCI": "Mental health days (1-30 days) (incl. 0 days)__95% CI - High",
-    "Avg_Poor_Mental_Health_Days_Quartile": "Mental health days (1-30 days) (incl. 0 days)__Quartile",
-    "CHR_YPLL_Rate": "Years of potential life lost (YPLL)__Rate per 100,000",
-    "CHR_Premature_Deaths_Count": "Years of potential life lost (YPLL)__Number of prematurely born infants",
-    "CHR_Pct_Low_Birthweight": "Low birthweight__% Low Birthweight",
-    "CHR_Pct_Low_Birthweight_Quartile": "Low birthweight__Quartile",
-    "Pct_Adult_Smoking": "Smoking__%",
-    "Pct_Adult_Smoking_LowCI": "Smoking__95% CI - Low",
-    "Pct_Adult_Smoking_HighCI": "Smoking__95% CI - High",
-    "Pct_Adult_Smoking_Quartile": "Smoking__Quartile",
-    "Pct_Adult_Obesity": "Adult obesity__%",
-    "Pct_Adult_Obesity_LowCI": "Adult obesity__95% CI - Low",
-    "Pct_Adult_Obesity_HighCI": "Adult obesity__95% CI - High",
-    "Pct_Adult_Obesity_Quartile": "Adult obesity__Quartile",
-    "Pct_Physical_Inactivity": "Physical inactivity__%",
-    "Pct_Physical_Inactivity_LowCI": "Physical inactivity__95% CI - Low",
-    "Pct_Physical_Inactivity_HighCI": "Physical inactivity__95% CI - High",
-    "Pct_Physical_Inactivity_Quartile": "Physical inactivity__Quartile",
-    "Excessive_Drinking_Pct": "Excessive drinking__% Excessive Drinking",
-    "Excessive_Drinking_Pct_LowCI": "Excessive drinking__95% CI - Low",
-    "Excessive_Drinking_Pct_HighCI": "Excessive drinking__95% CI - High",
-    "Excessive_Drinking_Pct_Quartile": "Excessive drinking__Quartile",
-    "CHR_Food_Environment_Index": "Food environment index__Food Environment Index",
-    "CHR_Access_Exercise_Opportunities_Pct": "Access to exercise opportunities__% With Access to Exercise Opportunities",
-    "CHR_Alcohol_Impaired_Driving_Deaths_Pct": "Alcohol-impaired driving deaths__% Driving Deaths with Alcohol Involvement",
-    "CHR_STI_Chlamydia_Rate": "Sexually transmitted infections__Chlamydia Rate",
-    "CHR_Teen_Birth_Rate": "Teen births__Teen Birth Rate",
+    "Pct_Poor_Fair_Health": "Poor or Fair Health__% Fair or Poor Health",
+    "Pct_Poor_Fair_Health_LowCI": "Poor or Fair Health__95% CI - Low",
+    "Pct_Poor_Fair_Health_HighCI": "Poor or Fair Health__95% CI - High",
+    "Pct_Poor_Fair_Health_Quartile": "__QUARTILE_DROPPED__",
+    "Avg_Poor_Physical_Health_Days": "Poor Physical Health Days__Average Number of Physically Unhealthy Days",
+    "Avg_Poor_Physical_Health_Days_LowCI": "Poor Physical Health Days__95% CI - Low",
+    "Avg_Poor_Physical_Health_Days_HighCI": "Poor Physical Health Days__95% CI - High",
+    "Avg_Poor_Physical_Health_Days_Quartile": "__QUARTILE_DROPPED__",
+    "Avg_Poor_Mental_Health_Days": "Poor Mental Health Days__Average Number of Mentally Unhealthy Days",
+    "Avg_Poor_Mental_Health_Days_LowCI": "Poor Mental Health Days__95% CI - Low",
+    "Avg_Poor_Mental_Health_Days_HighCI": "Poor Mental Health Days__95% CI - High",
+    "Avg_Poor_Mental_Health_Days_Quartile": "__QUARTILE_DROPPED__",
+    "CHR_YPLL_Rate": "Premature Death__Years of Potential Life Lost Rate",
+    "CHR_Premature_Deaths_Count": "Premature Death__Deaths",
+    "CHR_Pct_Low_Birthweight": "Low Birthweight__% Low Birthweight",
+    "CHR_Pct_Low_Birthweight_Quartile": "__QUARTILE_DROPPED__",
+    "Pct_Adult_Smoking": "Adult Smoking__% Adults Reporting Currently Smoking",
+    "Pct_Adult_Smoking_LowCI": "Adult Smoking__95% CI - Low",
+    "Pct_Adult_Smoking_HighCI": "Adult Smoking__95% CI - High",
+    "Pct_Adult_Smoking_Quartile": "__QUARTILE_DROPPED__",
+    "Pct_Adult_Obesity": "Adult Obesity__% Adults with Obesity",
+    "Pct_Adult_Obesity_LowCI": "Adult Obesity__95% CI - Low",
+    "Pct_Adult_Obesity_HighCI": "Adult Obesity__95% CI - High",
+    "Pct_Adult_Obesity_Quartile": "__QUARTILE_DROPPED__",
+    "Pct_Physical_Inactivity": "Physical Inactivity__% Physically Inactive",
+    "Pct_Physical_Inactivity_LowCI": "Physical Inactivity__95% CI - Low",
+    "Pct_Physical_Inactivity_HighCI": "Physical Inactivity__95% CI - High",
+    "Pct_Physical_Inactivity_Quartile": "__QUARTILE_DROPPED__",
+    "Excessive_Drinking_Pct": "Excessive Drinking__% Excessive Drinking",
+    "Excessive_Drinking_Pct_LowCI": "Excessive Drinking__95% CI - Low",
+    "Excessive_Drinking_Pct_HighCI": "Excessive Drinking__95% CI - High",
+    "Excessive_Drinking_Pct_Quartile": "__QUARTILE_DROPPED__",
+    "CHR_Food_Environment_Index": "Food Environment Index__Food Environment Index",
+    "CHR_Access_Exercise_Opportunities_Pct": "Access to Exercise Opportunities__% With Access to Exercise Opportunities",
+    "CHR_Alcohol_Impaired_Driving_Deaths_Pct": "Alcohol-Impaired Driving Deaths__% Driving Deaths with Alcohol Involvement",
+    "CHR_STI_Chlamydia_Rate": "Sexually Transmitted Infections__Chlamydia Rate",
+    "CHR_Teen_Birth_Rate": "Teen Births__Teen Birth Rate",
     "CHR_Uninsured_Pct": "Uninsured__% Uninsured",
     "CHR_Uninsured_Pct_LowCI": "Uninsured__95% CI - Low",
     "CHR_Uninsured_Pct_HighCI": "Uninsured__95% CI - High",
-    "CHR_Uninsured_Pct_Quartile": "Uninsured__Quartile",
-    "CHR_PCP_Ratio_Population": "Primary care physicians__Primary Care Physicians Ratio",
+    "CHR_Uninsured_Pct_Quartile": "__QUARTILE_DROPPED__",
+    "CHR_PCP_Ratio_Population": "Primary Care Physicians__Primary Care Physicians Ratio",
     "Dentist_Ratio_Population": "Dentists__Dentist Ratio",
-    "Mental_Health_Provider_Ratio": "Mental health providers__Mental Health Provider Ratio",
-    "CHR_Preventable_Hospital_Stays_Rate": "Preventable hospital stays__Preventable Hospitalization Rate",
-    "CHR_Mammography_Screening_Pct": "Mammography screening__% With Annual Mammogram",
-    "CHR_Mammography_Screening_Pct_Quartile": "Mammography screening__Quartile",
+    "Mental_Health_Provider_Ratio": "Mental Health Providers__Mental Health Provider Ratio",
+    "CHR_Preventable_Hospital_Stays_Rate": "Preventable Hospital Stays__Preventable Hospitalization Rate",
+    "CHR_Mammography_Screening_Pct": "Mammography Screening__% with Annual Mammogram",
+    "CHR_Mammography_Screening_Pct_Quartile": "__QUARTILE_DROPPED__",
+    "CHR_Flu_Vaccination_Pct": "Flu Vaccinations__% Vaccinated",
+    "CHR_Flu_Vaccination_Pct_Quartile": "__QUARTILE_DROPPED__",
     }
 
 
@@ -168,13 +185,14 @@ def _parse_chr_value(val):
 
 
 def build_chr() -> pd.DataFrame:
-    """Download the County Health Rankings 2024 Excel file from the official
-    website, extract Delaware county-level medical / public-health measures."""
-    print("Downloading 2024 County Health Rankings Excel from official site...")
+    """Download the County Health Rankings 2024 release workbook from the
+    official website, extract Delaware county-level medical / public-health
+    measures from the "Select Measure Data" sheet."""
+    print("Downloading 2024 County Health Rankings workbook from official site...")
     resp = requests.get(CHR_XLSX_URL, timeout=180)
     resp.raise_for_status()
     xl = pd.ExcelFile(io.BytesIO(resp.content))
-    raw = xl.parse("Ranked Measure Data", header=None)
+    raw = xl.parse("Select Measure Data", header=None)
     hdr0 = raw.iloc[0].ffill()
     hdr1 = raw.iloc[1]
     cols = ["FIPS", "State", "County"]
@@ -182,17 +200,21 @@ def build_chr() -> pd.DataFrame:
         cols.append(f"{hdr0.iloc[j]}__{hdr1.iloc[j]}")
     body = raw.iloc[2:].copy()
     body.columns = cols
-    missing = [v for v in CHR_TARGETS.values() if v not in body.columns]
+    live_targets = {v for v in CHR_TARGETS.values() if not v.startswith("__")}
+    missing = [v for v in live_targets if v not in body.columns]
     if missing:
         print("CHR MISSING columns:", missing)
         raise SystemExit(1)
     de = body[body["State"].fillna("").astype(str).str.strip().eq("Delaware")].copy()
-    de = de[de["FIPS"].astype(str).str.zfill(5).isin(DE_COUNTY_FIPS)]
+    de = de[de["FIPS"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(5).isin(DE_COUNTY_FIPS)]
     out = pd.DataFrame(
-        {"County_FIPS": de["FIPS"].astype(str).str.zfill(5), "County_Name": de["County"].str.strip()}
+        {"County_FIPS": de["FIPS"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(5), "County_Name": de["County"].str.strip()}
     )
     for out_col, src in CHR_TARGETS.items():
-        out[out_col] = de[src].map(_parse_chr_value)
+        if src.startswith("__"):
+            out[out_col] = float("nan")  # dropped from release file; keep schema
+        else:
+            out[out_col] = de[src].map(_parse_chr_value)
     out["CHR_Data_Year"] = 2022
     return out
 

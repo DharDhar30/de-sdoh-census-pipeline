@@ -99,7 +99,7 @@ Exports are saved in `./exports/` so your workspace stays clean.
 - U.S. Census Bureau Cartographic Boundary Files (ZCTA) — Current year via pygris
 - U.S. Census Bureau American Community Survey (ACS) 5-Year Data Profile — 2023 (DP02, DP03, DP05 tables)
 - CDC Behavioral Risk Factor Surveillance System (BRFSS) Prevalence Data — 2024, Delaware state-level
-- County Health Rankings & Roadmaps (CHR) — 2024 Data Document (underlying data year: 2022), Delaware counties (Kent, New Castle, Sussex)
+- County Health Rankings & Roadmaps (CHR) — 2024 County Health Release workbook v1 (`2024_county_health_release_data_-_v1.xlsx`, "Select Measure Data" sheet; underlying clinical-care data year: 2022), Delaware counties (Kent, New Castle, Sussex). Live source: https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation — the legacy `...Data Document_2024.xls` ("Ranked Measure Data") URL retired during CHR's 2025–2026 site redesign. Quartile columns are no longer published in the release file and are kept as empty (NaN) columns for schema compatibility; regenerate with `python3 gen_health_data.py`.
 - CDC PLACES: Local Data for Better Health — City/place-level model-based estimates for Delaware
 
 ## Tableau Visualization Guide
