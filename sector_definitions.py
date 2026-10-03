@@ -154,7 +154,9 @@ SECTORS: dict[str, list[str]] = {
     "Calculated Metrics": [
         "Population_Density_SqMi",
     ],
-    "CDC PLACES (City-Level)": [
+    # CDC PLACES, ZCTA release. Genuinely ZCTA-level model-based estimates,
+    # merged onto the same ZCTA rows as the ACS demographics.
+    "CDC PLACES (ZCTA-Level)": [
         "PLACES_Pct_Teeth_Lost_65Plus",
         "PLACES_Pct_Arthritis",
         "PLACES_Pct_Cancer_NonSkin",
@@ -249,7 +251,138 @@ SECTORS: dict[str, list[str]] = {
     ],
 }
 
-# Key columns always kept in every export so rows stay joinable.
+# ---------------------------------------------------------------------------
+# Provenance: which archived raw source each sector comes from, and the true
+# geography of that source. See ./raw/SOURCES.md for the citations and
+# ./fetch_raw_data.py for the download/verification code.
+#
+# This matters because only ACS and the TIGER boundaries are genuinely
+# ZCTA-level. CDC BRFSS is a statewide survey and County Health Rankings
+# reports by county, so those figures are broadcast onto every ZCTA row in the
+# state / county respectively.
+# ---------------------------------------------------------------------------
+SECTOR_SOURCES: dict[str, tuple[str | None, str]] = {
+    "Geographic": ("census_tiger_2020_de_zctas", "ZCTA"),
+    "Demographics (ACS)": ("census_acs_2021_zcta_de", "ZCTA"),
+    "Socioeconomic (ACS)": ("census_acs_2021_zcta_de", "ZCTA"),
+    "Health Access (ACS)": ("census_acs_2021_zcta_de", "ZCTA"),
+    "BRFSS (State Level)": ("cdc_brfss_2024_de", "State"),
+    "CHR - Health Outcomes": ("chr_2024_de_counties", "County"),
+    "CHR - Health Behaviors": ("chr_2024_de_counties", "County"),
+    "CHR - Clinical Care": ("chr_2024_de_counties", "County"),
+    "CHR - County Level": ("chr_2024_de_counties", "County"),
+    "CDC PLACES (ZCTA-Level)": ("cdc_places_2024_de_zcta", "ZCTA"),
+    "Provider Supply (HRSA AHRF)": ("hrsa_ahrf_2025_de_counties", "County"),
+    "PLACES Chronic Disease (ZCTA)": ("cdc_places_2024_de_zcta", "ZCTA"),
+    "Calculated Metrics": (None, "Derived from ZCTA-level ACS"),
+}
+
+# Raw TIGER boundary attribute columns that reach the master unrenamed; they are
+# genuinely ZCTA-level even though they sit outside the "Geographic" sector.
+TIGER_ZCTA_COLUMNS = [
+    "ZCTA5CE20",
+    "AFFGEOID20",
+    "GEOID20",
+    "NAME20",
+    "ALAND20",
+    "AWATER20",
+    "LSAD20",
+    "MTFCC20",
+]
+
+# Year/audit stamps and API-native identifiers carry no geography of their own.
+NON_GEOGRAPHIC_COLUMNS = {
+    "zip code tabulation area": "ZCTA",  # ACS API's own ZCTA identifier
+    "CHR_Data_Year": "Not geographic",   # release-year stamp for CHR columns
+    "BRFSS_Year": "Not geographic",      # survey-year stamp for BRFSS columns
+}
+
+# Columns that are computed in extract_census.py rather than taken from a source.
+CALCULATED_COLUMNS = [
+    "Population_Density_SqMi",
+    "Uninsured_Population_Count",
+    "Poverty_Population_Count",
+    "Seniors_65_Plus_Count",
+    "No_Broadband_Households_Estimate",
+]
+
+
+def _build_provenance_maps() -> tuple[dict, dict, dict]:
+    """Derive column -> source id / geography / sector from SECTORS once."""
+    by_source, by_level, by_sector = {}, {}, {}
+    for sector, columns in SECTORS.items():
+        source_id, geo_level = SECTOR_SOURCES.get(sector, (None, "Unknown"))
+        for column in columns:
+            by_source[column] = source_id
+            by_sector[column] = sector
+            # The derived counts live inside ACS sectors next to their inputs -
+            # they are still computed in extract_census.py, not measured.
+            if column in CALCULATED_COLUMNS:
+                by_source[column] = None
+                by_level[column] = "Derived from ZCTA-level ACS"
+                continue
+            by_level[column] = geo_level
+    for column in CALCULATED_COLUMNS:
+        by_source.setdefault(column, None)
+        by_level[column] = "Derived from ZCTA-level ACS"
+    for column in TIGER_ZCTA_COLUMNS:
+        by_source.setdefault(column, "census_tiger_2020_de_zctas")
+        by_level[column] = "ZCTA"
+        by_sector.setdefault(column, "Geographic")
+    for column, level in NON_GEOGRAPHIC_COLUMNS.items():
+        by_level[column] = level
+
+    # Confidence-interval columns carry no sector of their own - they are the
+    # uncertainty band around a measure, so they inherit the base measure's
+    # source, geography and sector (e.g. PLACES_Pct_Diabetes_CI_Low follows
+    # PLACES_Pct_Diabetes). The base measure is NOT listed in any sector, so the
+    # CI columns have to be registered here rather than found by scanning
+    # by_source, which only holds columns the sectors already declared.
+    # Registers PLACES_Pct_<measure>_CI_Low / _CI_High in the PLACES sector at
+    # ZCTA geography. The base measure is always listed in the sector, but its
+    # interval columns are not, and by_source only holds sector-declared columns
+    # - so the intervals are derived here from the base-measure names.
+    places_sector = "CDC PLACES (ZCTA-Level)"
+    places_source_id = SECTOR_SOURCES[places_sector][0]
+    for base in [c for c in SECTORS[places_sector] if c.startswith("PLACES_Pct_")]:
+        for suffix in ("_CI_Low", "_CI_High"):
+            column = f"{base}{suffix}"
+            by_source[column] = places_source_id
+            by_level[column] = "ZCTA"
+            by_sector[column] = places_sector
+    return by_source, by_level, by_sector
+
+
+COLUMN_SOURCES, COLUMN_GEO_LEVEL, COLUMN_SECTORS = _build_provenance_maps()
+
+
+def source_id_of(column: str) -> str | None:
+    """Manifest id of the raw source a column comes from (None if derived)."""
+    return COLUMN_SOURCES.get(column)
+
+
+def geo_level_of(column: str) -> str:
+    """True geography of a measure: ZCTA, State, County, City / place or derived."""
+    return COLUMN_GEO_LEVEL.get(column, "Unknown")
+
+
+def provenance_rows(columns: list[str]) -> list[dict]:
+    """Per-column provenance table (used for the data-dictionary exports)."""
+    rows = []
+    for column in columns:
+        source_id = COLUMN_SOURCES.get(column)
+        rows.append(
+            {
+                "Column": column,
+                "Sector": COLUMN_SECTORS.get(column, "Other"),
+                "Source_ID": source_id or "calculated",
+                "Geography_Level": geo_level_of(column),
+                "Calculated": "yes" if column in CALCULATED_COLUMNS else "no",
+            }
+        )
+    return rows
+
+
 KEY_COLUMNS = ["ZCTA", "County_FIPS", "County_Name"]
 
 # City-level data uses City_Name as the key instead of ZCTA

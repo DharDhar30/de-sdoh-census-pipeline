@@ -10,18 +10,38 @@ The pipeline outputs ready-to-use tabular and spatial datasets specifically form
 - Census ACS Integration: Pulls 5-Year ACS Data Profile metrics (poverty, broadband, insurance, median income, age, language) directly via the Census API.
 - CDC BRFSS (Public Health): Merges real CDC Behavioral Risk Factor Surveillance System 2024 state-level prevalence for Delaware - chronic disease (diabetes, asthma, COPD, heart disease, cancer, arthritis, kidney disease), risk behaviors (smoking, vaping, binge/heavy drinking, obesity, physical inactivity), health-care access (uninsured, cost barriers, routine checkups), screenings (mammogram, colorectal, flu/pneumonia vaccination), oral health, and disability. Each measure includes its sample size and 95% confidence interval.
 - County Health Rankings (CHR): Merges medical / public-health indicators across Delaware's 3 counties (New Castle, Kent, Sussex) - health outcomes (poor/fair health, premature death, low birth weight, STIs, teen births), health behaviors (smoking, obesity, inactivity, excessive drinking, food environment, exercise access, alcohol-impaired driving deaths), and clinical care (uninsured, provider ratios, preventable hospital stays, screening & vaccination rates).
+- HRSA AHRF Provider Supply: Archives the free, public-domain Area Health Resources Files so provider counts and population denominators can be re-derived independently. `generate_provider_ratios.py` recomputes population-to-provider ratios from these raw counts and cross-checks them against CHR's published values.
+- CDC PLACES ZCTA-Level: Pulls the PLACES **ZCTA** release so chronic-disease and prevention measures are reported directly on the same ZCTAs as the master, rather than being broadcast from a city-level file.
 - Automated Transformations: Computes derived population counts and land density metrics directly in Python.
 - Multi-Format Export: Generates wide-format outputs in CSV, Excel, and spatial GeoJSON formats simultaneously.
+
+## Data Provenance & Licensing
+
+**Provider ratios and chronic-disease data are NOT paid or closed sources.** Every dataset
+here is a free, public-domain federal download (no login, no licence fee, no vendor
+contract). See **[PROVENANCE.md](PROVENANCE.md)** for the full source inventory, the
+licence of each, the AHRF-vs-CHR ratio reconciliation table, and a suggested reviewer
+response.
+
+To download every raw snapshot from the app: expand **All raw sources & citations** and
+use the **Download ALL snapshots (ZIP)** button, or use the per-source *Download raw
+snapshot* button in each citation panel.
 
 ## Project Structure
 
 - extract_census.py: Main ETL Pipeline Script (merges spatial, ACS, BRFSS, CHR, and calculated metrics)
+- fetch_raw_data.py: Downloads and archives every raw public dataset into raw/ with citations + SHA-256 checksums (also `--verify`)
+- generate_provider_ratios.py: Recomputes population-to-provider ratios from the HRSA AHRF raw counts and reconciles them against the CHR published ratios
+- PROVENANCE.md: Data provenance & licensing reference (provider ratios, chronic disease, full source inventory)
+- raw_sources.py: Read-only accessor for the archived raw manifest, used by the UI
+- raw/: Unmodified publisher snapshots + raw/sources.json manifest + raw/SOURCES.md citations
 - gen_health_data.py: Downloads BRFSS (CDC API) and CHR (County Health Rankings website) CSV files from official sources
 - BRFSS_Delaware.csv: CDC BRFSS 2024 Delaware state-level prevalence (public-health measures)
-- CHR_Delaware.csv: County Health Rankings 2022 medical/public-health indicators
+- CHR_Delaware.csv: County Health Rankings 2024 medical/public-health indicators
 - .env: API key configuration
 - requirements.txt: Python dependencies
 - Delaware_ZCTA_Health_Master_Spatial.geojson: Master Spatial GeoJSON for Tableau
+- Delaware_ZCTA_Health_Master_Column_Provenance.csv: Per-column source + true geography of every master measure
 
 ## Installation & Local Execution Instructions
 
@@ -94,13 +114,34 @@ Exports are saved in `./exports/` so your workspace stays clean.
 - CHR - Clinical Care: CHR_Uninsured_Pct, CHR_PCP_Ratio_Population, Dentist_Ratio_Population, Mental_Health_Provider_Ratio, CHR_Preventable_Hospital_Stays_Rate, CHR_Mammography_Screening_Pct, CHR_Flu_Vaccination_Pct
 - Calculated Metrics: Population_Density_SqMi, Uninsured_Population_Count, No_Broadband_Households_Estimate (Derived volume & density counts)
 
-## Data Sources
+## Raw data sources (all live, all verifiable)
 
-- U.S. Census Bureau Cartographic Boundary Files (ZCTA) — Current year via pygris
-- U.S. Census Bureau American Community Survey (ACS) 5-Year Data Profile — 2023 (DP02, DP03, DP05 tables)
-- CDC Behavioral Risk Factor Surveillance System (BRFSS) Prevalence Data — 2024, Delaware state-level
-- County Health Rankings & Roadmaps (CHR) — 2024 County Health Release workbook v1 (`2024_county_health_release_data_-_v1.xlsx`, "Select Measure Data" sheet; underlying clinical-care data year: 2022), Delaware counties (Kent, New Castle, Sussex). Live source: https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation — the legacy `...Data Document_2024.xls` ("Ranked Measure Data") URL retired during CHR's 2025–2026 site redesign. Quartile columns are no longer published in the release file and are kept as empty (NaN) columns for schema compatibility; regenerate with `python3 gen_health_data.py`.
-- CDC PLACES: Local Data for Better Health — City/place-level model-based estimates for Delaware
+Every input dataset is archived **unmodified** under `raw/`, with the exact request URL,
+retrieval timestamp and SHA-256 digest in `raw/sources.json` and human-readable citations
+in `raw/SOURCES.md`. Re-download or re-verify everything with:
+
+```bash
+python3 fetch_raw_data.py            # refresh snapshots + manifest
+python3 fetch_raw_data.py --verify   # re-check live URLs + stored checksums (exit 1 on drift)
+```
+
+| # | Dataset | Publisher | Vintage | Geography | Snapshot |
+|---|---|---|---|---|---|
+| 1 | TIGER/Line Cartographic Boundary File — 2020 ZCTA, clipped to DE | U.S. Census Bureau | 2020 | ZCTA | `raw/census_tiger_2020_de_zctas_raw.csv` |
+| 2 | TIGER/Line Cartographic Boundary File — 2020 counties, DE | U.S. Census Bureau | 2020 | County | `raw/census_tiger_2020_de_counties_raw.csv` |
+| 3 | American Community Survey 5-Year Data Profile (DP02/DP03/DP05) | U.S. Census Bureau | 2021 5-yr (2017–2021) | ZCTA | `raw/census_acs_2021_zcta_de_raw.csv` |
+| 4 | BRFSS Prevalence (Socrata `dttw-5yxu`) | CDC | 2024 | State (broadcast onto ZCTA rows) | `raw/cdc_brfss_2024_de_raw.csv` |
+| 5 | 2024 County Health Release workbook v1, `Select Measure Data` sheet (clinical-care source year: 2022) | County Health Rankings & Roadmaps | 2024 release | County (broadcast onto ZCTA rows) | `raw/chr_2024_de_counties_raw.csv` |
+| 6 | PLACES: Local Data for Better Health, place/city release (Socrata `eav7-hnsx`) | CDC | 2024 release | City / place | `raw/cdc_places_2024_de_city_raw.csv` |
+
+The per-column provenance file shipped with the master outputs
+(`Delaware_ZCTA_Health_Master_Column_Provenance.csv`, also the `Column_Provenance`
+sheet of the master workbook) labels every measure with its source and the geography
+it was collected at, so ZCTA-measured columns can be isolated in Tableau via
+`Geography_Level == "ZCTA"`.
+
+Quartile columns are no longer published in the CHR release file and are kept as empty
+(NaN) columns for schema compatibility; regenerate inputs with `python3 gen_health_data.py`.
 
 ## Tableau Visualization Guide
 

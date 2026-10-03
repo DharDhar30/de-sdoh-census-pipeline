@@ -1,0 +1,496 @@
+"year","locationabbr","locationdesc","class","topic","question","response","break_out","break_out_category","sample_size","data_value","confidence_limit_low","confidence_limit_high","display_order","data_value_unit","data_value_type","data_value_footnote_symbol","data_value_footnote","datasource","classid","topicid","locationid","breakoutid","breakoutcategoryid","questionid","responseid","geolocation"
+"2024","DE","Delaware","Alcohol Consumption","Alcohol Consumption","Adults who have had at least one drink of alcohol within the past 30 days","No","Overall","Overall","1865","48.370000000000005","46.040000000000006","50.7","1170","%","Crude Prevalence",,,"BRFSS","CLASS01","TOPIC03","10","BO1","CAT1","DRNKANY6","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Alcohol Consumption","Alcohol Consumption","Adults who have had at least one drink of alcohol within the past 30 days","Yes","Overall","Overall","1904","51.629999999999995","49.3","53.959999999999994","1169","%","Crude Prevalence",,,"BRFSS","CLASS01","TOPIC03","10","BO1","CAT1","DRNKANY6","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Alcohol Consumption","Binge Drinking","Binge drinkers (males having five or more drinks on one occasion, females having four or more drinks on one occasion) (variable calculated from one or more BRFSS questions)","No","Overall","Overall","3363","86.91","85.22","88.6","3880","%","Crude Prevalence",,,"BRFSS","CLASS01","TOPIC07","10","BO1","CAT1","_RFBING6","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Alcohol Consumption","Binge Drinking","Binge drinkers (males having five or more drinks on one occasion, females having four or more drinks on one occasion) (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","372","13.089999999999998","11.399999999999999","14.779999999999998","3879","%","Crude Prevalence",,,"BRFSS","CLASS01","TOPIC07","10","BO1","CAT1","_RFBING6","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Alcohol Consumption","Heavy Drinking","Heavy drinkers (adult men having more than 14 drinks per week and adult women having more than 7 drinks per week) (variable calculated from one or more BRFSS questions)","Do not meet criteria for heavy drinking","Overall","Overall","3536","93.91000000000001","92.69000000000001","95.13000000000001","4010","%","Crude Prevalence",,,"BRFSS","CLASS01","TOPIC30","10","BO1","CAT1","_RFDRHV9","RESP205","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Alcohol Consumption","Heavy Drinking","Heavy drinkers (adult men having more than 14 drinks per week and adult women having more than 7 drinks per week) (variable calculated from one or more BRFSS questions)","Meet criteria for heavy drinking","Overall","Overall","202","6.09","4.87","7.31","4011","%","Crude Prevalence",,,"BRFSS","CLASS01","TOPIC30","10","BO1","CAT1","_RFDRHV9","RESP206","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Arthritis","Adults who have been told they have arthritis (variable calculated from one or more BRFSS questions)","No","Overall","Overall","2600","69.17","67.29","71.05","3180","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC05","10","BO1","CAT1","_DRDXAR2","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Arthritis","Adults who have been told they have arthritis (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","1737","30.830000000000002","28.950000000000003","32.71","3179","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC05","10","BO1","CAT1","_DRDXAR2","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Asthma","Adults who have been told they currently have asthma (variable calculated from one or more BRFSS questions)","No","Overall","Overall","3855","89.09","87.68","90.5","2825","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC06","10","BO1","CAT1","_CASTHM1","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Asthma","Adults who have been told they currently have asthma (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","475","10.91","9.5","12.32","2824","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC06","10","BO1","CAT1","_CASTHM1","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Asthma","Adults who have ever been told they have asthma (variable calculated from one or more BRFSS questions)","No","Overall","Overall","3676","84.27","82.61999999999999","85.92","3500","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC06","10","BO1","CAT1","_LTASTH1","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Asthma","Adults who have ever been told they have asthma (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","674","15.73","14.08","17.38","3499","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC06","10","BO1","CAT1","_LTASTH1","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Respondents that have ever reported having coronary heart disease (chd) or myocardial infarction (mi) (variable calculated from one or more BRFSS questions)","Did not report having MI or CHD","Overall","Overall","3842","92.39","91.45","93.33","3692","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","_MICHD","RESP204","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Respondents that have ever reported having coronary heart disease (chd) or myocardial infarction (mi) (variable calculated from one or more BRFSS questions)","Reported having MI or CHD","Overall","Overall","480","7.61","6.67","8.55","3691","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","_MICHD","RESP203","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Ever told you had angina or coronary heart disease?","No","Overall","Overall","3997","95.05","94.31","95.78999999999999","610","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","CVDCRHD4","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Ever told you had angina or coronary heart disease?","Yes","Overall","Overall","327","4.95","4.21","5.69","609","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","CVDCRHD4","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Ever told you had a heart attack (myocardial infarction)?","No","Overall","Overall","4060","95.53","94.79","96.27","666","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","CVDINFR4","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Ever told you had a heart attack (myocardial infarction)?","Yes","Overall","Overall","276","4.47","3.7299999999999995","5.21","665","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","CVDINFR4","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Ever told you had a stroke?","No","Overall","Overall","4073","95.52000000000001","94.78000000000002","96.26","722","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","CVDSTRK3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Cardiovascular Disease","Ever told you had a stroke?","Yes","Overall","Overall","274","4.4799999999999995","3.7399999999999993","5.22","721","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC10","10","BO1","CAT1","CVDSTRK3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","COPD","Ever told you have COPD?","No","Overall","Overall","3977","94.05","93.14999999999999","94.95","246","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC14","10","BO1","CAT1","CHCCOPD3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","COPD","Ever told you have COPD?","Yes","Overall","Overall","365","5.949999999999999","5.049999999999999","6.85","245","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC14","10","BO1","CAT1","CHCCOPD3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Depression","Ever told you that you have a form of depression?","No","Overall","Overall","3500","78.64","76.78","80.5","2","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC17","10","BO1","CAT1","ADDEPEV3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Depression","Ever told you that you have a form of depression?","Yes","Overall","Overall","848","21.36","19.5","23.22","1","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC17","10","BO1","CAT1","ADDEPEV3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Diabetes","Have you ever been told by a doctor that you have diabetes?","No","Overall","Overall","3412","82.49","80.97999999999999","84","891","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC18","10","BO1","CAT1","DIABETE4","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Diabetes","Have you ever been told by a doctor that you have diabetes?","No, pre-diabetes or borderline diabetes","Overall","Overall","168","3.56","2.83","4.29","892","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC18","10","BO1","CAT1","DIABETE4","RESP052","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Diabetes","Have you ever been told by a doctor that you have diabetes?","Yes","Overall","Overall","744","13.25","11.92","14.58","889","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC18","10","BO1","CAT1","DIABETE4","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Diabetes","Have you ever been told by a doctor that you have diabetes?","Yes, pregnancy-related","Overall","Overall","29","0.7000000000000001","0.37000000000000005","1.03","890","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC18","10","BO1","CAT1","DIABETE4","RESP051","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Kidney","Ever told you have kidney disease?","No","Overall","Overall","4062","95.52000000000001","94.76","96.28000000000002","302","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC35","10","BO1","CAT1","CHCKDNY2","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Kidney","Ever told you have kidney disease?","Yes","Overall","Overall","276","4.4799999999999995","3.7199999999999998","5.239999999999999","301","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC35","10","BO1","CAT1","CHCKDNY2","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Other Cancer","Ever told you had any other types of cancer?","No","Overall","Overall","3688","89.56","88.42","90.7","358","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC40","10","BO1","CAT1","CHCOCNC1","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Other Cancer","Ever told you had any other types of cancer?","Yes","Overall","Overall","645","10.440000000000001","9.3","11.580000000000002","357","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC40","10","BO1","CAT1","CHCOCNC1","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Skin Cancer","Ever told you had skin cancer?","No","Overall","Overall","3846","93.47999999999999","92.74","94.21999999999998","414","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC53","10","BO1","CAT1","CHCSCNC1","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Chronic Health Indicators","Skin Cancer","Ever told you had skin cancer?","Yes","Overall","Overall","480","6.52","5.779999999999999","7.26","413","%","Crude Prevalence",,,"BRFSS","CLASS03","TOPIC53","10","BO1","CAT1","CHCSCNC1","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Colorectal Cancer Screening","Blood Stool Test","Adults aged 45-75 who have had a blood stool test within the past year (variable calculated from one or more BRFSS questions)","Had a blood stool test in the past year","Overall","Overall","128","5.37","4.21","6.53","3935","%","Crude Prevalence",,,"BRFSS","CLASS04","TOPIC08","10","BO1","CAT1","_RFBLDS6","RESP190","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Colorectal Cancer Screening","Blood Stool Test","Adults aged 45-75 who have had a blood stool test within the past year (variable calculated from one or more BRFSS questions)","Have never had a blood stool test","Overall","Overall","1900","86.88","85.06","88.69999999999999","3937","%","Crude Prevalence",,,"BRFSS","CLASS04","TOPIC08","10","BO1","CAT1","_RFBLDS6","RESP226","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Colorectal Cancer Screening","Blood Stool Test","Adults aged 45-75 who have had a blood stool test within the past year (variable calculated from one or more BRFSS questions)","Have not had a blood stool test in more than the past year","Overall","Overall","190","7.75","6.3","9.2","3936","%","Crude Prevalence",,,"BRFSS","CLASS04","TOPIC08","10","BO1","CAT1","_RFBLDS6","RESP225","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Colorectal Cancer Screening","USPSTF Recommendations","Respondents aged 45-75 who have fully met the USPSTF recommendation (variable calculated from one or more BRFSS questions)","Did not receive one or more of the recommended CRC tests within the recommended time interval","Overall","Overall","130","4.9399999999999995","3.8399999999999994","6.039999999999999","3049","%","Crude Prevalence",,,"BRFSS","CLASS04","TOPIC64","10","BO1","CAT1","_CRCREC3","RESP228","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Colorectal Cancer Screening","USPSTF Recommendations","Respondents aged 45-75 who have fully met the USPSTF recommendation (variable calculated from one or more BRFSS questions)","Have never received any of the recommended CRC tests","Overall","Overall","329","18.87","16.380000000000003","21.36","3050","%","Crude Prevalence",,,"BRFSS","CLASS04","TOPIC64","10","BO1","CAT1","_CRCREC3","RESP229","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Colorectal Cancer Screening","USPSTF Recommendations","Respondents aged 45-75 who have fully met the USPSTF recommendation (variable calculated from one or more BRFSS questions)","Received one or more of the recommended CRC tests within the recommended time interval","Overall","Overall","1778","76.19","73.58","78.8","3048","%","Crude Prevalence",,,"BRFSS","CLASS04","TOPIC64","10","BO1","CAT1","_CRCREC3","RESP227","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Days of Poor Health","Healthy Days","Days when mental health status not good (variable calculated from one or more BRFSS questions)","1-13 days when mental health not good","Overall","Overall","937","25.16","23.22","27.1","3608","%","Crude Prevalence",,,"BRFSS","CLASS20","TOPIC71","10","BO1","CAT1","_MENT14D","RESP223","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Days of Poor Health","Healthy Days","Days when mental health status not good (variable calculated from one or more BRFSS questions)","14+ days when mental health not good","Overall","Overall","532","16.14","14.280000000000001","18","3609","%","Crude Prevalence",,,"BRFSS","CLASS20","TOPIC71","10","BO1","CAT1","_MENT14D","RESP224","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Days of Poor Health","Healthy Days","Days when mental health status not good (variable calculated from one or more BRFSS questions)","Zero days when mental health not good","Overall","Overall","2824","58.699999999999996","56.47","60.92999999999999","3607","%","Crude Prevalence",,,"BRFSS","CLASS20","TOPIC71","10","BO1","CAT1","_MENT14D","RESP222","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Days of Poor Health","Healthy Days","Days when physical health status not good (variable calculated from one or more BRFSS questions)","1-13 days when physical health not good","Overall","Overall","980","24.32","22.4","26.240000000000002","3748","%","Crude Prevalence",,,"BRFSS","CLASS20","TOPIC71","10","BO1","CAT1","_PHYS14D","RESP220","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Days of Poor Health","Healthy Days","Days when physical health status not good (variable calculated from one or more BRFSS questions)","14+ days when physical health not good","Overall","Overall","598","12.540000000000001","11.13","13.950000000000001","3749","%","Crude Prevalence",,,"BRFSS","CLASS20","TOPIC71","10","BO1","CAT1","_PHYS14D","RESP221","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Days of Poor Health","Healthy Days","Days when physical health status not good (variable calculated from one or more BRFSS questions)","Zero days when physical health not good","Overall","Overall","2692","63.14999999999999","61.00999999999999","65.28999999999999","3747","%","Crude Prevalence",,,"BRFSS","CLASS20","TOPIC71","10","BO1","CAT1","_PHYS14D","RESP219","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Age","What is your age?","18-24 years","Overall","Overall","201","11.21","9.450000000000001","12.97","57","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC02","10","BO1","CAT1","AGE","RESP010","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Age","What is your age?","25-34 years","Overall","Overall","300","14.829999999999998","13.009999999999998","16.65","58","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC02","10","BO1","CAT1","AGE","RESP011","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Age","What is your age?","35-44 years","Overall","Overall","465","15.409999999999998","13.739999999999998","17.08","59","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC02","10","BO1","CAT1","AGE","RESP012","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Age","What is your age?","45-54 years","Overall","Overall","453","13.88","12.270000000000001","15.49","60","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC02","10","BO1","CAT1","AGE","RESP013","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Age","What is your age?","55-64 years","Overall","Overall","876","16.79","15.399999999999999","18.18","61","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC02","10","BO1","CAT1","AGE","RESP014","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Age","What is your age?","65+ years","Overall","Overall","2065","27.889999999999997","26.299999999999997","29.479999999999997","62","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC02","10","BO1","CAT1","AGE","RESP015","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Are you blind or do you have serious difficulty seeing, even when wearing glasses?","No","Overall","Overall","3839","94.87","93.91000000000001","95.83","190","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","BLIND","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Are you blind or do you have serious difficulty seeing, even when wearing glasses?","Yes","Overall","Overall","233","5.13","4.17","6.09","189","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","BLIND","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have serious difficulty concentrating, remembering, or making decisions?","No","Overall","Overall","3610","85.52","83.61999999999999","87.42","834","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DECIDE","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have serious difficulty concentrating, remembering, or making decisions?","Yes","Overall","Overall","437","14.48","12.58","16.38","833","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DECIDE","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have difficulty doing errands alone?","No","Overall","Overall","3698","92.2","90.85000000000001","93.55","1002","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DIFFALON","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have difficulty doing errands alone?","Yes","Overall","Overall","320","7.8","6.449999999999999","9.15","1001","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DIFFALON","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have difficulty dressing or bathing?","No","Overall","Overall","3864","96.03","95.05","97.01","1058","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DIFFDRES","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have difficulty dressing or bathing?","Yes","Overall","Overall","175","3.9699999999999998","2.9899999999999998","4.949999999999999","1057","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DIFFDRES","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have serious difficulty walking or climbing stairs?","No","Overall","Overall","3323","86.36","84.92999999999999","87.79","1114","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DIFFWALK","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Disability status","Do you have serious difficulty walking or climbing stairs?","Yes","Overall","Overall","710","13.639999999999999","12.209999999999999","15.069999999999999","1113","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC19","10","BO1","CAT1","DIFFWALK","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Education","What is the highest grade or year of school you completed?","College+","Overall","Overall","1905","32.029999999999994","30.169999999999995","33.88999999999999","1340","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC21","10","BO1","CAT1","EDUCA","RESP024","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Education","What is the highest grade or year of school you completed?","H.S. or G.E.D.","Overall","Overall","1114","30.04","27.96","32.12","1338","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC21","10","BO1","CAT1","EDUCA","RESP022","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Education","What is the highest grade or year of school you completed?","Less than H.S.","Overall","Overall","235","9.1","7.63","10.57","1337","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC21","10","BO1","CAT1","EDUCA","RESP021","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Education","What is the highest grade or year of school you completed?","Some post-H.S.","Overall","Overall","1090","28.83","26.79","30.869999999999997","1339","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC21","10","BO1","CAT1","EDUCA","RESP023","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","Employed","Overall","Overall","1493","48.8","46.62","50.98","1433","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP137","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","Homemaker","Overall","Overall","133","3.56","2.72","4.4","1437","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP141","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","No work >yr","Overall","Overall","109","2.74","2","3.4800000000000004","1435","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP028","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","No work< yr","Overall","Overall","85","3.16","2.16","4.16","1436","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP027","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","Retired","Overall","Overall","1898","26.25","24.7","27.8","1439","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP031","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","Self-employed","Overall","Overall","271","6.74","5.68","7.800000000000001","1434","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP172","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","Student","Overall","Overall","64","3.61","2.51","4.71","1438","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP030","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Employment","What is your employment status?","Unable to work","Overall","Overall","221","5.13","4.17","6.09","1440","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC22","10","BO1","CAT1","EMPLOY1","RESP032","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Hearing","Adults who reported being deaf","No","Overall","Overall","3753","94.36","93.5","95.22","778","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC70","10","BO1","CAT1","DEAF","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Hearing","Adults who reported being deaf","Yes","Overall","Overall","343","5.64","4.779999999999999","6.5","777","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC70","10","BO1","CAT1","DEAF","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Income","What is your annual household income?","$100,000 - 199,999","Overall","Overall","757","23.68","21.47","25.89","1858","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC33","10","BO1","CAT1","INCOME1","RESP231","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Income","What is your annual household income?","$15,000 - 24,999","Overall","Overall","267","6.69","5.57","7.8100000000000005","1854","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC33","10","BO1","CAT1","INCOME1","RESP017","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Income","What is your annual household income?","$200,000+","Overall","Overall","248","9.24","7.75","10.73","1859","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC33","10","BO1","CAT1","INCOME1","RESP232","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Income","What is your annual household income?","$25,000 - 34,999","Overall","Overall","405","12.08","10.53","13.63","1855","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC33","10","BO1","CAT1","INCOME1","RESP018","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Income","What is your annual household income?","$35,000 -  49,999","Overall","Overall","454","13.56","11.91","15.21","1856","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC33","10","BO1","CAT1","INCOME1","RESP019","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Income","What is your annual household income?","$50,000 - 99,999","Overall","Overall","1106","30.709999999999997","28.459999999999997","32.959999999999994","1857","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC33","10","BO1","CAT1","INCOME1","RESP230","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Income","What is your annual household income?","Less than $15,000","Overall","Overall","148","4.06","3.1399999999999997","4.9799999999999995","1853","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC33","10","BO1","CAT1","INCOME1","RESP016","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Marital Status","What is your marital status?","Divorced","Overall","Overall","536","9.64","8.46","10.82","2001","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC38","10","BO1","CAT1","MARITAL","RESP034","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Marital Status","What is your marital status?","Married","Overall","Overall","2251","49.62","47.44","51.8","2000","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC38","10","BO1","CAT1","MARITAL","RESP033","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Marital Status","What is your marital status?","Never married","Overall","Overall","689","24.92","22.8","27.040000000000003","2004","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC38","10","BO1","CAT1","MARITAL","RESP037","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Marital Status","What is your marital status?","Partnered","Overall","Overall","167","5.82","4.7","6.94","2005","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC38","10","BO1","CAT1","MARITAL","RESP038","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Marital Status","What is your marital status?","Separated","Overall","Overall","78","1.81","1.2200000000000002","2.4","2003","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC38","10","BO1","CAT1","MARITAL","RESP036","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Marital Status","What is your marital status?","Widowed","Overall","Overall","601","8.18","7.199999999999999","9.16","2002","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC38","10","BO1","CAT1","MARITAL","RESP035","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Number of Children","How many children live in your household? (variable calculated from one or more BRFSS questions)","Five or more children","Overall","Overall","18","0.5700000000000001","0.26000000000000006","0.8800000000000001","2885","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC39","10","BO1","CAT1","_CHLDCNT","RESP090","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Number of Children","How many children live in your household? (variable calculated from one or more BRFSS questions)","Four children","Overall","Overall","35","1.3","0.7100000000000001","1.8900000000000001","2884","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC39","10","BO1","CAT1","_CHLDCNT","RESP091","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Number of Children","How many children live in your household? (variable calculated from one or more BRFSS questions)","None","Overall","Overall","3382","68.47999999999999","66.29999999999998","70.66","2880","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC39","10","BO1","CAT1","_CHLDCNT","RESP095","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Number of Children","How many children live in your household? (variable calculated from one or more BRFSS questions)","One child","Overall","Overall","407","13.51","11.879999999999999","15.14","2881","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC39","10","BO1","CAT1","_CHLDCNT","RESP094","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Number of Children","How many children live in your household? (variable calculated from one or more BRFSS questions)","Three children","Overall","Overall","122","4.75","3.65","5.85","2883","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC39","10","BO1","CAT1","_CHLDCNT","RESP092","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Number of Children","How many children live in your household? (variable calculated from one or more BRFSS questions)","Two children","Overall","Overall","309","11.4","9.870000000000001","12.93","2882","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC39","10","BO1","CAT1","_CHLDCNT","RESP093","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","American Indian or Alaskan Native, non-Hispanic","Overall","Overall","13",,,,"2310","%","Crude Prevalence","*","Prevalence estimate not available if the unweighted sample size for the denominator was < 50 or the Relative Standard Error (RSE) is > 0.3 or if the state did not collect data for that calendar year.","BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP196","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","Asian, non-Hispanic","Overall","Overall","71","3.51","2.61","4.41","2311","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP197","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","Black, non-Hispanic","Overall","Overall","592","21.39","19.330000000000002","23.45","2309","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP195","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","Hispanic","Overall","Overall","364","9.87","8.649999999999999","11.09","2315","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP007","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","MultiRacial, non-Hispanic","Overall","Overall","89","3.73","2.69","4.77","2314","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP200","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","Native Hawaiian or other Pacific Islander, non-Hispanic","Overall","Overall","5",,,,"2312","%","Crude Prevalence","*","Prevalence estimate not available if the unweighted sample size for the denominator was < 50 or the Relative Standard Error (RSE) is > 0.3 or if the state did not collect data for that calendar year.","BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP198","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","Other race, non-Hispanic","Overall","Overall","16",,,,"2313","%","Crude Prevalence","*","Prevalence estimate not available if the unweighted sample size for the denominator was < 50 or the Relative Standard Error (RSE) is > 0.3 or if the state did not collect data for that calendar year.","BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP199","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Race","What is your race/ethnicity?","White, non-Hispanic","Overall","Overall","3210","59.99","57.78","62.2","2308","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC48","10","BO1","CAT1","RACE8","RESP194","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Sex","Sex of respondent","Female","Overall","Overall","2416","52.07000000000001","49.870000000000005","54.27000000000001","2469","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC51","10","BO1","CAT1","SEX","RESP002","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Sex","Sex of respondent","Male","Overall","Overall","1944","47.93","45.73","50.13","2468","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC51","10","BO1","CAT1","SEX","RESP001","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Veteran Status","Have you ever served on active duty in the United States Armed Forces?","No","Overall","Overall","3666","88.01","86.64","89.38000000000001","2609","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC61","10","BO1","CAT1","VETERAN3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Demographics","Veteran Status","Have you ever served on active duty in the United States Armed Forces?","Yes","Overall","Overall","657","11.99","10.620000000000001","13.36","2608","%","Crude Prevalence",,,"BRFSS","CLASS05","TOPIC61","10","BO1","CAT1","VETERAN3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","E-Cigarette Use","E-Cigarette Use","Adults who are current e-cigarette users (variable calculated from one or more BRFSS questions)","Current E-cigarette user","Overall","Overall","148","6.64","5.27","8.01","3124","%","Crude Prevalence",,,"BRFSS","CLASS19","TOPIC67","10","BO1","CAT1","_CURECI3","RESP214","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","E-Cigarette Use","E-Cigarette Use","Adults who are current e-cigarette users (variable calculated from one or more BRFSS questions)","Not currently using E-cigarettes","Overall","Overall","3721","93.36","91.99","94.73","3123","%","Crude Prevalence",,,"BRFSS","CLASS19","TOPIC67","10","BO1","CAT1","_CURECI3","RESP213","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","E-Cigarette Use","E-Cigarette Use","Do you now use e-cigarettes or other electronic vaping products every day, some days, or not at all?","Current E-cigarette user - every day","Overall","Overall","85","3.9800000000000004","2.8800000000000003","5.08","1226","%","Crude Prevalence",,,"BRFSS","CLASS19","TOPIC67","10","BO1","CAT1","ECIGNOW3","RESP215","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","E-Cigarette Use","E-Cigarette Use","Do you now use e-cigarettes or other electronic vaping products every day, some days, or not at all?","Current E-cigarette user - some days","Overall","Overall","63","2.6599999999999997","1.7799999999999998","3.5399999999999996","1227","%","Crude Prevalence",,,"BRFSS","CLASS19","TOPIC67","10","BO1","CAT1","ECIGNOW3","RESP216","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","E-Cigarette Use","E-Cigarette Use","Do you now use e-cigarettes or other electronic vaping products every day, some days, or not at all?","Former E-cigarette user","Overall","Overall","458","15.329999999999998","13.509999999999998","17.15","1228","%","Crude Prevalence",,,"BRFSS","CLASS19","TOPIC67","10","BO1","CAT1","ECIGNOW3","RESP217","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","E-Cigarette Use","E-Cigarette Use","Do you now use e-cigarettes or other electronic vaping products every day, some days, or not at all?","Never used E-cigarettes","Overall","Overall","3263","78.03","75.91","80.15","1225","%","Crude Prevalence",,,"BRFSS","CLASS19","TOPIC67","10","BO1","CAT1","ECIGNOW3","RESP218","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Health Care Cost","Was there a time in the past 12 months when you needed to see a doctor but could not because you could not afford it?","No","Overall","Overall","4032","90.52","89.19","91.85","2169","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC28","10","BO1","CAT1","MEDCOST1","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Health Care Cost","Was there a time in the past 12 months when you needed to see a doctor but could not because you could not afford it?","Yes","Overall","Overall","318","9.48","8.15","10.81","2168","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC28","10","BO1","CAT1","MEDCOST1","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Health Care Coverage","Adults who had some form of health insurance (variable calculated from one or more BRFSS questions)","Do not have some form of health insurance","Overall","Overall","218","7.53","6.300000000000001","8.76","3394","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC29","10","BO1","CAT1","_HLTHPL2","RESP234","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Health Care Coverage","Adults who had some form of health insurance (variable calculated from one or more BRFSS questions)","Have some form of health insurance","Overall","Overall","4011","92.47","91.24","93.7","3393","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC29","10","BO1","CAT1","_HLTHPL2","RESP233","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Last Checkup","About how long has it been since you last visited a doctor for a routine checkup?","5 or more years ago","Overall","Overall","110","3.4099999999999997","2.57","4.25","472","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC36","10","BO1","CAT1","CHECKUP1","RESP066","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Last Checkup","About how long has it been since you last visited a doctor for a routine checkup?","Never","Overall","Overall","22","0.72","0.37","1.0699999999999998","473","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC36","10","BO1","CAT1","CHECKUP1","RESP067","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Last Checkup","About how long has it been since you last visited a doctor for a routine checkup?","Within the past 2 years","Overall","Overall","283","8.34","7.09","9.59","470","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC36","10","BO1","CAT1","CHECKUP1","RESP064","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Last Checkup","About how long has it been since you last visited a doctor for a routine checkup?","Within the past 5 years","Overall","Overall","138","4.72","3.76","5.68","471","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC36","10","BO1","CAT1","CHECKUP1","RESP065","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Last Checkup","About how long has it been since you last visited a doctor for a routine checkup?","Within the past year","Overall","Overall","3767","82.8","81.09","84.50999999999999","469","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC36","10","BO1","CAT1","CHECKUP1","RESP063","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Personal Care Provider","Do you have one person (or a group of doctors) that you think of as your personal health care provider?","More than one","Overall","Overall","1624","33.11","31.13","35.089999999999996","2225","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC43","10","BO1","CAT1","PERSDOC3","RESP053","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Personal Care Provider","Do you have one person (or a group of doctors) that you think of as your personal health care provider?","No","Overall","Overall","417","13.65","12.040000000000001","15.26","2226","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC43","10","BO1","CAT1","PERSDOC3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Personal Care Provider","Do you have one person (or a group of doctors) that you think of as your personal health care provider?","Yes, only one","Overall","Overall","2292","53.239999999999995","51.03999999999999","55.44","2224","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC43","10","BO1","CAT1","PERSDOC3","RESP050","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Under 65 Coverage","Adults aged 18-64 who have any kind of health care coverage (variable calculated from one or more BRFSS questions)","Do not have some form of health insurance","Overall","Overall","205","10.31","8.59","12.030000000000001","3340","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC59","10","BO1","CAT1","_HCVU654","RESP234","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Care Access/Coverage","Under 65 Coverage","Adults aged 18-64 who have any kind of health care coverage (variable calculated from one or more BRFSS questions)","Have some form of health insurance","Overall","Overall","1964","89.69","87.97","91.41","3339","%","Crude Prevalence",,,"BRFSS","CLASS07","TOPIC59","10","BO1","CAT1","_HCVU654","RESP233","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Status","Fair or Poor Health","Health Status (variable calculated from one or more BRFSS questions)","Fair or Poor Health","Overall","Overall","853","18.57","16.9","20.240000000000002","4067","%","Crude Prevalence",,,"BRFSS","CLASS08","TOPIC24","10","BO1","CAT1","_RFHLTH","RESP062","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Status","Fair or Poor Health","Health Status (variable calculated from one or more BRFSS questions)","Good or Better Health","Overall","Overall","3494","81.43","79.76","83.10000000000001","4066","%","Crude Prevalence",,,"BRFSS","CLASS08","TOPIC24","10","BO1","CAT1","_RFHLTH","RESP061","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Status","Overall Health","How is your general health?","Excellent","Overall","Overall","541","12.509999999999998","11.139999999999997","13.879999999999999","1657","%","Crude Prevalence",,,"BRFSS","CLASS08","TOPIC41","10","BO1","CAT1","GENHLTH","RESP056","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Status","Overall Health","How is your general health?","Fair","Overall","Overall","678","15.47","13.9","17.04","1660","%","Crude Prevalence",,,"BRFSS","CLASS08","TOPIC41","10","BO1","CAT1","GENHLTH","RESP059","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Status","Overall Health","How is your general health?","Good","Overall","Overall","1531","36.4","34.26","38.54","1659","%","Crude Prevalence",,,"BRFSS","CLASS08","TOPIC41","10","BO1","CAT1","GENHLTH","RESP058","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Status","Overall Health","How is your general health?","Poor","Overall","Overall","175","3.11","2.46","3.76","1661","%","Crude Prevalence",,,"BRFSS","CLASS08","TOPIC41","10","BO1","CAT1","GENHLTH","RESP060","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Health Status","Overall Health","How is your general health?","Very good","Overall","Overall","1422","32.519999999999996","30.439999999999998","34.599999999999994","1658","%","Crude Prevalence",,,"BRFSS","CLASS08","TOPIC41","10","BO1","CAT1","GENHLTH","RESP057","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","HIV-AIDS","HIV Test","Have you ever been tested for HIV?","No","Overall","Overall","2267","59.19","56.8","61.58","1798","%","Crude Prevalence",,,"BRFSS","CLASS09","TOPIC32","10","BO1","CAT1","HIVTST7","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","HIV-AIDS","HIV Test","Have you ever been tested for HIV?","Yes","Overall","Overall","1284","40.81","38.42","43.2","1797","%","Crude Prevalence",,,"BRFSS","CLASS09","TOPIC32","10","BO1","CAT1","HIVTST7","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Immunization","Flu Shot","Adults aged 65+ who have had a flu shot within the past year (variable calculated from one or more BRFSS questions)","No","Overall","Overall","504","30.95","27.869999999999997","34.03","3292","%","Crude Prevalence",,,"BRFSS","CLASS11","TOPIC26","10","BO1","CAT1","_FLSHOT7","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Immunization","Flu Shot","Adults aged 65+ who have had a flu shot within the past year (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","1264","69.05","65.97","72.13","3291","%","Crude Prevalence",,,"BRFSS","CLASS11","TOPIC26","10","BO1","CAT1","_FLSHOT7","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Immunization","Pneumonia Vaccination","Adults aged 65+ who have ever had a pneumonia vaccination (variable calculated from one or more BRFSS questions)","No","Overall","Overall","402","25.03","22.01","28.05","3832","%","Crude Prevalence",,,"BRFSS","CLASS11","TOPIC46","10","BO1","CAT1","_PNEUMO3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Immunization","Pneumonia Vaccination","Adults aged 65+ who have ever had a pneumonia vaccination (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","1324","74.97","71.95","77.99","3831","%","Crude Prevalence",,,"BRFSS","CLASS11","TOPIC46","10","BO1","CAT1","_PNEUMO3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Lung Cancer Screening","Had CAT/CT Chest Scan","Calculated variable for meet USPSTF lung cancer screening guidelines","Eligible respondent, does not meet USPSTF recommendations","Overall","Overall","236","81.12","75.48","86.76","3450","%","Crude Prevalence",,,"BRFSS","CLASS21","TOPIC72","10","BO1","CAT1","_LCSPSTF","RESP238","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Lung Cancer Screening","Had CAT/CT Chest Scan","Calculated variable for meet USPSTF lung cancer screening guidelines","Eligible respondent, meets USPSTF recommendations","Overall","Overall","67","18.88","13.239999999999998","24.52","3449","%","Crude Prevalence",,,"BRFSS","CLASS21","TOPIC72","10","BO1","CAT1","_LCSPSTF","RESP237","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Oral Health","All Teeth Removed","Adults aged 65+ who have had all their natural teeth extracted (variable calculated from one or more BRFSS questions)","No","Overall","Overall","1782","91.56","89.78","93.34","2665","%","Crude Prevalence",,,"BRFSS","CLASS13","TOPIC04","10","BO1","CAT1","_ALTETH3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Oral Health","All Teeth Removed","Adults aged 65+ who have had all their natural teeth extracted (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","157","8.44","6.659999999999999","10.219999999999999","2664","%","Crude Prevalence",,,"BRFSS","CLASS13","TOPIC04","10","BO1","CAT1","_ALTETH3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Oral Health","Teeth Removed","Adults that have had any permanent teeth extracted (variable calculated from one or more BRFSS questions)","No","Overall","Overall","2114","58.14","56","60.28","3236","%","Crude Prevalence",,,"BRFSS","CLASS13","TOPIC57","10","BO1","CAT1","_EXTETH3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Oral Health","Teeth Removed","Adults that have had any permanent teeth extracted (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","2108","41.86","39.72","44","3235","%","Crude Prevalence",,,"BRFSS","CLASS13","TOPIC57","10","BO1","CAT1","_EXTETH3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Overweight and Obesity (BMI)","BMI Categories","Weight classification by Body Mass Index (BMI) (variable calculated from one or more BRFSS questions)","Normal Weight (BMI 18.5-24.9)","Overall","Overall","1049","28.12","26","30.240000000000002","2713","%","Crude Prevalence",,,"BRFSS","CLASS14","TOPIC09","10","BO1","CAT1","_BMI5CAT","RESP041","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Overweight and Obesity (BMI)","BMI Categories","Weight classification by Body Mass Index (BMI) (variable calculated from one or more BRFSS questions)","Obese (BMI 30.0 - 99.8)","Overall","Overall","1427","36.64","34.43","38.85","2715","%","Crude Prevalence",,,"BRFSS","CLASS14","TOPIC09","10","BO1","CAT1","_BMI5CAT","RESP039","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Overweight and Obesity (BMI)","BMI Categories","Weight classification by Body Mass Index (BMI) (variable calculated from one or more BRFSS questions)","Overweight (BMI 25.0-29.9)","Overall","Overall","1385","33.550000000000004","31.370000000000005","35.730000000000004","2714","%","Crude Prevalence",,,"BRFSS","CLASS14","TOPIC09","10","BO1","CAT1","_BMI5CAT","RESP040","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Overweight and Obesity (BMI)","BMI Categories","Weight classification by Body Mass Index (BMI) (variable calculated from one or more BRFSS questions)","Underweight (BMI 12.0-18.4)","Overall","Overall","60","1.7000000000000002","1.0700000000000003","2.33","2712","%","Crude Prevalence",,,"BRFSS","CLASS14","TOPIC09","10","BO1","CAT1","_BMI5CAT","RESP042","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Physical Activity","Exercise","During the past month, did you participate in any physical activities? (variable calculated from one or more BRFSS questions)","No","Overall","Overall","1163","25.19","23.330000000000002","27.05","4343","%","Crude Prevalence",,,"BRFSS","CLASS15","TOPIC23","10","BO1","CAT1","_TOTINDA","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Physical Activity","Exercise","During the past month, did you participate in any physical activities? (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","3186","74.81","72.95","76.67","4342","%","Crude Prevalence",,,"BRFSS","CLASS15","TOPIC23","10","BO1","CAT1","_TOTINDA","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Current Smoker Status","Adults who are current smokers (variable calculated from one or more BRFSS questions)","No","Overall","Overall","3481","89.94","88.61","91.27","4175","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC15","10","BO1","CAT1","_RFSMOK3","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Current Smoker Status","Adults who are current smokers (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","393","10.059999999999999","8.729999999999999","11.389999999999999","4174","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC15","10","BO1","CAT1","_RFSMOK3","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Smokeless Tobacco","Do you currently use chewing tobacco, snuff, or snus?","Every day","Overall","Overall","30","0.91","0.46","1.36","2524","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC54","10","BO1","CAT1","USENOW3","RESP079","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Smokeless Tobacco","Do you currently use chewing tobacco, snuff, or snus?","Not at all","Overall","Overall","3823","97.23","96.17","98.29","2526","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC54","10","BO1","CAT1","USENOW3","RESP081","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Smokeless Tobacco","Do you currently use chewing tobacco, snuff, or snus?","Some days","Overall","Overall","41","1.8599999999999999","0.8999999999999999","2.82","2525","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC54","10","BO1","CAT1","USENOW3","RESP080","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Smoker Status","Four Level Smoking Status (variable calculated from one or more BRFSS questions)","Former smoker","Overall","Overall","1259","28.470000000000002","26.410000000000004","30.53","4232","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC55","10","BO1","CAT1","_SMOKER3","RESP070","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Smoker Status","Four Level Smoking Status (variable calculated from one or more BRFSS questions)","Never smoked","Overall","Overall","2222","61.47","59.24","63.699999999999996","4233","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC55","10","BO1","CAT1","_SMOKER3","RESP071","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Smoker Status","Four Level Smoking Status (variable calculated from one or more BRFSS questions)","Smoke everyday","Overall","Overall","274","6.8500000000000005","5.710000000000001","7.99","4230","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC55","10","BO1","CAT1","_SMOKER3","RESP068","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Tobacco Use","Smoker Status","Four Level Smoking Status (variable calculated from one or more BRFSS questions)","Smoke some days","Overall","Overall","119","3.2199999999999998","2.4799999999999995","3.96","4231","%","Crude Prevalence",,,"BRFSS","CLASS17","TOPIC55","10","BO1","CAT1","_SMOKER3","RESP069","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Women's Health","Mammogram","Women aged 40-74 who have had a mammogram within the past two years (variable calculated from one or more BRFSS questions)","Did not receive a mammogram within the past 2 years","Overall","Overall","258","19.77","16.83","22.71","3556","%","Crude Prevalence",,,"BRFSS","CLASS18","TOPIC37","10","BO1","CAT1","_MAM402Y","RESP187","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Women's Health","Mammogram","Women aged 40-74 who have had a mammogram within the past two years (variable calculated from one or more BRFSS questions)","Received a mammogram within the past 2 years","Overall","Overall","1105","80.23","77.29","83.17","3555","%","Crude Prevalence",,,"BRFSS","CLASS18","TOPIC37","10","BO1","CAT1","_MAM402Y","RESP186","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Women's Health","Mammogram","Women aged 40+ who have had a mammogram within the past two years (variable calculated from one or more BRFSS questions)","No","Overall","Overall","412","22.27","19.6","24.939999999999998","4123","%","Crude Prevalence",,,"BRFSS","CLASS18","TOPIC37","10","BO1","CAT1","_RFMAM23","RESP054","
+,  
+(39.008830667000495, -75.57774116799965)"
+"2024","DE","Delaware","Women's Health","Mammogram","Women aged 40+ who have had a mammogram within the past two years (variable calculated from one or more BRFSS questions)","Yes","Overall","Overall","1423","77.73","75.06","80.4","4122","%","Crude Prevalence",,,"BRFSS","CLASS18","TOPIC37","10","BO1","CAT1","_RFMAM23","RESP046","
+,  
+(39.008830667000495, -75.57774116799965)"

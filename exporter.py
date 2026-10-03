@@ -72,13 +72,22 @@ def _key_columns(df: pd.DataFrame, include_keys: bool) -> list[str]:
 
 
 def build_sector_tables(
-    df: pd.DataFrame, picked_columns: Iterable[str], include_keys: bool = True
+    df: pd.DataFrame,
+    picked_columns: Iterable[str],
+    include_keys: bool = True,
+    fallback_label: str | None = None,
 ) -> dict[str, pd.DataFrame]:
     """Split the master frame into one table per sector.
 
     Returns {sector_name: DataFrame} where each table keeps the key columns
     first (ZCTA / County_FIPS / County_Name when present) followed by that
     sector's picked columns. Empty sectors are skipped.
+
+    ``fallback_label`` covers the datasets whose columns belong to no sector:
+    a raw publisher snapshot uses the publisher's own column names, so no
+    sector ever matches and the preview/export tabs would otherwise have
+    nothing to show. When that happens the whole selection is returned under
+    this single label instead.
     """
     picked = [c for c in picked_columns if c in df.columns]
     keys = _key_columns(df, include_keys)
@@ -89,6 +98,10 @@ def build_sector_tables(
             continue
         ordered = list(dict.fromkeys(keys + chosen))
         tables[sector] = df[ordered].copy()
+    if not tables and fallback_label:
+        ordered = list(dict.fromkeys(keys + picked))
+        if ordered:
+            tables[fallback_label] = df[ordered].copy()
     return tables
 
 

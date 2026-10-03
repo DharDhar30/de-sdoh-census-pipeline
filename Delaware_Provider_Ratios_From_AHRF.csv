@@ -1,0 +1,7 @@
+County_FIPS,County_Name,Provider_Type,AHRF_Provider_Count,AHRF_Population_Estimate_2023,AHRF_Populations_Per_Provider,AHRF_Source_Column,CHR_Published_Count,CHR_Published_Ratio,Ratio_Source,Pct_Difference_vs_CHR
+10001,"Kent, DE",Primary Care Physicians,83,189789,2287,md_nf_prim_care_pc_excl_rsdnt_23,93,1980.0,"HRSA Area Health Resources Files (AHRF) 2024-2025 - public domain, free direct download",0.155
+10001,"Kent, DE",Dentists,78,189789,2433,dent_npi_23,76,2460.0,"HRSA Area Health Resources Files (AHRF) 2024-2025 - public domain, free direct download",-0.011
+10003,"New Castle, DE",Primary Care Physicians,473,578592,1223,md_nf_prim_care_pc_excl_rsdnt_23,495,1155.0,"HRSA Area Health Resources Files (AHRF) 2024-2025 - public domain, free direct download",0.059
+10003,"New Castle, DE",Dentists,342,578592,1692,dent_npi_23,334,1723.0,"HRSA Area Health Resources Files (AHRF) 2024-2025 - public domain, free direct download",-0.018
+10005,"Sussex, DE",Primary Care Physicians,136,263509,1938,md_nf_prim_care_pc_excl_rsdnt_23,152,1628.0,"HRSA Area Health Resources Files (AHRF) 2024-2025 - public domain, free direct download",0.19
+10005,"Sussex, DE",Dentists,58,263509,4543,dent_npi_23,57,4490.0,"HRSA Area Health Resources Files (AHRF) 2024-2025 - public domain, free direct download",0.012

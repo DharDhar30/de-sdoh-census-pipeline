@@ -5,6 +5,10 @@ import geopandas as gpd
 import pygris
 from dotenv import load_dotenv
 
+# Per-column provenance (which raw source each measure comes from and at what
+# true geography) - see sector_definitions.SECTOR_SOURCES and raw/SOURCES.md.
+from sector_definitions import provenance_rows
+
 # ---------------------------------------------------------------------------
 # 1. CONFIGURATION & ENVIRONMENT SETUP
 # ---------------------------------------------------------------------------
@@ -71,6 +75,47 @@ BRFSS_MEASURES = [
 # ---------------------------------------------------------------------------
 # 2. SPATIAL BOUNDARIES (PYGRIS)
 # ---------------------------------------------------------------------------
+# Delaware ZIPs are exactly 197xx / 198xx / 199xx.
+DE_ZCTA_PREFIXES = ("197", "198", "199")
+
+
+def _de_zctas_only(de_zctas, zcta_col: str):
+    """Restrict clipped ZCTA polygons to ZCTAs that genuinely belong to Delaware.
+
+    ``gpd.clip`` to the Delaware state boundary keeps any ZCTA that *touches*
+    Delaware, and border ZCTAs retain their full multi-state polygon. Delaware's
+    north-east corner touches Maryland and Pennsylvania, so 30 MD/PA/NJ ZCTAs
+    (including 21921 / Annapolis, MD) survived the clip and their ACS
+    populations were merged into the master, inflating Delaware's total
+    population by ~21%. Two filters are required together:
+
+    1. the ZCTA's centroid must fall inside the Delaware state polygon; and
+    2. the ZCTA's ZIP must be a Delaware ZIP (197/198/199).
+
+    Filter 1 alone is not sufficient; filter 2 alone would keep ZCTAs that are
+    Delaware ZIPs but whose centroid the clip moved.
+    """
+    projected = de_zctas.to_crs(epsg=3857)
+    centroids = projected.set_geometry(projected.geometry.centroid)
+    de_state = pygris.states(cb=True, resolution="20m").query("STUSPS == 'DE'")
+    if de_state.crs != centroids.crs:
+        de_state = de_state.to_crs(centroids.crs)
+    inside = gpd.sjoin(
+        centroids, de_state[["geometry"]], how="left", predicate="within"
+    )
+    keep = inside.dropna(subset=["index_right"]).index.unique()
+
+    out = de_zctas.loc[de_zctas.index.intersection(keep)].copy()
+    before = len(out)
+    out = out.loc[out[zcta_col].astype(str).str.zfill(5).str.startswith(DE_ZCTA_PREFIXES)]
+    dropped = before - len(out)
+    if dropped:
+        print(f"  Dropped {dropped} non-Delaware ZCTAs (centroid inside DE, ZIP not 197/198/199).")
+    if out.empty:
+        raise RuntimeError("The Delaware ZCTA filter removed every ZCTA; aborting.")
+    return out
+
+
 def fetch_spatial_boundaries():
     """Downloads Delaware state & ZCTA boundaries and computes area metrics."""
     print("Fetching spatial boundaries via pygris...")
@@ -87,6 +132,8 @@ def fetch_spatial_boundaries():
     zcta_col = "ZCTA5CE20" if "ZCTA5CE20" in de_zctas.columns else ("GEOID20" if "GEOID20" in de_zctas.columns else "GEOID")
     
     de_zctas = de_zctas[de_zctas[aland_col] > 0].copy()
+    # Drop out-of-state border ZCTAs before any population is attached.
+    de_zctas = _de_zctas_only(de_zctas, zcta_col)
     de_zctas["ZCTA"] = de_zctas[zcta_col].astype(str).str.zfill(5)
     de_zctas["Land_Area_SqMi"] = de_zctas[aland_col] / 2589988.11
     de_zctas["Water_Area_SqMi"] = de_zctas[awater_col] / 2589988.11
@@ -107,6 +154,70 @@ def fetch_spatial_boundaries():
     
     de_zctas_final = joined.drop_duplicates(subset=["ZCTA"]).drop(columns=["index_right"])
     return de_zctas_final
+
+# ---------------------------------------------------------------------------
+# 2b. CDC PLACES ZCTA-LEVEL CHRONIC DISEASE (model-based estimates)
+# ---------------------------------------------------------------------------
+# PLACES publishes SEPARATE datasets per geography: place/city, county,
+# census-tract and ZCTA. The ZCTA release is the one that shares this master's
+# geography, so chronic-disease measures land on the same ZCTA rows as the ACS
+# demographics instead of being broadcast from a city or county geography.
+PLACES_ZCTA_URL = "https://data.cdc.gov/resource/4r2x-hcfq.json"
+PLACES_ZCTA_SNAPSHOT = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "raw", "cdc_places_2024_de_zcta_raw.csv"
+)
+
+
+def load_places_zcta(filepath: str = PLACES_ZCTA_SNAPSHOT) -> pd.DataFrame:
+    """Wide ZCTA-level chronic-disease estimates from the archived PLACES snapshot.
+
+    Returns one row per ZCTA with a ``PLACES_Pct_*`` column per measure plus its
+    confidence limits. Values are the publisher's model-based estimates
+    (BRFSS-derived, small-area modelled) - they are NOT direct counts, so the
+    confidence limits published alongside them are carried through.
+    """
+    from fetch_places import MEASURE_COLUMNS
+
+    print("Loading CDC PLACES ZCTA-level chronic disease estimates...")
+    if not os.path.exists(filepath):
+        print(f"  WARNING: {filepath} not found - run "
+              "`python3 fetch_raw_data.py --only cdc_places_2024_de_zcta` first.")
+        return pd.DataFrame(columns=["ZCTA"])
+
+    raw = pd.read_csv(filepath, low_memory=False)
+    raw = raw[raw["measure"].isin(MEASURE_COLUMNS.keys())].copy()
+    for col in ("data_value", "low_confidence_limit", "high_confidence_limit"):
+        raw[col] = pd.to_numeric(raw[col], errors="coerce")
+
+    raw["ZCTA"] = raw["locationname"].astype(str).str.zfill(5)
+
+    wide = raw.pivot_table(
+        index="ZCTA", columns="measure", values="data_value", aggfunc="first"
+    )
+    out = pd.DataFrame(index=wide.index)
+    # Build every column first, then assign once - assigning 120 columns one at
+    # a time leaves the frame highly fragmented and triggers pandas warnings.
+    value_cols, ci_low_cols, ci_high_cols = {}, {}, {}
+    for measure, col_name in MEASURE_COLUMNS.items():
+        if measure not in wide.columns:
+            continue
+        value_cols[col_name] = wide[measure]
+        subset = raw[raw["measure"] == measure].set_index("ZCTA")
+        ci_low_cols[f"{col_name}_CI_Low"] = out.index.to_series().map(
+            subset["low_confidence_limit"]
+        )
+        ci_high_cols[f"{col_name}_CI_High"] = out.index.to_series().map(
+            subset["high_confidence_limit"]
+        )
+    out = pd.concat(
+        [pd.DataFrame(value_cols), pd.DataFrame(ci_low_cols), pd.DataFrame(ci_high_cols)],
+        axis=1,
+    )
+
+    out = out.reset_index()
+    measures = [c for c in out.columns if c.startswith("PLACES_Pct_") and not c.endswith(("_CI_Low", "_CI_High"))]
+    print(f"  {len(out)} ZCTAs x {len(measures)} PLACES measures")
+    return out
 
 # ---------------------------------------------------------------------------
 # 3. CENSUS ACS DEMOGRAPHIC DATA API
@@ -216,6 +327,7 @@ def main():
     acs_df = fetch_acs_data(CENSUS_API_KEY)
     chr_df = load_county_health_rankings()
     brfss_df = fetch_brfss_state_data()
+    places_df = load_places_zcta()
     
     master_gdf = spatial_gdf.merge(acs_df, on="ZCTA", how="inner")
     
@@ -226,7 +338,18 @@ def main():
     master_gdf["State"] = "Delaware"
     master_gdf = master_gdf.merge(brfss_df, on="State", how="left")
     master_gdf = master_gdf.drop(columns=["State"])
-    
+
+    # PLACES ZCTA: genuinely ZCTA-level model-based chronic-disease estimates.
+    # Merged with how="left" so ZCTAs PLACES does not cover keep a NULL measure
+    # rather than being dropped from the master.
+    places_cols = [c for c in places_df.columns if c != "ZCTA"]
+    if places_cols:
+        master_gdf = master_gdf.merge(places_df, on="ZCTA", how="left")
+        missing = master_gdf.loc[master_gdf[places_cols[0]].isna(), "ZCTA"].tolist()
+        if missing:
+            print(f"  NOTE: PLACES has no ZCTA estimate for {len(missing)} ZCTA(s): "
+                  f"{', '.join(missing)} - their PLACES measures are NULL.")
+
 
     master_gdf["Population_Density_SqMi"] = (master_gdf["Total_Population"] / master_gdf["Land_Area_SqMi"]).round(2)
     master_gdf["Uninsured_Population_Count"] = ((master_gdf["Pct_No_Health_Insurance"] / 100) * master_gdf["Total_Population"]).round(0)
@@ -239,10 +362,22 @@ def main():
 
     print("Exporting updated master datasets...")
     tabular_df = pd.DataFrame(master_gdf.drop(columns=["geometry"]))
+
+    # Provenance: the true geography of every measure. Only ACS + TIGER are
+    # genuinely ZCTA-level; BRFSS is a statewide survey and CHR reports by
+    # county, so those columns are broadcast onto ZCTA rows. Users who want
+    # ZCTA-only measures filter on Geography_Level == "ZCTA".
+    provenance_df = pd.DataFrame(provenance_rows(list(tabular_df.columns)))
+    provenance_path = "Delaware_ZCTA_Health_Master_Column_Provenance.csv"
+    provenance_df.to_csv(provenance_path, index=False)
+
     tabular_df.to_csv("Delaware_ZCTA_Health_Master_Wide.csv", index=False)
-    tabular_df.to_excel("Delaware_ZCTA_Health_Master_Wide.xlsx", index=False)
-    
+    with pd.ExcelWriter("Delaware_ZCTA_Health_Master_Wide.xlsx") as writer:
+        tabular_df.to_excel(writer, sheet_name="Master", index=False)
+        provenance_df.to_excel(writer, sheet_name="Column_Provenance", index=False)
+
     master_gdf.to_file("Delaware_ZCTA_Health_Master_Spatial.geojson", driver="GeoJSON")
+    print(f"Wrote {provenance_path} ({len(provenance_df)} columns classified)")
     print("Successfully exported all files with County Health Rankings added!")
 
 if __name__ == "__main__":

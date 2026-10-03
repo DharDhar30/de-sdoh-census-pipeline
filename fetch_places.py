@@ -9,8 +9,9 @@ import os
 import requests
 import pandas as pd
 
-# CDC PLACES API endpoint for city/place data
-PLACES_API_BASE = "https://data.cdc.gov/api/v3/views/eav7-hnsx/query.json"
+# CDC PLACES API endpoint for city/place data (SODA 2.1 resource endpoint,
+# where $where filters server-side - the v3 query.json root ignores it).
+PLACES_API_BASE = "https://data.cdc.gov/resource/eav7-hnsx.json"
 
 # Delaware state name for filtering
 DELAWARE_STATE = "Delaware"
@@ -60,6 +61,10 @@ MEASURE_COLUMNS = {
     "Housing insecurity in the past 12 months among adults": "PLACES_Pct_Housing_Insecurity",
     "Lack of reliable transportation in the past 12 months among adults": "PLACES_Pct_Transportation_Barrier",
     "Lack of social and emotional support among adults": "PLACES_Pct_Lack_Social_Support",
+    # CDC renamed this measure in the 2023/24 releases. Accept BOTH spellings so
+    # the ZCTA release (which uses the new name) and the older place/city
+    # release (which uses the old name) both map to the same column.
+    "Feeling socially isolated among adults": "PLACES_Pct_Loneliness",
     "Loneliness among adults": "PLACES_Pct_Loneliness",
     "Received food stamps in the past 12 months among adults": "PLACES_Pct_Food_Stamps",
     "Utility services shut-off threat in the past 12 months among adults": "PLACES_Pct_Utility_Shutoff_Threat",
