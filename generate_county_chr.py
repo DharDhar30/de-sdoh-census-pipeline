@@ -1,166 +1,179 @@
-"""Generate county-level CHR data by aggregating ZCTA-level data."""
+"""Rebuild the Delaware county CHR table as a faithful copy of the raw release.
 
-import pandas as pd
-import numpy as np
+This script used to aggregate the ZCTA-level master back up to county level,
+averaging percentages, averaging ratios and summing counts. That was unsound
+and is why it was rewritten:
+
+- County Health Rankings publishes county measures directly. The master
+  broadcasts each county value onto every ZCTA in that county, so re-aggregating
+  ZCTA -> county averaged an identical value against itself.
+- Summing a county count across its ZCTAs multiplied it by the ZCTA count:
+  Kent's 2,920 premature deaths became 56,892 (19.5x too high).
+
+So nothing is aggregated any more. Every value here is lifted straight out of
+the archived publisher snapshot, unchanged. The only value from another source
+is Total_Population, because CHR publishes no county population total (its
+"High School Completion__Population" / "Some College__Population" columns are
+education cohorts, not a population total). That one comes from the HRSA AHRF
+postcensal estimate, the only published county total in ./raw.
+
+Inputs
+  raw/chr_2024_de_counties_raw.csv        CHR 2024 release, unmodified
+  raw/hrsa_ahrf_2025_de_counties_raw.csv  county population denominators
+Output
+  Delaware_County_CHR.csv
+
+Run:
+    python3 generate_county_chr.py
+"""
+
 import os
 
+import pandas as pd
+
+# The CHR column mappings (output name -> source column in the raw snapshot)
+# are imported from gen_health_data.py so there is a single source of truth
+# for them. gen_health_data.py only runs its downloads under __main__, so this
+# import is side-effect free.
+from gen_health_data import CHR_TARGETS, _parse_chr_value
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
-MASTER_PATH = os.path.join(ROOT, "Delaware_ZCTA_Health_Master_Wide.xlsx")
+CHR_PATH = os.path.join(ROOT, "raw", "chr_2024_de_counties_raw.csv")
+AHRF_PATH = os.path.join(ROOT, "raw", "hrsa_ahrf_2025_de_counties_raw.csv")
 OUTPUT_PATH = os.path.join(ROOT, "Delaware_County_CHR.csv")
 
+DE_COUNTY_FIPS = ["10001", "10003", "10005"]
 
-def load_master_data() -> pd.DataFrame:
-    """Load the master ZCTA dataset."""
-    df = pd.read_excel(MASTER_PATH)
-    print(f"Loaded master data: {df.shape[0]} ZCTAs, {df.shape[1]} columns")
-    return df
-
-
-def get_chr_columns() -> dict[str, list[str]]:
-    """Get CHR-related columns grouped by category."""
-    return {
-        "Health Outcomes": [
-            "Pct_Poor_Fair_Health",
-            "Pct_Poor_Fair_Health_LowCI",
-            "Pct_Poor_Fair_Health_HighCI",
-            "Pct_Poor_Fair_Health_Quartile",
-            "Avg_Poor_Physical_Health_Days",
-            "Avg_Poor_Physical_Health_Days_LowCI",
-            "Avg_Poor_Physical_Health_Days_HighCI",
-            "Avg_Poor_Physical_Health_Days_Quartile",
-            "Avg_Poor_Mental_Health_Days",
-            "Avg_Poor_Mental_Health_Days_LowCI",
-            "Avg_Poor_Mental_Health_Days_HighCI",
-            "Avg_Poor_Mental_Health_Days_Quartile",
-            "CHR_YPLL_Rate",
-            "CHR_Premature_Deaths_Count",
-            "CHR_Pct_Low_Birthweight",
-            "CHR_Pct_Low_Birthweight_Quartile",
-            "CHR_STI_Chlamydia_Rate",
-            "CHR_Teen_Birth_Rate",
-        ],
-        "Health Behaviors": [
-            "Pct_Adult_Smoking",
-            "Pct_Adult_Smoking_LowCI",
-            "Pct_Adult_Smoking_HighCI",
-            "Pct_Adult_Smoking_Quartile",
-            "Pct_Adult_Obesity",
-            "Pct_Adult_Obesity_LowCI",
-            "Pct_Adult_Obesity_HighCI",
-            "Pct_Adult_Obesity_Quartile",
-            "Pct_Physical_Inactivity",
-            "Pct_Physical_Inactivity_LowCI",
-            "Pct_Physical_Inactivity_HighCI",
-            "Pct_Physical_Inactivity_Quartile",
-            "Excessive_Drinking_Pct",
-            "Excessive_Drinking_Pct_LowCI",
-            "Excessive_Drinking_Pct_HighCI",
-            "Excessive_Drinking_Pct_Quartile",
-            "CHR_Food_Environment_Index",
-            "CHR_Access_Exercise_Opportunities_Pct",
-            "CHR_Alcohol_Impaired_Driving_Deaths_Pct",
-        ],
-        "Clinical Care": [
-            "CHR_Uninsured_Pct",
-            "CHR_Uninsured_Pct_LowCI",
-            "CHR_Uninsured_Pct_HighCI",
-            "CHR_Uninsured_Pct_Quartile",
-            "CHR_PCP_Ratio_Population",
-            "Dentist_Ratio_Population",
-            "Mental_Health_Provider_Ratio",
-            "CHR_Preventable_Hospital_Stays_Rate",
-            "CHR_Mammography_Screening_Pct",
-            "CHR_Mammography_Screening_Pct_Quartile",
-            "CHR_Flu_Vaccination_Pct",
-            "CHR_Flu_Vaccination_Pct_Quartile",
-        ],
-    }
+# AHRF postcensal population estimate used as the county population total.
+POPULATION_SOURCE_COL = "pop_popn_est_23"
+POPULATION_SOURCE = "HRSA AHRF 2024-2025 (postcensal estimate, 2023 vintage)"
 
 
-def aggregate_to_county(df: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate ZCTA-level data to county level."""
-    # Filter out ZCTAs with no county assignment
-    df = df.dropna(subset=["County_Name"]).copy()
-    print(f"ZCTAs with county assignment: {df.shape[0]}")
-    
-    # Define column types for aggregation
-    count_cols = ["CHR_Premature_Deaths_Count"]
-    ratio_cols = ["CHR_PCP_Ratio_Population", "Dentist_Ratio_Population", "Mental_Health_Provider_Ratio"]
-    
-    # Get all CHR columns
-    chr_columns = []
-    for cols in get_chr_columns().values():
-        chr_columns.extend(cols)
-    chr_columns = [c for c in chr_columns if c in df.columns]
-    
-    # Group by county
-    counties = []
-    for county_name, group in df.groupby("County_Name"):
-        county_data = {
-            "County_Name": county_name,
-            "County_FIPS": group["County_FIPS"].iloc[0],
-            "Total_Population": group["Total_Population"].sum(),
-            "ZCTA_Count": len(group),
+def _fips(series: pd.Series) -> pd.Series:
+    """Normalise FIPS to a 5-digit string ('10001', not '10001.0')."""
+    return (
+        series.astype(str).str.replace(r"\.0$", "", regex=True).str.strip().str.zfill(5)
+    )
+
+
+def load_county_population() -> pd.DataFrame:
+    """County population denominators straight from the AHRF snapshot."""
+    ahrf = pd.read_csv(AHRF_PATH, dtype=str, low_memory=False)
+    frame = pd.DataFrame(
+        {
+            "County_FIPS": _fips(ahrf["fips_st_cnty"]),
+            "Total_Population": pd.to_numeric(ahrf[POPULATION_SOURCE_COL], errors="coerce"),
         }
-        
-        for col in chr_columns:
-            if col not in group.columns:
+    )
+    return frame.set_index("County_FIPS")
+
+
+def build_county_chr() -> pd.DataFrame:
+    """Project the CHR release onto its Delaware county rows, unaltered."""
+    chr_raw = pd.read_csv(CHR_PATH, dtype=str, low_memory=False)
+
+    live_targets = {v for v in CHR_TARGETS.values() if not v.startswith("__")}
+    missing = sorted(v for v in live_targets if v not in chr_raw.columns)
+    if missing:
+        raise SystemExit(f"CHR snapshot is missing expected columns: {missing}")
+
+    de = chr_raw[_fips(chr_raw["FIPS"]).isin(DE_COUNTY_FIPS)].copy()
+    de["County_FIPS"] = _fips(de["FIPS"])
+
+    out = pd.DataFrame(
+        {"County_FIPS": de["County_FIPS"], "County_Name": de["County"].str.strip()}
+    )
+    for out_col, src in CHR_TARGETS.items():
+        if src.startswith("__"):
+            # Dropped from the 2024 release; kept as NaN so the schema that
+            # downstream consumers expect is unchanged.
+            out[out_col] = float("nan")
+        else:
+            out[out_col] = de[src].map(_parse_chr_value)
+
+    out = out.merge(load_county_population(), on="County_FIPS", how="left")
+
+    # Column order: identifiers, then population, then the CHR measures.
+    measures = [c for c in CHR_TARGETS if c in out.columns]
+    out = out[["County_FIPS", "County_Name", "Total_Population"] + measures]
+    out["Population_Source"] = POPULATION_SOURCE
+    out["CHR_Data_Year"] = 2022
+    return out
+
+
+def verify_against_raw(out: pd.DataFrame) -> None:
+    """Fail loudly if any emitted value differs from the publisher's snapshot.
+
+    This is the guard against the aggregation bug this script used to have:
+    one row per county, and every measure equal to the raw published value.
+    """
+    raw = pd.read_csv(CHR_PATH, dtype=str, low_memory=False)
+    raw_by_fips = raw.assign(_fips=_fips(raw["FIPS"])).set_index("_fips", drop=False)
+    problems = []
+
+    if len(out) != len(DE_COUNTY_FIPS):
+        problems.append(f"expected {len(DE_COUNTY_FIPS)} county rows, got {len(out)}")
+
+    for _, row in out.iterrows():
+        fips = row["County_FIPS"]
+        if fips not in raw_by_fips.index:
+            problems.append(f"{fips}: not present in the raw CHR snapshot")
+            continue
+        raw_row = raw_by_fips.loc[fips]
+        for out_col, src in CHR_TARGETS.items():
+            if src.startswith("__") or out_col not in out.columns:
                 continue
-            values = group[col].dropna()
-            if len(values) == 0:
-                county_data[col] = np.nan
-            elif col in count_cols:
-                county_data[col] = group[col].sum()
-            elif col in ratio_cols:
-                county_data[col] = group[col].mean()
-            elif "Quartile" in col:
-                county_data[col] = group[col].mode().iloc[0] if len(group[col].mode()) > 0 else np.nan
-            elif "CI" in col:
-                county_data[col] = group[col].mean()
-            else:
-                # Population-weighted average for percentages
-                pop = group["Total_Population"]
-                vals = group[col]
-                mask = vals.notna() & pop.notna()
-                if mask.sum() > 0:
-                    county_data[col] = (vals[mask] * pop[mask]).sum() / pop[mask].sum()
-                else:
-                    county_data[col] = np.nan
-        counties.append(county_data)
-    
-    return pd.DataFrame(counties)
+            published = _parse_chr_value(raw_row[src])
+            emitted = row[out_col]
+            if pd.isna(published) and pd.isna(emitted):
+                continue
+            if pd.isna(published) or pd.isna(emitted) or float(emitted) != float(published):
+                problems.append(
+                    f"{fips} {out_col}: emitted {emitted!r} != published {published!r}"
+                )
+
+    if problems:
+        for p in problems:
+            print(f"  MISMATCH  {p}")
+        raise SystemExit(f"\n{len(problems)} value(s) differ from the raw CHR release")
 
 
-def filter_empty_rows(df: pd.DataFrame) -> pd.DataFrame:
-    """Remove rows where all CHR data columns are NaN."""
-    key_cols = ["County_Name", "County_FIPS", "Total_Population", "ZCTA_Count"]
-    data_cols = [c for c in df.columns if c not in key_cols]
-    non_nan_counts = df[data_cols].notna().sum(axis=1)
-    print(f"\nRows before filtering: {len(df)}")
-    for idx, row in df.iterrows():
-        print(f"  {row['County_Name']}: {non_nan_counts[idx]} of {len(data_cols)} data columns")
-    mask = non_nan_counts > 0
-    result = df[mask].copy()
-    print(f"Rows after filtering: {len(result)}")
-    return result
+def main() -> None:
+    for path, hint in (
+        (CHR_PATH, "chr_2024_de_counties"),
+        (AHRF_PATH, "hrsa_ahrf_2025_de_counties"),
+    ):
+        if not os.path.exists(path):
+            raise SystemExit(
+                f"{os.path.relpath(path, ROOT)} is missing - run "
+                f"`python3 fetch_raw_data.py --only {hint}` first."
+            )
 
+    out = build_county_chr()
+    verify_against_raw(out)
+    out.to_csv(OUTPUT_PATH, index=False)
 
-def main():
-    """Generate county-level CHR dataset."""
-    print("Generating County-Level CHR Data")
-    print("=" * 50)
-    df = load_master_data()
-    county_df = aggregate_to_county(df)
-    county_df = filter_empty_rows(county_df)
-    county_df = county_df.sort_values("County_Name").reset_index(drop=True)
-    county_df.to_csv(OUTPUT_PATH, index=False)
-    print(f"\nSaved county-level CHR data to: {OUTPUT_PATH}")
-    print(f"Shape: {county_df.shape}")
-    print(f"\nCounties: {list(county_df['County_Name'])}")
-    print(f"\nColumns ({len(county_df.columns)}):")
-    for col in county_df.columns:
-        print(f"  - {col}")
-    return county_df
+    print(f"Wrote {os.path.relpath(OUTPUT_PATH, ROOT)}  shape={out.shape}")
+    print(f"{len(out)} counties x {len(out.columns)} columns")
+    print("Every value verified identical to raw/chr_2024_de_counties_raw.csv\n")
+    print(
+        out[
+            [
+                "County_Name",
+                "Total_Population",
+                "Pct_Poor_Fair_Health",
+                "CHR_PCP_Ratio_Population",
+                "Dentist_Ratio_Population",
+                "Mental_Health_Provider_Ratio",
+            ]
+        ].to_string(index=False)
+    )
+    print(f"\nTotal_Population source: {POPULATION_SOURCE}")
+    print(f"        column: {POPULATION_SOURCE_COL}")
+    print(
+        "\nProvider ratios and Fair/Poor Health are CHR's own published figures, "
+        "unaltered.\nNo aggregation, averaging or summing was applied."
+    )
 
 
 if __name__ == "__main__":

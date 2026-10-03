@@ -345,12 +345,20 @@ def main() -> None:
                     "dataset entry."
                 )
         elif data_source == CHR_OPTION:
-            with st.expander("\U0001f4ce Source & citation — processed CHR", expanded=False):
+            with st.expander("\U0001f4ce Source & citation — county CHR", expanded=False):
                 st.markdown(
-                    "**Derived dataset** — county table produced by "
-                    "`generate_county_chr.py` from the raw CHR release "
-                    "`raw/chr_2024_de_counties_raw.csv`. The unmodified workbook rows "
-                    "are inspectable in that raw file's own dataset entry."
+                    "**Publisher's own figures, unaltered.** County Health Rankings "
+                    "publishes these three counties directly, so this table is a "
+                    "straight projection of the raw release "
+                    "`raw/chr_2024_de_counties_raw.csv` — nothing is aggregated, "
+                    "averaged or summed. `generate_county_chr.py` rebuilds it and "
+                    "refuses to write if any value differs from the raw snapshot.\n\n"
+                    "One column is not CHR's: `Total_Population`. CHR publishes no "
+                    "county population total (its `High School Completion__Population` "
+                    "and `Some College__Population` columns are education cohorts, not "
+                    "a population total), so the figure comes from the HRSA AHRF "
+                    "postcensal estimate (`pop_popn_est_23`) — the only published "
+                    "county total in `./raw`. `Population_Source` records this per row."
                 )
             with st.expander("\U0001f4ce Source & citation — derived master", expanded=False):
                 st.markdown(

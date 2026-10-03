@@ -27,6 +27,75 @@ To download every raw snapshot from the app: expand **All raw sources & citation
 use the **Download ALL snapshots (ZIP)** button, or use the per-source *Download raw
 snapshot* button in each citation panel.
 
+## Published values are used as published
+
+The county and city tables report **the publisher's own numbers, unaltered.** Nothing
+in them is averaged, weighted, re-derived or hand-edited, and both build scripts refuse
+to write their output if any emitted value differs from the archived raw snapshot.
+
+```bash
+python3 generate_county_chr.py                # -> Delaware_County_CHR.csv
+python3 build_city_chronic_disease_table.py   # -> Delaware_City_Chronic_Disease.csv
+```
+
+### County table — `Delaware_County_CHR.csv` (3 rows)
+
+| Column | Source |
+|---|---|
+| `County_Name` | CHR 2024, published |
+| `Total_Population` | **HRSA AHRF `pop_popn_est_23`** (see below) |
+| `Pct_Poor_Fair_Health` (+ `_LowCI` / `_HighCI`) | CHR 2024, published |
+| `CHR_PCP_Ratio_Population` | CHR 2024, published |
+| `Dentist_Ratio_Population` | CHR 2024, published |
+| `Mental_Health_Provider_Ratio` | CHR 2024, published |
+
+`Total_Population` is the single column that is not CHR's. CHR publishes **no** county
+population total — its `High School Completion__Population` and
+`Some College__Population` columns are education cohorts, not a population total. Of
+the eight raw snapshots, only HRSA AHRF carries a published county total
+(`pop_popn_est_23` / `pop_popn_est_24`), so that is what is used. `Population_Source`
+records the provenance on every row.
+
+⚠️ **Vintage note.** AHRF's 2023 postcensal estimates sum to 1,031,890; the ACS 2021
+5-year ZCTA total in `raw/` sums to 982,285. Both are legitimate, different vintages.
+Do not mix them in one column, and label whichever you report.
+
+**A ZCTA→county aggregation was removed as unsound.** `generate_county_chr.py`
+previously rebuilt this table by aggregating the ZCTA-level master back to county,
+which corrupted published values: the master *broadcasts* each county value onto every
+ZCTA in that county, so averaging an identical value against itself drifted
+`Pct_Poor_Fair_Health` from a published 16.4 to 19.9 in Kent, and summing a county count
+across its ZCTAs inflated Kent's premature deaths from a published 2,920 to 56,892
+(19.5×). CHR publishes these counties directly, so the table is now a straight
+projection of the raw release.
+
+### City table — `Delaware_City_Chronic_Disease.csv` (79 rows)
+
+| Column | Source |
+|---|---|
+| `City_Municipality` | CDC PLACES 2024 `locationname` |
+| `Adult_Obesity_Pct`, `Diabetes_Pct`, `Coronary_Heart_Disease_Pct` | PLACES, published (age-adjusted) |
+| `*_CI_Low` / `*_CI_High` | PLACES, published confidence limits |
+| `*_Crude_Pct` | PLACES, published crude series (carried for auditability) |
+
+PLACES publishes each measure twice — **age-adjusted** and **crude** prevalence. The
+primary columns are age-adjusted, which is the series to compare across places because
+crude rates confound health with a place's age structure. The crude series is kept in
+`*_Crude_Pct` columns so the choice is visible rather than hidden. (The older
+`PLACES_Delaware_City.csv` resolved this with `aggfunc="first"` — whatever row the API
+returned first — which happened to be age-adjusted but was never stated.) The script
+asserts the vintage is uniformly 2023 and fails rather than mixing years silently.
+
+These are CDC's **model-based small-area estimates, not observed counts.** Report them
+with their confidence limits, and do not read small differences between neighbouring
+places as meaningful without checking the intervals separate.
+
+### Geography warning
+
+Provider ratios are **county-level** (3 observations) and come from CHR. Chronic-disease
+measures are **city/place-level** (79) and come from PLACES. These two tables share no
+common geography and must not be joined to each other.
+
 ## Project Structure
 
 - extract_census.py: Main ETL Pipeline Script (merges spatial, ACS, BRFSS, CHR, and calculated metrics)
@@ -36,8 +105,12 @@ snapshot* button in each citation panel.
 - raw_sources.py: Read-only accessor for the archived raw manifest, used by the UI
 - raw/: Unmodified publisher snapshots + raw/sources.json manifest + raw/SOURCES.md citations
 - gen_health_data.py: Downloads BRFSS (CDC API) and CHR (County Health Rankings website) CSV files from official sources
+- generate_county_chr.py: Rebuilds Delaware_County_CHR.csv as a straight projection of the raw CHR release (verifies every value against the snapshot)
+- build_city_chronic_disease_table.py: Rebuilds Delaware_City_Chronic_Disease.csv from the raw CDC PLACES snapshot (verifies every value against the snapshot)
 - BRFSS_Delaware.csv: CDC BRFSS 2024 Delaware state-level prevalence (public-health measures)
 - CHR_Delaware.csv: County Health Rankings 2024 medical/public-health indicators
+- Delaware_County_CHR.csv: 3-county table — published CHR figures + AHRF county population
+- Delaware_City_Chronic_Disease.csv: 79-city table — published PLACES obesity / diabetes / coronary heart disease
 - .env: API key configuration
 - requirements.txt: Python dependencies
 - Delaware_ZCTA_Health_Master_Spatial.geojson: Master Spatial GeoJSON for Tableau

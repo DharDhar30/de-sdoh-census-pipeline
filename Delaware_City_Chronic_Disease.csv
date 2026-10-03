@@ -1,0 +1,80 @@
+City_Municipality,Adult_Obesity_Pct,Adult_Obesity_Pct_CI_Low,Adult_Obesity_Pct_CI_High,Adult_Obesity_Pct_Crude_Pct,Diabetes_Pct,Diabetes_Pct_CI_Low,Diabetes_Pct_CI_High,Diabetes_Pct_Crude_Pct,Coronary_Heart_Disease_Pct,Coronary_Heart_Disease_Pct_CI_Low,Coronary_Heart_Disease_Pct_CI_High,Coronary_Heart_Disease_Pct_Crude_Pct,State,PLACES_Vintage,PLACES_Measure_Type,Geography_Level
+Arden,29.5,24.3,35.1,29.0,7.7,6.5,8.9,12.0,4.4,3.8,5.0,7.4,Delaware,2023,Age-adjusted prevalence,City / place
+Ardencroft,29.1,23.8,35.0,29.0,7.6,6.4,8.9,10.6,4.5,3.8,5.2,6.9,Delaware,2023,Age-adjusted prevalence,City / place
+Ardentown,29.0,23.7,34.6,28.3,7.6,6.4,8.8,12.5,4.3,3.7,4.9,8.0,Delaware,2023,Age-adjusted prevalence,City / place
+Bear,35.7,30.0,41.3,36.0,12.1,10.7,13.6,12.8,5.3,4.7,5.8,5.4,Delaware,2023,Age-adjusted prevalence,City / place
+Bellefonte,31.5,25.9,37.3,32.9,9.0,7.7,10.3,10.9,5.0,4.4,5.7,5.9,Delaware,2023,Age-adjusted prevalence,City / place
+Bethany Beach,27.8,22.7,33.1,26.6,6.5,5.6,7.5,12.6,4.0,3.6,4.5,9.4,Delaware,2023,Age-adjusted prevalence,City / place
+Bethel,38.3,32.1,44.5,38.1,11.9,10.4,13.6,17.9,7.3,6.5,8.2,12.4,Delaware,2023,Age-adjusted prevalence,City / place
+Blades,37.6,31.6,43.6,37.3,11.5,10.0,13.0,13.5,5.8,5.1,6.5,7.3,Delaware,2023,Age-adjusted prevalence,City / place
+Bowers,42.8,36.5,49.3,42.4,11.4,10.0,13.1,15.5,5.9,5.2,6.8,8.8,Delaware,2023,Age-adjusted prevalence,City / place
+Bridgeville,37.0,31.0,43.4,35.4,11.3,9.8,12.9,17.7,6.1,5.4,6.9,11.8,Delaware,2023,Age-adjusted prevalence,City / place
+Brookside,35.4,29.6,41.1,35.4,11.9,10.5,13.4,12.7,5.8,5.2,6.4,6.3,Delaware,2023,Age-adjusted prevalence,City / place
+Camden,41.5,35.1,48.1,40.8,11.2,9.7,12.7,13.9,4.9,4.3,5.5,6.9,Delaware,2023,Age-adjusted prevalence,City / place
+Cheswold,47.0,40.5,53.8,46.7,14.5,12.9,16.3,18.3,6.3,5.6,7.0,8.4,Delaware,2023,Age-adjusted prevalence,City / place
+Claymont,33.4,27.7,38.7,33.8,10.5,9.2,11.9,11.0,5.0,4.4,5.5,5.1,Delaware,2023,Age-adjusted prevalence,City / place
+Clayton,42.1,35.8,48.7,43.1,11.2,9.8,12.6,11.2,4.7,4.2,5.3,4.4,Delaware,2023,Age-adjusted prevalence,City / place
+Dagsboro,33.8,27.9,39.7,33.9,9.6,8.3,10.9,12.0,5.5,4.9,6.3,7.3,Delaware,2023,Age-adjusted prevalence,City / place
+Delaware City,33.5,27.7,39.4,33.6,9.8,8.5,11.2,11.9,5.4,4.7,6.0,6.6,Delaware,2023,Age-adjusted prevalence,City / place
+Delmar,35.7,30.0,41.7,35.2,10.5,9.3,11.9,12.2,5.5,4.9,6.1,7.0,Delaware,2023,Age-adjusted prevalence,City / place
+Dewey Beach,28.8,23.5,34.4,28.7,6.9,5.9,7.9,10.4,4.4,3.9,5.0,7.2,Delaware,2023,Age-adjusted prevalence,City / place
+Dover,47.2,41.0,53.9,44.8,14.5,12.9,16.3,14.5,5.9,5.4,6.6,6.4,Delaware,2023,Age-adjusted prevalence,City / place
+Dover Base Housing,42.4,36.3,49.0,39.4,12.5,10.9,14.2,5.5,5.5,4.9,6.2,2.1,Delaware,2023,Age-adjusted prevalence,City / place
+Edgemoor,35.4,29.6,41.0,35.8,11.0,9.7,12.3,12.4,5.0,4.5,5.5,5.7,Delaware,2023,Age-adjusted prevalence,City / place
+Ellendale,38.8,32.8,45.0,38.8,12.6,11.1,14.2,14.5,6.5,5.8,7.3,8.0,Delaware,2023,Age-adjusted prevalence,City / place
+Elsmere,36.9,30.9,42.8,37.1,12.4,10.9,13.9,13.0,6.1,5.5,6.7,6.3,Delaware,2023,Age-adjusted prevalence,City / place
+Farmington,41.6,35.1,48.3,42.6,10.7,9.2,12.3,11.5,5.7,4.8,6.5,6.1,Delaware,2023,Age-adjusted prevalence,City / place
+Felton,43.1,36.8,49.6,43.4,11.8,10.2,13.5,14.0,5.3,4.7,6.1,6.4,Delaware,2023,Age-adjusted prevalence,City / place
+Fenwick Island,28.4,23.2,34.0,27.1,6.9,5.7,8.1,13.0,4.5,3.8,5.3,10.4,Delaware,2023,Age-adjusted prevalence,City / place
+Frankford,36.9,30.8,42.7,36.7,12.2,10.7,13.7,12.7,5.7,5.1,6.4,6.0,Delaware,2023,Age-adjusted prevalence,City / place
+Frederica,42.9,36.5,49.5,43.3,11.8,10.2,13.5,12.8,5.2,4.5,5.9,5.6,Delaware,2023,Age-adjusted prevalence,City / place
+Georgetown,40.7,34.5,47.0,39.5,14.9,13.2,16.6,14.7,7.6,6.8,8.3,7.9,Delaware,2023,Age-adjusted prevalence,City / place
+Glasgow,31.7,26.3,37.1,32.7,9.7,8.5,11.0,10.9,4.6,4.1,5.1,4.8,Delaware,2023,Age-adjusted prevalence,City / place
+Greenville,26.6,21.7,31.6,26.2,7.8,6.7,8.9,10.2,4.3,3.8,4.8,6.6,Delaware,2023,Age-adjusted prevalence,City / place
+Greenwood,36.1,30.2,42.3,35.8,10.9,9.6,12.3,11.3,6.0,5.3,6.7,6.4,Delaware,2023,Age-adjusted prevalence,City / place
+Harrington,43.3,37.1,50.1,43.1,11.7,10.2,13.4,12.7,5.3,4.7,6.0,5.9,Delaware,2023,Age-adjusted prevalence,City / place
+Hartly,38.7,32.9,44.9,43.1,10.5,9.2,12.0,14.2,5.2,4.5,6.0,7.4,Delaware,2023,Age-adjusted prevalence,City / place
+Henlopen Acres,26.2,21.1,31.5,25.6,6.8,5.8,7.9,11.3,4.1,3.5,4.7,8.9,Delaware,2023,Age-adjusted prevalence,City / place
+Highland Acres,41.8,35.4,48.5,41.6,11.5,10.2,13.1,15.5,5.4,4.8,6.0,8.1,Delaware,2023,Age-adjusted prevalence,City / place
+Hockessin,25.6,20.9,30.6,25.6,7.4,6.4,8.4,10.5,3.9,3.5,4.3,6.1,Delaware,2023,Age-adjusted prevalence,City / place
+Houston,44.1,37.6,50.5,44.2,12.2,10.7,13.9,14.1,6.3,5.5,7.1,7.2,Delaware,2023,Age-adjusted prevalence,City / place
+Kent Acres,43.1,37.0,49.8,43.4,12.6,11.1,14.3,15.0,5.5,5.0,6.2,6.9,Delaware,2023,Age-adjusted prevalence,City / place
+Kenton,42.9,36.4,49.7,43.5,11.5,10.0,13.1,14.3,5.8,5.0,6.5,7.2,Delaware,2023,Age-adjusted prevalence,City / place
+Laurel,40.3,34.2,46.4,40.0,13.1,11.6,14.7,13.0,6.5,5.8,7.3,6.3,Delaware,2023,Age-adjusted prevalence,City / place
+Leipsic,42.3,36.0,48.9,42.5,11.1,9.6,12.7,13.0,6.0,5.2,6.7,7.3,Delaware,2023,Age-adjusted prevalence,City / place
+Lewes,31.1,25.6,36.8,29.6,7.9,6.9,9.1,14.2,4.8,4.3,5.5,10.5,Delaware,2023,Age-adjusted prevalence,City / place
+Lincoln,38.4,32.4,44.6,38.7,12.2,10.8,13.8,15.6,6.2,5.5,6.8,8.3,Delaware,2023,Age-adjusted prevalence,City / place
+Little Creek,43.8,37.5,50.4,43.5,12.6,11.0,14.4,15.1,7.0,6.2,7.9,8.7,Delaware,2023,Age-adjusted prevalence,City / place
+Long Neck,32.3,26.6,38.3,31.8,8.3,7.2,9.5,14.4,5.1,4.6,5.7,10.2,Delaware,2023,Age-adjusted prevalence,City / place
+Magnolia,44.4,37.9,51.0,45.1,12.4,10.8,14.1,12.9,6.0,5.2,6.9,6.0,Delaware,2023,Age-adjusted prevalence,City / place
+Middletown,32.9,27.3,38.4,33.3,10.2,9.0,11.5,11.2,4.8,4.3,5.3,5.1,Delaware,2023,Age-adjusted prevalence,City / place
+Milford,40.6,35.3,46.0,39.9,12.5,11.1,13.9,15.1,6.1,5.5,6.7,8.1,Delaware,2023,Age-adjusted prevalence,City / place
+Millsboro,34.5,28.9,40.5,34.3,10.1,8.8,11.5,13.2,5.5,4.9,6.2,8.0,Delaware,2023,Age-adjusted prevalence,City / place
+Millville,31.6,26.0,37.3,31.9,8.1,7.0,9.3,14.6,4.9,4.4,5.6,9.6,Delaware,2023,Age-adjusted prevalence,City / place
+Milton,32.6,27.0,38.7,32.4,8.7,7.5,9.9,12.6,5.0,4.4,5.6,8.0,Delaware,2023,Age-adjusted prevalence,City / place
+New Castle,33.2,27.5,39.0,33.2,9.7,8.4,10.9,12.2,4.7,4.2,5.3,6.3,Delaware,2023,Age-adjusted prevalence,City / place
+Newark,33.3,27.8,38.8,29.6,10.5,9.3,11.9,7.8,5.4,4.9,6.0,4.3,Delaware,2023,Age-adjusted prevalence,City / place
+Newport,37.2,31.3,43.0,37.3,12.8,11.4,14.4,13.0,6.2,5.6,6.9,6.2,Delaware,2023,Age-adjusted prevalence,City / place
+North Star,25.6,20.9,30.8,26.1,7.2,6.3,8.2,10.0,3.9,3.5,4.4,5.7,Delaware,2023,Age-adjusted prevalence,City / place
+Ocean View,31.3,25.8,37.0,31.0,8.2,7.1,9.3,14.7,5.0,4.5,5.7,10.4,Delaware,2023,Age-adjusted prevalence,City / place
+Odessa,29.4,23.8,34.9,29.2,7.5,6.4,8.7,10.0,4.1,3.6,4.8,5.8,Delaware,2023,Age-adjusted prevalence,City / place
+Pike Creek,26.9,22.0,31.9,27.8,8.0,6.9,9.1,10.1,4.1,3.7,4.6,5.3,Delaware,2023,Age-adjusted prevalence,City / place
+Pike Creek Valley,29.9,24.7,35.5,29.9,8.9,7.7,10.1,10.0,4.6,4.1,5.1,5.3,Delaware,2023,Age-adjusted prevalence,City / place
+Port Penn,29.4,24.2,35.0,30.1,7.6,6.5,8.9,9.5,4.4,3.7,5.1,5.4,Delaware,2023,Age-adjusted prevalence,City / place
+Rehoboth Beach,28.4,23.0,34.0,28.1,6.8,5.8,7.8,11.9,4.3,3.8,4.9,8.6,Delaware,2023,Age-adjusted prevalence,City / place
+Rising Sun-Lebanon,39.9,33.8,46.5,40.3,10.9,9.6,12.4,11.4,4.8,4.3,5.4,4.9,Delaware,2023,Age-adjusted prevalence,City / place
+Riverview,41.0,34.5,47.5,41.9,10.6,9.2,12.0,13.7,5.2,4.6,5.7,6.7,Delaware,2023,Age-adjusted prevalence,City / place
+Rodney Village,48.6,42.1,55.3,47.8,15.5,13.7,17.4,16.7,5.9,5.3,6.6,6.7,Delaware,2023,Age-adjusted prevalence,City / place
+Seaford,38.7,32.6,44.7,37.8,12.6,11.1,14.1,14.5,6.4,5.7,7.1,8.1,Delaware,2023,Age-adjusted prevalence,City / place
+Selbyville,33.8,28.0,39.8,33.7,9.6,8.3,10.9,13.4,5.4,4.8,6.0,8.2,Delaware,2023,Age-adjusted prevalence,City / place
+Slaughter Beach,30.8,25.4,36.7,30.8,8.3,7.0,9.7,15.3,5.4,4.6,6.2,11.1,Delaware,2023,Age-adjusted prevalence,City / place
+Smyrna,43.4,37.1,49.9,43.6,11.8,10.5,13.3,12.9,5.0,4.5,5.5,5.5,Delaware,2023,Age-adjusted prevalence,City / place
+South Bethany,27.3,22.2,32.6,26.2,6.3,5.4,7.2,12.2,4.1,3.5,4.6,9.2,Delaware,2023,Age-adjusted prevalence,City / place
+St. Georges,32.4,26.8,37.9,33.5,10.7,9.4,12.0,12.8,5.0,4.5,5.5,5.7,Delaware,2023,Age-adjusted prevalence,City / place
+Townsend,32.9,27.2,38.5,33.6,9.8,8.5,11.2,8.9,4.6,4.0,5.2,3.7,Delaware,2023,Age-adjusted prevalence,City / place
+Viola,41.9,35.3,48.6,42.0,10.8,9.3,12.4,14.0,5.7,5.0,6.5,8.1,Delaware,2023,Age-adjusted prevalence,City / place
+Wilmington,41.0,34.7,46.8,41.0,15.1,13.4,16.8,16.0,6.2,5.6,6.8,6.6,Delaware,2023,Age-adjusted prevalence,City / place
+Wilmington Manor,35.2,29.4,41.1,35.4,11.4,10.0,12.8,12.7,5.5,4.9,6.1,6.2,Delaware,2023,Age-adjusted prevalence,City / place
+Woodside,42.1,35.5,48.9,43.2,11.2,9.7,12.7,14.3,6.0,5.2,6.7,7.5,Delaware,2023,Age-adjusted prevalence,City / place
+Woodside East,44.4,38.1,51.0,44.6,12.6,11.1,14.1,14.5,5.5,4.9,6.1,6.5,Delaware,2023,Age-adjusted prevalence,City / place
+Wyoming,41.8,35.5,48.4,41.9,11.3,10.0,12.9,11.1,5.1,4.5,5.7,4.8,Delaware,2023,Age-adjusted prevalence,City / place
