@@ -4,7 +4,7 @@ Proof-of-provenance index for every dataset this pipeline consumes. Each file in
 directory is an **unmodified copy** of what a public publisher served - original column
 names, original values, no cleaning, no renaming and no cross-source joins.
 
-Manifest generated: **2026-10-03T16:08:15Z** by `fetch_raw_data.py`.
+Manifest generated: **2026-10-05T16:02:15Z** by `fetch_raw_data.py`.
 
 Re-verify everything at any time:
 
@@ -18,9 +18,9 @@ python3 fetch_raw_data.py --verify
 |---|---|---|---|---|---|
 | 1 | Census TIGER 2020 ZCTA Boundaries (DE) | U.S. Census Bureau | ZCTA | 68 x 7 | `raw/census_tiger_2020_de_zctas_raw.csv` |
 | 2 | Census TIGER 2020 County Boundaries (DE) | U.S. Census Bureau | County | 3 x 12 | `raw/census_tiger_2020_de_counties_raw.csv` |
-| 3 | Census ACS 2021 5-Year Profile (ZCTA) | U.S. Census Bureau | ZCTA | 68 x 10 | `raw/census_acs_2021_zcta_de_raw.csv` |
+| 3 | Census ACS 2024 5-Year Profile (ZCTA) | U.S. Census Bureau | ZCTA | 68 x 10 | `raw/census_acs_2024_zcta_de_raw.csv` |
 | 4 | CDC BRFSS 2024 Prevalence (DE, state level) | U.S. Centers for Disease Control and Prevention | State | 165 x 27 | `raw/cdc_brfss_2024_de_raw.csv` |
-| 5 | County Health Rankings 2024 (DE counties) | County Health Rankings & Roadmaps (Univ. of Wisconsin Population Health Institute) | County | 3 x 272 | `raw/chr_2024_de_counties_raw.csv` |
+| 5 | County Health Rankings 2025 (DE counties) | County Health Rankings & Roadmaps (Univ. of Wisconsin Population Health Institute) | County | 3 x 618 | `raw/chr_2025_de_counties_raw.csv` |
 | 6 | CDC PLACES 2024 Place-Level (DE cities) | U.S. Centers for Disease Control and Prevention | City / place | 6,320 x 20 | `raw/cdc_places_2024_de_city_raw.csv` |
 | 7 | HRSA AHRF 2024-2025 (DE counties, provider supply) | Health Resources & Services Administration (HRSA), U.S. Dept. of Health & Human Services | County | 3 x 3395 | `raw/hrsa_ahrf_2025_de_counties_raw.csv` |
 | 8 | CDC PLACES 2024 ZCTA-Level (DE chronic disease & prevention) | U.S. Centers for Disease Control and Prevention | ZCTA | 2,597 x 18 | `raw/cdc_places_2024_de_zcta_raw.csv` |
@@ -55,20 +55,20 @@ python3 fetch_raw_data.py --verify
 - **SHA-256:** `50dcd867a2bdb426028d8fcd01fb65702ed42573a15d3f109968b4ff3229f467`
 - **Note:** All 3 Delaware counties; source of County_FIPS / County_Name in the master.
 
-### 3. Census ACS 2021 5-Year Profile (ZCTA)
+### 3. Census ACS 2024 5-Year Profile (ZCTA)
 
 - **Publisher:** U.S. Census Bureau
 - **Dataset:** American Community Survey 5-Year Data Profile (DP02 / DP03 / DP05)
-- **Vintage:** 2021 5-year estimates (2017-2021)
+- **Vintage:** 2024 5-year estimates (2020-2024)
 - **Geography:** ZCTA (Delaware rows of a national response)
-- **Retrieved (UTC):** 2026-10-03T16:08:15Z
-- **File:** `raw/census_acs_2021_zcta_de_raw.csv` (68 rows x 10 columns)
-- **Source URL:** `https://api.census.gov/data/2021/acs/acs5/profile?get=DP05_0001E,DP05_0018E,DP05_0024PE,DP03_0062E,DP03_0128PE,DP03_0099PE,DP03_0021PE,DP02_0154PE,DP02_0114PE&for=zip%20code%20tabulation%20area:*&key=***REDACTED***`
+- **Retrieved (UTC):** 2026-10-05T16:01:39Z
+- **File:** `raw/census_acs_2024_zcta_de_raw.csv` (68 rows x 10 columns)
+- **Source URL:** `https://api.census.gov/data/2024/acs/acs5/profile?get=DP05_0001E,DP05_0018E,DP05_0024PE,DP03_0062E,DP03_0128PE,DP03_0099PE,DP03_0021PE,DP02_0154PE,DP02_0114PE&for=zip%20code%20tabulation%20area:*&key=***REDACTED***`
 - **Landing page:** https://data.census.gov/
 - **License / terms:** Public domain (U.S. Government work)
-- **Rows downloaded before regional filter:** 33,774
-- **SHA-256:** `8b38a272424c0c9dc37517e9fca9dfb85f871699c3c72957d7fe38a86b0acbc5`
-- **Note:** API variable codes retained (no renaming). 33,774 ZCTAs were returned nationwide; the snapshot keeps the Delaware rows used by the pipeline.
+- **Rows downloaded before regional filter:** 33,772
+- **SHA-256:** `139db60df3d5c84352676ce0bc1386cf6cd31bc9876aaa5465eed1b9ec4636d1`
+- **Note:** API variable codes retained (no renaming). 33,772 ZCTAs were returned nationwide; the snapshot keeps the Delaware rows used by the pipeline.
 
 ### 4. CDC BRFSS 2024 Prevalence (DE, state level)
 
@@ -84,19 +84,19 @@ python3 fetch_raw_data.py --verify
 - **SHA-256:** `6bd3f26703524f876fc3cbac5b602a63d4cdb3829b0dc80bd476f8c524dac69c`
 - **Note:** Byte-for-byte copy of the CDC Socrata CSV response (no re-encoding, no column renaming). This is a STATE-level survey, so every row here describes Delaware as a whole - not an individual ZCTA.
 
-### 5. County Health Rankings 2024 (DE counties)
+### 5. County Health Rankings 2025 (DE counties)
 
 - **Publisher:** County Health Rankings & Roadmaps (Univ. of Wisconsin Population Health Institute)
-- **Dataset:** 2024 County Health Release workbook v1 (`Select Measure Data` sheet)
-- **Vintage:** 2024 release (clinical-care source year 2022)
+- **Dataset:** 2025 County Health Rankings Data v4 (`Select Measure Data` + `Additional Measure Data` sheets, merged on FIPS)
+- **Vintage:** 2025 release (clinical-care source year 2022; see Sources & Years sheets)
 - **Geography:** County (Kent, New Castle, Sussex) - broadcast onto ZCTA rows downstream
-- **Retrieved (UTC):** 2026-10-02T16:48:02Z
-- **File:** `raw/chr_2024_de_counties_raw.csv` (3 rows x 272 columns)
-- **Source URL:** `https://www.countyhealthrankings.org/sites/default/files/media/document/2024_county_health_release_data_-_v1.xlsx`
+- **Retrieved (UTC):** 2026-10-05T16:02:15Z
+- **File:** `raw/chr_2025_de_counties_raw.csv` (3 rows x 618 columns)
+- **Source URL:** `https://www.countyhealthrankings.org/sites/default/files/media/document/2025%20County%20Health%20Rankings%20Data%20-%20v4.xlsx`
 - **Landing page:** https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation
 - **License / terms:** Free for public use with attribution (CHR&R / UW PHI)
-- **SHA-256:** `68fc6ebcbc92701a01bfce521c8ae83e9396244b821b9c7ba24c0b5a50bc46d5`
-- **Note:** Workbook sheet 'Select Measure Data', every measure column kept, Delaware counties only (FIPS 10001/10003/10005). The two header rows the publisher ships are joined with '__'; no values are altered or rounded.
+- **SHA-256:** `5f795de7de4e48b41dfc668c6d2a9a6606cb98a7fb6b9f307cd498dd15750844`
+- **Note:** Workbook sheets 'Select Measure Data' + 'Additional Measure Data' merged on FIPS, every measure column kept, Delaware counties only (FIPS 10001/10003/10005). The two header rows the publisher ships are joined with '__'; no values are altered or rounded.
 
 ### 6. CDC PLACES 2024 Place-Level (DE cities)
 
@@ -144,12 +144,35 @@ python3 fetch_raw_data.py --verify
 
 ## Notes on geography
 
-- ACS 2021 and the TIGER boundaries are genuinely ZCTA-level.
+- ACS 2024, the TIGER boundaries and the PLACES ZCTA release are genuinely
+  ZCTA-level.
+- PLACES values are **model-based estimates** produced from BRFSS survey data by
+  small-area modelling - they are not direct counts of conditions. The publisher's
+  confidence limits are archived alongside every measure. PLACES does not publish an
+  estimate for every ZCTA; those rows are NULL rather than filled in.
 - BRFSS is a **state** survey, so its Delaware figures describe the whole state and
   are broadcast onto every ZCTA row downstream (identical across ZCTAs).
-- CHR reports at **county** level, so its figures are broadcast onto the ZCTAs in that
-  county via `County_FIPS`.
+- CHR and the HRSA AHRF provider ratios report at **county** level, so their figures
+  are broadcast onto the ZCTAs in that county via `County_FIPS`.
 - The `Geography_Level` field in `Delaware_ZCTA_Health_Master_Column_Provenance.csv`
   (also the `Column_Provenance` sheet of the master workbook) labels each measure,
   and the UI's 'geography they were actually collected at' filter uses the same field,
   so non-ZCTA measures can be filtered out in the UI or in Tableau.
+
+## Delaware ZCTA selection
+
+The master contains **68** ZCTAs. Getting that number right needed two filters, not
+one. Clipping the TIGER ZCTAs to the Delaware state boundary keeps every ZCTA that
+*touches* Delaware, and border ZCTAs keep their full multi-state polygon - Delaware's
+north-east corner touches Maryland and Pennsylvania. A centroid test alone therefore
+let 25 Maryland, Pennsylvania and New Jersey ZCTAs through, including ZCTA 21921
+(Annapolis, MD). Their ACS populations were merged in, inflating the master's total
+population from 982,285 to 1,190,837 - an overstatement of about 21%, with the NJ and
+Philadelphia-area rows assigned to Kent, New Castle and Sussex counties.
+
+So `fetch_raw_data.py` and `extract_census.py` both require **both** conditions:
+
+1. the ZCTA's centroid falls inside the Delaware state polygon, and
+2. the ZCTA's ZIP is a Delaware ZIP (`197`, `198` or `199`).
+
+Either test on its own is insufficient.

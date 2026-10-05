@@ -62,7 +62,7 @@ def get_source(source_id: str) -> dict | None:
 
 
 def source_option_labels() -> dict:
-    """Map the UI radio label -> source id, e.g. {"Raw \u00b7 ACS 2021...": "..."}."""
+    """Map the UI radio label -> source id, e.g. {"Raw · ACS 2024...": "..."}."""
     return {f"Raw \u00b7 {src['label']}": src["id"] for src in list_sources()}
 
 

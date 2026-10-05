@@ -20,7 +20,8 @@ load_dotenv(os.path.join(ROOT, ".env"))
 CENSUS_API_KEY = os.getenv("CENSUS_API_KEY", "")
 
 # --- Source 1: Census ACS 5-Year Data Profile (same variables as the ETL) ----
-ACS_PROFILE_URL = "https://api.census.gov/data/2021/acs/acs5/profile"
+# Most-current vintage: 2024 5-year (2020-2024). Verified live 2026-10-05.
+ACS_PROFILE_URL = "https://api.census.gov/data/2024/acs/acs5/profile"
 ACS_VARS = [
     "DP05_0001E",
     "DP05_0018E",
@@ -40,13 +41,21 @@ BRFSS_URL = (
     "&$limit=10000"
 )
 
-# --- Source 3: County Health Rankings 2024 release workbook ----------------
+# --- Source 3: County Health Rankings 2025 release workbook ----------------
+# Most-current release: 2025 Annual Data Release, v4 file. Note the filename
+# uses spaces ("2025 County Health Rankings Data - v4.xlsx"), NOT the old
+# underscore pattern ("2024_county_health_release_data_-_v1.xlsx" -> 404).
+# Health-behavior measures (smoking, obesity, inactivity, drinking, STIs,
+# teen births, alcohol-impaired deaths) moved from "Select Measure Data" to
+# the "Additional Measure Data" sheet in the 2025 release, so BOTH sheets are
+# parsed and merged on FIPS. "Low Birthweight" was renamed "Low Birth Weight".
 CHR_URL = (
     "https://www.countyhealthrankings.org/"
     "sites/default/files/media/document/"
-    "2024_county_health_release_data_-_v1.xlsx"
+    "2025%20County%20Health%20Rankings%20Data%20-%20v4.xlsx"
 )
 CHR_SHEET = "Select Measure Data"
+CHR_ADDL_SHEET = "Additional Measure Data"
 DE_COUNTY_FIPS = {"10001", "10003", "10005"}  # Kent, New Castle, Sussex
 
 # --- Source 4: CDC PLACES city/place-level estimates -----------------------
@@ -223,9 +232,9 @@ def fetch_tiger_de_counties() -> tuple:
 # ---------------------------------------------------------------------------
 # Source 1 - Census ACS 5-Year Data Profile
 # ---------------------------------------------------------------------------
-def fetch_census_acs_2021(de_zcta_ids: set) -> tuple:
-    """Raw ACS 2021 5-year profile response, filtered to the Delaware ZCTAs."""
-    print("  Querying the Census ACS 2021 5-year profile API...")
+def fetch_census_acs_2024(de_zcta_ids: set) -> tuple:
+    """Raw ACS 2024 5-year profile response, filtered to the Delaware ZCTAs."""
+    print("  Querying the Census ACS 2024 5-year profile API...")
     url = (
         f"{ACS_PROFILE_URL}?get={','.join(ACS_VARS)}"
         "&for=zip%20code%20tabulation%20area:*"
@@ -249,7 +258,7 @@ def fetch_census_acs_2021(de_zcta_ids: set) -> tuple:
         mask = frame[id_col].astype(str).str.zfill(5).isin(de_zcta_ids)
         frame = frame[mask].reset_index(drop=True)
 
-    path = _write_raw_frame("census_acs_2021_zcta_de_raw.csv", frame)
+    path = _write_raw_frame("census_acs_2024_zcta_de_raw.csv", frame)
     return path, {
         "note": (
             f"API variable codes retained (no renaming). {downloaded:,} ZCTAs were returned "
@@ -287,15 +296,11 @@ def fetch_cdc_brfss_2024_de() -> tuple:
 
 
 # ---------------------------------------------------------------------------
-# Source 3 - County Health Rankings 2024 release workbook
+# Source 3 - County Health Rankings 2025 release workbook
 # ---------------------------------------------------------------------------
-def fetch_chr_2024_de_counties() -> tuple:
-    """Delaware county rows from the official 2024 CHR release workbook."""
-    print("  Downloading the 2024 County Health Rankings release workbook (~16 MB)...")
-    resp = requests.get(CHR_URL, timeout=TIMEOUT)
-    resp.raise_for_status()
-
-    grid = pd.read_excel(io.BytesIO(resp.content), sheet_name=CHR_SHEET, header=None)
+def _parse_chr_sheet(content: bytes, sheet: str) -> pd.DataFrame:
+    """Parse one CHR workbook sheet (two header rows joined with '__')."""
+    grid = pd.read_excel(io.BytesIO(content), sheet_name=sheet, header=None)
     group = grid.iloc[0].ffill()
     measure = grid.iloc[1]
     columns = []
@@ -306,21 +311,62 @@ def fetch_chr_2024_de_counties() -> tuple:
 
     body = grid.iloc[2:].copy()
     body.columns = columns
-    body = body.reset_index(drop=True)
+    return body.reset_index(drop=True)
 
-    fips_col = next((c for c in body.columns if c.strip().endswith("FIPS")), None)
-    if fips_col is None:
-        raise RuntimeError(
-            f"No FIPS column in '{CHR_SHEET}'; first columns were {list(body.columns[:5])}"
-        )
-    de_rows = body[_fips_series(body[fips_col]).isin(DE_COUNTY_FIPS)].reset_index(drop=True)
-    if de_rows.empty:
+
+def fetch_chr_2025_de_counties() -> tuple:
+    """Delaware county rows from the official 2025 CHR release workbook.
+
+    The 2025 release split measures across two sheets: "Select Measure Data"
+    (outcomes + clinical care) and "Additional Measure Data" (health
+    behaviors: smoking, obesity, inactivity, drinking, STIs, teen births,
+    alcohol-impaired deaths). Both are parsed and merged on FIPS so the
+    Delaware snapshot keeps the same measure coverage as the 2024 one.
+    """
+    print("  Downloading the 2025 County Health Rankings release workbook (~16 MB)...")
+    resp = requests.get(CHR_URL, timeout=TIMEOUT)
+    resp.raise_for_status()
+
+    select = _parse_chr_sheet(resp.content, CHR_SHEET)
+    try:
+        addl = _parse_chr_sheet(resp.content, CHR_ADDL_SHEET)
+    except ValueError:
+        addl = None
+
+    def _fips_col(frame: pd.DataFrame, sheet: str) -> str:
+        col = next((c for c in frame.columns if c.strip().endswith("FIPS")), None)
+        if col is None:
+            raise RuntimeError(
+                f"No FIPS column in '{sheet}'; first columns were {list(frame.columns[:5])}"
+            )
+        return col
+
+    select_fips = _fips_col(select, CHR_SHEET)
+    select["_join_fips"] = _fips_series(select[select_fips])
+    de_select = select[select["_join_fips"].isin(DE_COUNTY_FIPS)].reset_index(drop=True)
+    if de_select.empty:
         raise RuntimeError("No Delaware county rows found in the CHR workbook.")
 
-    path = _write_raw_frame("chr_2024_de_counties_raw.csv", de_rows)
+    if addl is not None:
+        addl_fips = _fips_col(addl, CHR_ADDL_SHEET)
+        addl["_join_fips"] = _fips_series(addl[addl_fips])
+        de_addl = addl[addl["_join_fips"].isin(DE_COUNTY_FIPS)].reset_index(drop=True)
+        # Keep Select-sheet columns as-is; add only Additional columns not
+        # already present (FIPS/State/County overlap). State row (FIPS 10000)
+        # is dropped by the FIPS filter either way.
+        extra = [c for c in de_addl.columns if c not in de_select.columns and c != "_join_fips"]
+        de_rows = de_select.merge(
+            de_addl[["_join_fips"] + extra], on="_join_fips", how="left"
+        ).drop(columns=["_join_fips"])
+        sheets_note = f"'{CHR_SHEET}' + '{CHR_ADDL_SHEET}' merged on FIPS"
+    else:
+        de_rows = de_select.drop(columns=["_join_fips"])
+        sheets_note = f"'{CHR_SHEET}'"
+
+    path = _write_raw_frame("chr_2025_de_counties_raw.csv", de_rows)
     return path, {
         "note": (
-            f"Workbook sheet '{CHR_SHEET}', every measure column kept, Delaware counties "
+            f"Workbook sheets {sheets_note}, every measure column kept, Delaware counties "
             "only (FIPS 10001/10003/10005). The two header rows the publisher ships are "
             "joined with '__'; no values are altered or rounded."
         )
@@ -470,11 +516,11 @@ SOURCES = [
         "fetch": fetch_tiger_de_counties,
     },
     {
-        "id": "census_acs_2021_zcta_de",
-        "label": "Census ACS 2021 5-Year Profile (ZCTA)",
+        "id": "census_acs_2024_zcta_de",
+        "label": "Census ACS 2024 5-Year Profile (ZCTA)",
         "publisher": "U.S. Census Bureau",
         "dataset": "American Community Survey 5-Year Data Profile (DP02 / DP03 / DP05)",
-        "vintage": "2021 5-year estimates (2017-2021)",
+        "vintage": "2024 5-year estimates (2020-2024)",
         "geography": "ZCTA (Delaware rows of a national response)",
         "geo_level": "ZCTA",
         "access": "REST API (JSON) - requires CENSUS_API_KEY in .env",
@@ -484,7 +530,7 @@ SOURCES = [
         ),
         "landing_page": "https://data.census.gov/",
         "license": "Public domain (U.S. Government work)",
-        "fetch": fetch_census_acs_2021,
+        "fetch": fetch_census_acs_2024,
         "args": ("de_zcta_ids",),
     },
     {
@@ -502,18 +548,18 @@ SOURCES = [
         "fetch": fetch_cdc_brfss_2024_de,
     },
     {
-        "id": "chr_2024_de_counties",
-        "label": "County Health Rankings 2024 (DE counties)",
+        "id": "chr_2025_de_counties",
+        "label": "County Health Rankings 2025 (DE counties)",
         "publisher": "County Health Rankings & Roadmaps (Univ. of Wisconsin Population Health Institute)",
-        "dataset": "2024 County Health Release workbook v1 (`Select Measure Data` sheet)",
-        "vintage": "2024 release (clinical-care source year 2022)",
+        "dataset": "2025 County Health Rankings Data v4 (`Select Measure Data` + `Additional Measure Data` sheets, merged on FIPS)",
+        "vintage": "2025 release (clinical-care source year 2022; see Sources & Years sheets)",
         "geography": "County (Kent, New Castle, Sussex) - broadcast onto ZCTA rows downstream",
         "geo_level": "County",
         "access": "Direct file download (.xlsx)",
         "url": CHR_URL,
         "landing_page": "https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation",
         "license": "Free for public use with attribution (CHR&R / UW PHI)",
-        "fetch": fetch_chr_2024_de_counties,
+        "fetch": fetch_chr_2025_de_counties,
     },
     {
         "id": "cdc_places_2024_de_city",
@@ -735,7 +781,7 @@ def _sources_md_footer() -> list:
     return [
         "## Notes on geography",
         "",
-        "- ACS 2021, the TIGER boundaries and the PLACES ZCTA release are genuinely",
+        "- ACS 2024, the TIGER boundaries and the PLACES ZCTA release are genuinely",
         "  ZCTA-level.",
         "- PLACES values are **model-based estimates** produced from BRFSS survey data by",
         "  small-area modelling - they are not direct counts of conditions. The publisher's",

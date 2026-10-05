@@ -18,7 +18,7 @@ education cohorts, not a population total). That one comes from the HRSA AHRF
 postcensal estimate, the only published county total in ./raw.
 
 Inputs
-  raw/chr_2024_de_counties_raw.csv        CHR 2024 release, unmodified
+  raw/chr_2025_de_counties_raw.csv        CHR 2025 release, unmodified
   raw/hrsa_ahrf_2025_de_counties_raw.csv  county population denominators
 Output
   Delaware_County_CHR.csv
@@ -38,7 +38,7 @@ import pandas as pd
 from gen_health_data import CHR_TARGETS, _parse_chr_value
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-CHR_PATH = os.path.join(ROOT, "raw", "chr_2024_de_counties_raw.csv")
+CHR_PATH = os.path.join(ROOT, "raw", "chr_2025_de_counties_raw.csv")
 AHRF_PATH = os.path.join(ROOT, "raw", "hrsa_ahrf_2025_de_counties_raw.csv")
 OUTPUT_PATH = os.path.join(ROOT, "Delaware_County_CHR.csv")
 
@@ -97,6 +97,8 @@ def build_county_chr() -> pd.DataFrame:
     measures = [c for c in CHR_TARGETS if c in out.columns]
     out = out[["County_FIPS", "County_Name", "Total_Population"] + measures]
     out["Population_Source"] = POPULATION_SOURCE
+    # Release-year stamp: CHR 2025 clinical-care source year is 2022
+    # (see the workbook's Sources & Years sheets).
     out["CHR_Data_Year"] = 2022
     return out
 
@@ -140,7 +142,7 @@ def verify_against_raw(out: pd.DataFrame) -> None:
 
 def main() -> None:
     for path, hint in (
-        (CHR_PATH, "chr_2024_de_counties"),
+        (CHR_PATH, "chr_2025_de_counties"),
         (AHRF_PATH, "hrsa_ahrf_2025_de_counties"),
     ):
         if not os.path.exists(path):
@@ -155,7 +157,7 @@ def main() -> None:
 
     print(f"Wrote {os.path.relpath(OUTPUT_PATH, ROOT)}  shape={out.shape}")
     print(f"{len(out)} counties x {len(out.columns)} columns")
-    print("Every value verified identical to raw/chr_2024_de_counties_raw.csv\n")
+    print("Every value verified identical to raw/chr_2025_de_counties_raw.csv\n")
     print(
         out[
             [

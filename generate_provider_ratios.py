@@ -11,7 +11,7 @@ first-party counts instead of being taken on trust.
 
 Inputs
   raw/hrsa_ahrf_2025_de_counties_raw.csv  provider counts + population (AHRF)
-  raw/chr_2024_de_counties_raw.csv        CHR's own published ratios
+  raw/chr_2025_de_counties_raw.csv        CHR's own published ratios
 Output
   Delaware_Provider_Ratios_From_AHRF.csv
 """
@@ -22,7 +22,7 @@ import pandas as pd
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 AHRF_PATH = os.path.join(ROOT, "raw", "hrsa_ahrf_2025_de_counties_raw.csv")
-CHR_PATH = os.path.join(ROOT, "raw", "chr_2024_de_counties_raw.csv")
+CHR_PATH = os.path.join(ROOT, "raw", "chr_2025_de_counties_raw.csv")
 OUTPUT_PATH = os.path.join(ROOT, "Delaware_Provider_Ratios_From_AHRF.csv")
 
 # AHRF provider-count column -> the plain-language label used in the output.

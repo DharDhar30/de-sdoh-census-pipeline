@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-03T16:08:15Z",
+  "generated_utc": "2026-10-05T16:02:15Z",
   "generated_by": "fetch_raw_data.py",
   "note": "Snapshots of public datasets exactly as published. No values in this directory are modelled, imputed or edited by this project.",
   "sources": [
@@ -42,24 +42,24 @@
       "note": "All 3 Delaware counties; source of County_FIPS / County_Name in the master."
     },
     {
-      "id": "census_acs_2021_zcta_de",
-      "label": "Census ACS 2021 5-Year Profile (ZCTA)",
+      "id": "census_acs_2024_zcta_de",
+      "label": "Census ACS 2024 5-Year Profile (ZCTA)",
       "publisher": "U.S. Census Bureau",
       "dataset": "American Community Survey 5-Year Data Profile (DP02 / DP03 / DP05)",
-      "vintage": "2021 5-year estimates (2017-2021)",
+      "vintage": "2024 5-year estimates (2020-2024)",
       "geography": "ZCTA (Delaware rows of a national response)",
       "geo_level": "ZCTA",
       "access": "REST API (JSON) - requires CENSUS_API_KEY in .env",
-      "url": "https://api.census.gov/data/2021/acs/acs5/profile?get=DP05_0001E,DP05_0018E,DP05_0024PE,DP03_0062E,DP03_0128PE,DP03_0099PE,DP03_0021PE,DP02_0154PE,DP02_0114PE&for=zip%20code%20tabulation%20area:*&key=***REDACTED***",
+      "url": "https://api.census.gov/data/2024/acs/acs5/profile?get=DP05_0001E,DP05_0018E,DP05_0024PE,DP03_0062E,DP03_0128PE,DP03_0099PE,DP03_0021PE,DP02_0154PE,DP02_0114PE&for=zip%20code%20tabulation%20area:*&key=***REDACTED***",
       "landing_page": "https://data.census.gov/",
       "license": "Public domain (U.S. Government work)",
-      "file": "census_acs_2021_zcta_de_raw.csv",
+      "file": "census_acs_2024_zcta_de_raw.csv",
       "rows": 68,
       "columns": 10,
-      "sha256": "8b38a272424c0c9dc37517e9fca9dfb85f871699c3c72957d7fe38a86b0acbc5",
-      "retrieved_utc": "2026-10-03T16:08:15Z",
-      "note": "API variable codes retained (no renaming). 33,774 ZCTAs were returned nationwide; the snapshot keeps the Delaware rows used by the pipeline.",
-      "rows_downloaded_total": 33774
+      "sha256": "139db60df3d5c84352676ce0bc1386cf6cd31bc9876aaa5465eed1b9ec4636d1",
+      "retrieved_utc": "2026-10-05T16:01:39Z",
+      "note": "API variable codes retained (no renaming). 33,772 ZCTAs were returned nationwide; the snapshot keeps the Delaware rows used by the pipeline.",
+      "rows_downloaded_total": 33772
     },
     {
       "id": "cdc_brfss_2024_de",
@@ -81,23 +81,23 @@
       "note": "Byte-for-byte copy of the CDC Socrata CSV response (no re-encoding, no column renaming). This is a STATE-level survey, so every row here describes Delaware as a whole - not an individual ZCTA."
     },
     {
-      "id": "chr_2024_de_counties",
-      "label": "County Health Rankings 2024 (DE counties)",
+      "id": "chr_2025_de_counties",
+      "label": "County Health Rankings 2025 (DE counties)",
       "publisher": "County Health Rankings & Roadmaps (Univ. of Wisconsin Population Health Institute)",
-      "dataset": "2024 County Health Release workbook v1 (`Select Measure Data` sheet)",
-      "vintage": "2024 release (clinical-care source year 2022)",
+      "dataset": "2025 County Health Rankings Data v4 (`Select Measure Data` + `Additional Measure Data` sheets, merged on FIPS)",
+      "vintage": "2025 release (clinical-care source year 2022; see Sources & Years sheets)",
       "geography": "County (Kent, New Castle, Sussex) - broadcast onto ZCTA rows downstream",
       "geo_level": "County",
       "access": "Direct file download (.xlsx)",
-      "url": "https://www.countyhealthrankings.org/sites/default/files/media/document/2024_county_health_release_data_-_v1.xlsx",
+      "url": "https://www.countyhealthrankings.org/sites/default/files/media/document/2025%20County%20Health%20Rankings%20Data%20-%20v4.xlsx",
       "landing_page": "https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation",
       "license": "Free for public use with attribution (CHR&R / UW PHI)",
-      "file": "chr_2024_de_counties_raw.csv",
+      "file": "chr_2025_de_counties_raw.csv",
       "rows": 3,
-      "columns": 272,
-      "sha256": "68fc6ebcbc92701a01bfce521c8ae83e9396244b821b9c7ba24c0b5a50bc46d5",
-      "retrieved_utc": "2026-10-02T16:48:02Z",
-      "note": "Workbook sheet 'Select Measure Data', every measure column kept, Delaware counties only (FIPS 10001/10003/10005). The two header rows the publisher ships are joined with '__'; no values are altered or rounded."
+      "columns": 618,
+      "sha256": "5f795de7de4e48b41dfc668c6d2a9a6606cb98a7fb6b9f307cd498dd15750844",
+      "retrieved_utc": "2026-10-05T16:02:15Z",
+      "note": "Workbook sheets 'Select Measure Data' + 'Additional Measure Data' merged on FIPS, every measure column kept, Delaware counties only (FIPS 10001/10003/10005). The two header rows the publisher ships are joined with '__'; no values are altered or rounded."
     },
     {
       "id": "cdc_places_2024_de_city",

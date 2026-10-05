@@ -27,8 +27,10 @@ BRFSS_API_URL = (
 CHR_XLSX_URL = (
     "https://www.countyhealthrankings.org/"
     "sites/default/files/media/document/"
-    "2024_county_health_release_data_-_v1.xlsx"
+    "2025%20County%20Health%20Rankings%20Data%20-%20v4.xlsx"
 )
+CHR_SHEET = "Select Measure Data"
+CHR_ADDL_SHEET = "Additional Measure Data"
 # Legacy (retired) document URL kept for provenance — CHR removed the old
 # "/sites/default/files/...2024 County Health Rankings Data Document_2024.xls"
 # path during their 2025-2026 site redesign (now HTTP 404). The v1.xlsx above
@@ -115,12 +117,12 @@ def build_brfss() -> pd.DataFrame:
     return pd.DataFrame([out])
 
 
-# CHR: output-column -> source-column-name inside the "Select Measure Data"
-# sheet of the 2024 County Health Release workbook (v1.xlsx). The retired
-# "Ranked Measure Data" layout used different header text (e.g. lowercase
-# "Fair or poor health__%", "Smoking__%", quartile columns) and no longer
-# exists upstream; quartile columns were dropped from the release file, so
-# those outputs are now NaN (schema preserved for downstream consumers).
+# CHR: output-column -> source-column-name inside the 2025 County Health
+# Rankings workbook (v4.xlsx). In the 2025 release, Select-sheet columns keep
+# their names; health-behavior measures moved to the "Additional Measure Data"
+# sheet (same column names); "Low Birthweight" was renamed "Low Birth Weight".
+# build_chr() merges both sheets on FIPS. Quartile columns were dropped from
+# the release file, so those outputs are NaN (schema preserved).
 CHR_TARGETS = {
     "Pct_Poor_Fair_Health": "Poor or Fair Health__% Fair or Poor Health",
     "Pct_Poor_Fair_Health_LowCI": "Poor or Fair Health__95% CI - Low",
@@ -136,7 +138,7 @@ CHR_TARGETS = {
     "Avg_Poor_Mental_Health_Days_Quartile": "__QUARTILE_DROPPED__",
     "CHR_YPLL_Rate": "Premature Death__Years of Potential Life Lost Rate",
     "CHR_Premature_Deaths_Count": "Premature Death__Deaths",
-    "CHR_Pct_Low_Birthweight": "Low Birthweight__% Low Birthweight",
+    "CHR_Pct_Low_Birthweight": "Low Birth Weight__% Low Birth Weight",
     "CHR_Pct_Low_Birthweight_Quartile": "__QUARTILE_DROPPED__",
     "Pct_Adult_Smoking": "Adult Smoking__% Adults Reporting Currently Smoking",
     "Pct_Adult_Smoking_LowCI": "Adult Smoking__95% CI - Low",
@@ -184,15 +186,9 @@ def _parse_chr_value(val):
     return pd.to_numeric(val, errors="coerce")
 
 
-def build_chr() -> pd.DataFrame:
-    """Download the County Health Rankings 2024 release workbook from the
-    official website, extract Delaware county-level medical / public-health
-    measures from the "Select Measure Data" sheet."""
-    print("Downloading 2024 County Health Rankings workbook from official site...")
-    resp = requests.get(CHR_XLSX_URL, timeout=180)
-    resp.raise_for_status()
-    xl = pd.ExcelFile(io.BytesIO(resp.content))
-    raw = xl.parse("Select Measure Data", header=None)
+def _parse_chr_sheet(xl: pd.ExcelFile, sheet: str) -> pd.DataFrame:
+    """Parse one CHR workbook sheet (two header rows joined with '__')."""
+    raw = xl.parse(sheet, header=None)
     hdr0 = raw.iloc[0].ffill()
     hdr1 = raw.iloc[1]
     cols = ["FIPS", "State", "County"]
@@ -200,6 +196,25 @@ def build_chr() -> pd.DataFrame:
         cols.append(f"{hdr0.iloc[j]}__{hdr1.iloc[j]}")
     body = raw.iloc[2:].copy()
     body.columns = cols
+    return body
+
+
+def build_chr() -> pd.DataFrame:
+    """Download the County Health Rankings 2025 release workbook from the
+    official website, extract Delaware county-level medical / public-health
+    measures from the "Select Measure Data" + "Additional Measure Data"
+    sheets (merged on FIPS)."""
+    print("Downloading 2025 County Health Rankings workbook from official site...")
+    resp = requests.get(CHR_XLSX_URL, timeout=180)
+    resp.raise_for_status()
+    xl = pd.ExcelFile(io.BytesIO(resp.content))
+    body = _parse_chr_sheet(xl, CHR_SHEET)
+    try:
+        addl = _parse_chr_sheet(xl, CHR_ADDL_SHEET)
+        extra = [c for c in addl.columns if c not in body.columns]
+        body = body.merge(addl[["FIPS"] + extra], on="FIPS", how="left")
+    except ValueError:
+        pass  # Additional sheet absent: Select-only workbook
     live_targets = {v for v in CHR_TARGETS.values() if not v.startswith("__")}
     missing = [v for v in live_targets if v not in body.columns]
     if missing:

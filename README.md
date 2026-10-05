@@ -7,7 +7,7 @@ The pipeline outputs ready-to-use tabular and spatial datasets specifically form
 ## Features
 
 - Automated Spatial Extraction: Downloads official U.S. Census Bureau cartographic boundary files via pygris and clips boundaries specifically to Delaware ZCTAs.
-- Census ACS Integration: Pulls 5-Year ACS Data Profile metrics (poverty, broadband, insurance, median income, age, language) directly via the Census API.
+- Census ACS Integration: Pulls 2024 5-Year ACS Data Profile metrics (2020–2024; poverty, broadband, insurance, median income, age, language) directly via the Census API.
 - CDC BRFSS (Public Health): Merges real CDC Behavioral Risk Factor Surveillance System 2024 state-level prevalence for Delaware - chronic disease (diabetes, asthma, COPD, heart disease, cancer, arthritis, kidney disease), risk behaviors (smoking, vaping, binge/heavy drinking, obesity, physical inactivity), health-care access (uninsured, cost barriers, routine checkups), screenings (mammogram, colorectal, flu/pneumonia vaccination), oral health, and disability. Each measure includes its sample size and 95% confidence interval.
 - County Health Rankings (CHR): Merges medical / public-health indicators across Delaware's 3 counties (New Castle, Kent, Sussex) - health outcomes (poor/fair health, premature death, low birth weight, STIs, teen births), health behaviors (smoking, obesity, inactivity, excessive drinking, food environment, exercise access, alcohol-impaired driving deaths), and clinical care (uninsured, provider ratios, preventable hospital stays, screening & vaccination rates).
 - HRSA AHRF Provider Supply: Archives the free, public-domain Area Health Resources Files so provider counts and population denominators can be re-derived independently. `generate_provider_ratios.py` recomputes population-to-provider ratios from these raw counts and cross-checks them against CHR's published values.
@@ -42,12 +42,12 @@ python3 build_city_chronic_disease_table.py   # -> Delaware_City_Chronic_Disease
 
 | Column | Source |
 |---|---|
-| `County_Name` | CHR 2024, published |
+| `County_Name` | CHR 2025, published |
 | `Total_Population` | **HRSA AHRF `pop_popn_est_23`** (see below) |
-| `Pct_Poor_Fair_Health` (+ `_LowCI` / `_HighCI`) | CHR 2024, published |
-| `CHR_PCP_Ratio_Population` | CHR 2024, published |
-| `Dentist_Ratio_Population` | CHR 2024, published |
-| `Mental_Health_Provider_Ratio` | CHR 2024, published |
+| `Pct_Poor_Fair_Health` (+ `_LowCI` / `_HighCI`) | CHR 2025, published |
+| `CHR_PCP_Ratio_Population` | CHR 2025, published |
+| `Dentist_Ratio_Population` | CHR 2025, published |
+| `Mental_Health_Provider_Ratio` | CHR 2025, published |
 
 `Total_Population` is the single column that is not CHR's. CHR publishes **no** county
 population total — its `High School Completion__Population` and
@@ -56,8 +56,8 @@ the eight raw snapshots, only HRSA AHRF carries a published county total
 (`pop_popn_est_23` / `pop_popn_est_24`), so that is what is used. `Population_Source`
 records the provenance on every row.
 
-⚠️ **Vintage note.** AHRF's 2023 postcensal estimates sum to 1,031,890; the ACS 2021
-5-year ZCTA total in `raw/` sums to 982,285. Both are legitimate, different vintages.
+⚠️ **Vintage note.** AHRF's 2023 postcensal estimates sum to 1,031,890; the ACS 2024
+5-year ZCTA total in `raw/` sums to ~1M. Both are legitimate, different vintages.
 Do not mix them in one column, and label whichever you report.
 
 **A ZCTA→county aggregation was removed as unsound.** `generate_county_chr.py`
@@ -108,7 +108,7 @@ common geography and must not be joined to each other.
 - generate_county_chr.py: Rebuilds Delaware_County_CHR.csv as a straight projection of the raw CHR release (verifies every value against the snapshot)
 - build_city_chronic_disease_table.py: Rebuilds Delaware_City_Chronic_Disease.csv from the raw CDC PLACES snapshot (verifies every value against the snapshot)
 - BRFSS_Delaware.csv: CDC BRFSS 2024 Delaware state-level prevalence (public-health measures)
-- CHR_Delaware.csv: County Health Rankings 2024 medical/public-health indicators
+- CHR_Delaware.csv: County Health Rankings 2025 medical/public-health indicators
 - Delaware_County_CHR.csv: 3-county table — published CHR figures + AHRF county population
 - Delaware_City_Chronic_Disease.csv: 79-city table — published PLACES obesity / diabetes / coronary heart disease
 - .env: API key configuration
@@ -202,9 +202,9 @@ python3 fetch_raw_data.py --verify   # re-check live URLs + stored checksums (ex
 |---|---|---|---|---|---|
 | 1 | TIGER/Line Cartographic Boundary File — 2020 ZCTA, clipped to DE | U.S. Census Bureau | 2020 | ZCTA | `raw/census_tiger_2020_de_zctas_raw.csv` |
 | 2 | TIGER/Line Cartographic Boundary File — 2020 counties, DE | U.S. Census Bureau | 2020 | County | `raw/census_tiger_2020_de_counties_raw.csv` |
-| 3 | American Community Survey 5-Year Data Profile (DP02/DP03/DP05) | U.S. Census Bureau | 2021 5-yr (2017–2021) | ZCTA | `raw/census_acs_2021_zcta_de_raw.csv` |
+| 3 | American Community Survey 5-Year Data Profile (DP02/DP03/DP05) | U.S. Census Bureau | 2024 5-yr (2020–2024) | ZCTA | `raw/census_acs_2024_zcta_de_raw.csv` |
 | 4 | BRFSS Prevalence (Socrata `dttw-5yxu`) | CDC | 2024 | State (broadcast onto ZCTA rows) | `raw/cdc_brfss_2024_de_raw.csv` |
-| 5 | 2024 County Health Release workbook v1, `Select Measure Data` sheet (clinical-care source year: 2022) | County Health Rankings & Roadmaps | 2024 release | County (broadcast onto ZCTA rows) | `raw/chr_2024_de_counties_raw.csv` |
+| 5 | 2025 County Health Rankings Data v4, `Select Measure Data` + `Additional Measure Data` sheets merged on FIPS (clinical-care source year: 2022) | County Health Rankings & Roadmaps | 2025 release | County (broadcast onto ZCTA rows) | `raw/chr_2025_de_counties_raw.csv` |
 | 6 | PLACES: Local Data for Better Health, place/city release (Socrata `eav7-hnsx`) | CDC | 2024 release | City / place | `raw/cdc_places_2024_de_city_raw.csv` |
 
 The per-column provenance file shipped with the master outputs

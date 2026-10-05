@@ -223,10 +223,10 @@ def load_places_zcta(filepath: str = PLACES_ZCTA_SNAPSHOT) -> pd.DataFrame:
 # 3. CENSUS ACS DEMOGRAPHIC DATA API
 # ---------------------------------------------------------------------------
 def fetch_acs_data(api_key):
-    """Fetches 5-Year ACS profile metrics from the Census API."""
-    print("Fetching Census ACS 5-Year demographic metrics...")
+    """Fetches 5-Year ACS profile metrics from the Census API (2024 5-year)."""
+    print("Fetching Census ACS 2024 5-Year demographic metrics...")
     var_string = ",".join(ACS_VARS.keys())
-    url = f"https://api.census.gov/data/2021/acs/acs5/profile?get={var_string}&for=zip%20code%20tabulation%20area:*&key={api_key}"
+    url = f"https://api.census.gov/data/2024/acs/acs5/profile?get={var_string}&for=zip%20code%20tabulation%20area:*&key={api_key}"
     
     response = requests.get(url)
     if response.status_code != 200:
@@ -251,14 +251,14 @@ def load_county_health_rankings(filepath="CHR_Delaware.csv"):
     behaviors, and clinical-care measures only).
 
     Reads exclusively from the bundled CHR_Delaware.csv, which is generated
-    from the official County Health Rankings & Roadmaps 2022 Excel release
+    from the official County Health Rankings & Roadmaps 2025 release
     (see gen_health_data.py for the full reproducible download script).
     """
-    print("Loading County Health Rankings (CHR) metrics...")
+    print("Loading County Health Rankings (CHR) 2025 metrics...")
     if not os.path.exists(filepath):
         raise FileNotFoundError(
             f"{filepath} not found. Run gen_health_data.py first to download "
-            "the official County Health Rankings 2022 data."
+            "the official County Health Rankings 2025 data."
         )
     chr_df = pd.read_csv(filepath)
     chr_df["County_FIPS"] = chr_df["County_FIPS"].astype(str).str.zfill(5)

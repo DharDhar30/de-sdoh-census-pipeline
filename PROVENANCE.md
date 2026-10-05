@@ -143,9 +143,9 @@ python3 fetch_raw_data.py --verify   # re-check live URLs + checksums
 |---|---|---|---|---|---|
 | 1 | TIGER/Line 2020 ZCTA boundaries | Census Bureau | ZCTA | Free | Public domain |
 | 2 | TIGER/Line 2020 county boundaries | Census Bureau | County | Free | Public domain |
-| 3 | ACS 2021 5-Year Data Profile | Census Bureau | ZCTA | Free | Public domain |
+| 3 | ACS 2024 5-Year Data Profile | Census Bureau | ZCTA | Free | Public domain |
 | 4 | BRFSS 2024 Prevalence | CDC | **State** | Free | Public domain |
-| 5 | County Health Rankings 2024 | CHR&R / UW PHI | **County** | Free | Free with attribution |
+| 5 | County Health Rankings 2025 | CHR&R / UW PHI | **County** | Free | Free with attribution |
 | 6 | PLACES 2024 Place | CDC | City / place | Free | Public domain |
 | 7 | **AHRF 2024–2025** | **HRSA** | **County** | **Free** | **Public domain** |
 | 8 | **PLACES 2024 ZCTA** | **CDC** | **ZCTA** | **Free** | **Public domain** |
