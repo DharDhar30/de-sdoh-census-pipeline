@@ -59,8 +59,11 @@ CHR_ADDL_SHEET = "Additional Measure Data"
 DE_COUNTY_FIPS = {"10001", "10003", "10005"}  # Kent, New Castle, Sussex
 
 # --- Source 4: CDC PLACES city/place-level estimates -----------------------
-# Use the SODA 2.1 resource endpoint ($where filters server-side). The v3
-# query.json root ignores $where/$limit, which would dump the whole nation.
+# 2025 release reuses the SAME Socrata id (eav7-hnsx) - CDC overwrote it in
+# place with model years 2022-2023 (revised values + renamed/added measures
+# vs the 2024 release). Use the SODA 2.1 resource endpoint ($where filters
+# server-side). The v3 query.json root ignores $where/$limit, which would
+# dump the whole nation.
 PLACES_URL = "https://data.cdc.gov/resource/eav7-hnsx.json"
 PLACES_QUERY = {"$where": "statedesc='Delaware'", "$limit": 50000}
 
@@ -84,9 +87,11 @@ AHRF_HP_FILE = "AHRF2025hp.csv"
 # --- Source 8: CDC PLACES ZCTA-level estimates -----------------------------
 # PLACES publishes SEPARATE datasets per geography. The project originally used
 # the place/city release, which forces chronic-disease measures onto a city
-# geography. The ZCTA release (4r2x-hcfq) gives the same measures directly on
-# the ZCTAs the rest of the master is keyed to.
-PLACES_ZCTA_URL = "https://data.cdc.gov/resource/4r2x-hcfq.json"
+# geography. The ZCTA release gives the same measures directly on the ZCTAs
+# the rest of the master is keyed to.
+# 2025 release = NEW Socrata id qnzd-25i4 (model years 2022-2023). The old
+# 2024 id 4r2x-hcfq served 2021-2022 and is superseded.
+PLACES_ZCTA_URL = "https://data.cdc.gov/resource/qnzd-25i4.json"
 PLACES_ZCTA_QUERY = {
     "$where": "locationname like '197%' OR locationname like '198%' OR locationname like '199%'",
     "$limit": 50000,
@@ -385,7 +390,7 @@ def fetch_cdc_places_de_city() -> tuple:
     if not records:
         raise RuntimeError("CDC PLACES returned no rows for Delaware.")
     frame = pd.DataFrame(records)
-    path = _write_raw_frame("cdc_places_2024_de_city_raw.csv", frame)
+    path = _write_raw_frame("cdc_places_2025_de_city_raw.csv", frame)
     prepared = requests.Request("GET", PLACES_URL, params=PLACES_QUERY).prepare().url
     return path, {
         "url": prepared,
@@ -467,7 +472,7 @@ def fetch_cdc_places_de_zcta() -> tuple:
     if not records:
         raise RuntimeError("CDC PLACES ZCTA returned no rows for Delaware.")
     frame = pd.DataFrame(records)
-    path = _write_raw_frame("cdc_places_2024_de_zcta_raw.csv", frame)
+    path = _write_raw_frame("cdc_places_2025_de_zcta_raw.csv", frame)
     prepared = requests.Request("GET", PLACES_ZCTA_URL, params=PLACES_ZCTA_QUERY).prepare().url
     n_zctas = frame["locationname"].nunique()
     return path, {
@@ -562,11 +567,11 @@ SOURCES = [
         "fetch": fetch_chr_2025_de_counties,
     },
     {
-        "id": "cdc_places_2024_de_city",
-        "label": "CDC PLACES 2024 Place-Level (DE cities)",
+        "id": "cdc_places_2025_de_city",
+        "label": "CDC PLACES 2025 Place-Level (DE cities)",
         "publisher": "U.S. Centers for Disease Control and Prevention",
-        "dataset": "PLACES: Local Data for Better Health - place/city release (Socrata eav7-hnsx)",
-        "vintage": "2024 release",
+        "dataset": "PLACES: Local Data for Better Health - place/city release, 2025 (Socrata eav7-hnsx)",
+        "vintage": "2025 release (model years 2022-2023)",
         "geography": "City / place (Delaware)",
         "geo_level": "City / place",
         "access": "REST API (JSON), Socrata SODA 3.0",
@@ -590,11 +595,11 @@ SOURCES = [
         "fetch": fetch_hrsa_ahrf_de_counties,
     },
     {
-        "id": "cdc_places_2024_de_zcta",
-        "label": "CDC PLACES 2024 ZCTA-Level (DE chronic disease & prevention)",
+        "id": "cdc_places_2025_de_zcta",
+        "label": "CDC PLACES 2025 ZCTA-Level (DE chronic disease & prevention)",
         "publisher": "U.S. Centers for Disease Control and Prevention",
-        "dataset": "PLACES: Local Data for Better Health - ZCTA release (Socrata 4r2x-hcfq)",
-        "vintage": "2024 release",
+        "dataset": "PLACES: Local Data for Better Health - ZCTA release, 2025 (Socrata qnzd-25i4)",
+        "vintage": "2025 release (model years 2022-2023)",
         "geography": "ZCTA (Delaware) - directly reported, NOT broadcast from a city file",
         "geo_level": "ZCTA",
         "access": "REST API (JSON), Socrata SODA 3.0",

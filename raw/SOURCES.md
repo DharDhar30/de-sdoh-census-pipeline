@@ -4,7 +4,7 @@ Proof-of-provenance index for every dataset this pipeline consumes. Each file in
 directory is an **unmodified copy** of what a public publisher served - original column
 names, original values, no cleaning, no renaming and no cross-source joins.
 
-Manifest generated: **2026-10-05T16:02:15Z** by `fetch_raw_data.py`.
+Manifest generated: **2026-10-05T16:37:27Z** by `fetch_raw_data.py`.
 
 Re-verify everything at any time:
 
@@ -21,9 +21,9 @@ python3 fetch_raw_data.py --verify
 | 3 | Census ACS 2024 5-Year Profile (ZCTA) | U.S. Census Bureau | ZCTA | 68 x 10 | `raw/census_acs_2024_zcta_de_raw.csv` |
 | 4 | CDC BRFSS 2024 Prevalence (DE, state level) | U.S. Centers for Disease Control and Prevention | State | 165 x 27 | `raw/cdc_brfss_2024_de_raw.csv` |
 | 5 | County Health Rankings 2025 (DE counties) | County Health Rankings & Roadmaps (Univ. of Wisconsin Population Health Institute) | County | 3 x 618 | `raw/chr_2025_de_counties_raw.csv` |
-| 6 | CDC PLACES 2024 Place-Level (DE cities) | U.S. Centers for Disease Control and Prevention | City / place | 6,320 x 20 | `raw/cdc_places_2024_de_city_raw.csv` |
+| 6 | CDC PLACES 2025 Place-Level (DE cities) | U.S. Centers for Disease Control and Prevention | City / place | 6,320 x 20 | `raw/cdc_places_2025_de_city_raw.csv` |
 | 7 | HRSA AHRF 2024-2025 (DE counties, provider supply) | Health Resources & Services Administration (HRSA), U.S. Dept. of Health & Human Services | County | 3 x 3395 | `raw/hrsa_ahrf_2025_de_counties_raw.csv` |
-| 8 | CDC PLACES 2024 ZCTA-Level (DE chronic disease & prevention) | U.S. Centers for Disease Control and Prevention | ZCTA | 2,597 x 18 | `raw/cdc_places_2024_de_zcta_raw.csv` |
+| 8 | CDC PLACES 2025 ZCTA-Level (DE chronic disease & prevention) | U.S. Centers for Disease Control and Prevention | ZCTA | 2,597 x 18 | `raw/cdc_places_2025_de_zcta_raw.csv` |
 
 ## Per-source detail
 
@@ -98,14 +98,14 @@ python3 fetch_raw_data.py --verify
 - **SHA-256:** `5f795de7de4e48b41dfc668c6d2a9a6606cb98a7fb6b9f307cd498dd15750844`
 - **Note:** Workbook sheets 'Select Measure Data' + 'Additional Measure Data' merged on FIPS, every measure column kept, Delaware counties only (FIPS 10001/10003/10005). The two header rows the publisher ships are joined with '__'; no values are altered or rounded.
 
-### 6. CDC PLACES 2024 Place-Level (DE cities)
+### 6. CDC PLACES 2025 Place-Level (DE cities)
 
 - **Publisher:** U.S. Centers for Disease Control and Prevention
-- **Dataset:** PLACES: Local Data for Better Health - place/city release (Socrata eav7-hnsx)
-- **Vintage:** 2024 release
+- **Dataset:** PLACES: Local Data for Better Health - place/city release, 2025 (Socrata eav7-hnsx)
+- **Vintage:** 2025 release (model years 2022-2023)
 - **Geography:** City / place (Delaware)
-- **Retrieved (UTC):** 2026-10-02T16:48:04Z
-- **File:** `raw/cdc_places_2024_de_city_raw.csv` (6,320 rows x 20 columns)
+- **Retrieved (UTC):** 2026-10-05T16:37:27Z
+- **File:** `raw/cdc_places_2025_de_city_raw.csv` (6,320 rows x 20 columns)
 - **Source URL:** `https://data.cdc.gov/resource/eav7-hnsx.json?%24where=statedesc%3D%27Delaware%27&%24limit=50000`
 - **Landing page:** https://www.cdc.gov/places/index.html
 - **License / terms:** Public domain (U.S. Government work)
@@ -127,19 +127,19 @@ python3 fetch_raw_data.py --verify
 - **SHA-256:** `7b0984fbbb6a6c94eb3f908ce99b9785da0ab893934e578e6bfcf3333428c6c7`
 - **Note:** Delaware county rows (FIPS 10001, 10003, 10005) from the 'AHRF2025hp.csv' health-professional file joined to 'AHRF2025pop.csv' on fips_st_cnty. Health-professional columns carry the publisher's own names and vintage suffix (e.g. md_nf_prim_care_pc_excl_rsdnt_23); population columns are prefixed 'pop_' so the two files' overlapping short names stay distinct. Values are exactly as published - AHRF suppresses small counts, so blanks mean 'suppressed', not zero.
 
-### 8. CDC PLACES 2024 ZCTA-Level (DE chronic disease & prevention)
+### 8. CDC PLACES 2025 ZCTA-Level (DE chronic disease & prevention)
 
 - **Publisher:** U.S. Centers for Disease Control and Prevention
-- **Dataset:** PLACES: Local Data for Better Health - ZCTA release (Socrata 4r2x-hcfq)
-- **Vintage:** 2024 release
+- **Dataset:** PLACES: Local Data for Better Health - ZCTA release, 2025 (Socrata qnzd-25i4)
+- **Vintage:** 2025 release (model years 2022-2023)
 - **Geography:** ZCTA (Delaware) - directly reported, NOT broadcast from a city file
-- **Retrieved (UTC):** 2026-10-03T15:17:02Z
-- **File:** `raw/cdc_places_2024_de_zcta_raw.csv` (2,597 rows x 18 columns)
-- **Source URL:** `https://data.cdc.gov/resource/4r2x-hcfq.json?%24where=locationname+like+%27197%25%27+OR+locationname+like+%27198%25%27+OR+locationname+like+%27199%25%27&%24limit=50000`
+- **Retrieved (UTC):** 2026-10-05T16:35:29Z
+- **File:** `raw/cdc_places_2025_de_zcta_raw.csv` (2,597 rows x 18 columns)
+- **Source URL:** `https://data.cdc.gov/resource/qnzd-25i4.json?%24where=locationname+like+%27197%25%27+OR+locationname+like+%27198%25%27+OR+locationname+like+%27199%25%27&%24limit=50000`
 - **Landing page:** https://www.cdc.gov/places/index.html
 - **License / terms:** Public domain (U.S. Government work)
 - **Rows downloaded before regional filter:** 2,597
-- **SHA-256:** `f1b544e39d40b7d03a6afabbc9990f903a8c8b4f7bff5684666e6008e6e94d63`
+- **SHA-256:** `9c91912436d8ac03cbb4125af11c9cb7bb9584a65f42fdf8d4a6384cc4ed64ec`
 - **Note:** Untouched API rows - one row per ZCTA x measure with the publisher's own field names. 65 Delaware ZCTAs x 40 measures. This is the ZCTA release of PLACES, so the chronic-disease measures (diabetes, hypertension, asthma, COPD, depression, ...) are reported ON the ZCTAs rather than being borrowed from a city-level file and broadcast.
 
 ## Notes on geography

@@ -271,9 +271,9 @@ SECTOR_SOURCES: dict[str, tuple[str | None, str]] = {
     "CHR - Health Behaviors": ("chr_2025_de_counties", "County"),
     "CHR - Clinical Care": ("chr_2025_de_counties", "County"),
     "CHR - County Level": ("chr_2025_de_counties", "County"),
-    "CDC PLACES (ZCTA-Level)": ("cdc_places_2024_de_zcta", "ZCTA"),
+    "CDC PLACES (ZCTA-Level)": ("cdc_places_2025_de_zcta", "ZCTA"),
     "Provider Supply (HRSA AHRF)": ("hrsa_ahrf_2025_de_counties", "County"),
-    "PLACES Chronic Disease (ZCTA)": ("cdc_places_2024_de_zcta", "ZCTA"),
+    "PLACES Chronic Disease (ZCTA)": ("cdc_places_2025_de_zcta", "ZCTA"),
     "Calculated Metrics": (None, "Derived from ZCTA-level ACS"),
 }
 

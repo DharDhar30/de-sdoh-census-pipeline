@@ -61,9 +61,9 @@ MEASURE_COLUMNS = {
     "Housing insecurity in the past 12 months among adults": "PLACES_Pct_Housing_Insecurity",
     "Lack of reliable transportation in the past 12 months among adults": "PLACES_Pct_Transportation_Barrier",
     "Lack of social and emotional support among adults": "PLACES_Pct_Lack_Social_Support",
-    # CDC renamed this measure in the 2023/24 releases. Accept BOTH spellings so
-    # the ZCTA release (which uses the new name) and the older place/city
-    # release (which uses the old name) both map to the same column.
+    # CDC renamed this measure in the 2024 release and again in 2025
+    # ("Loneliness among adults" is the 2025 name). Accept ALL spellings so
+    # old and new snapshots map to the same column.
     "Feeling socially isolated among adults": "PLACES_Pct_Loneliness",
     "Loneliness among adults": "PLACES_Pct_Loneliness",
     "Received food stamps in the past 12 months among adults": "PLACES_Pct_Food_Stamps",

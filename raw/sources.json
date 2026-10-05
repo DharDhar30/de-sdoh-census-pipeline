@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-10-05T16:02:15Z",
+  "generated_utc": "2026-10-05T16:37:27Z",
   "generated_by": "fetch_raw_data.py",
   "note": "Snapshots of public datasets exactly as published. No values in this directory are modelled, imputed or edited by this project.",
   "sources": [
@@ -100,22 +100,22 @@
       "note": "Workbook sheets 'Select Measure Data' + 'Additional Measure Data' merged on FIPS, every measure column kept, Delaware counties only (FIPS 10001/10003/10005). The two header rows the publisher ships are joined with '__'; no values are altered or rounded."
     },
     {
-      "id": "cdc_places_2024_de_city",
-      "label": "CDC PLACES 2024 Place-Level (DE cities)",
+      "id": "cdc_places_2025_de_city",
+      "label": "CDC PLACES 2025 Place-Level (DE cities)",
       "publisher": "U.S. Centers for Disease Control and Prevention",
-      "dataset": "PLACES: Local Data for Better Health - place/city release (Socrata eav7-hnsx)",
-      "vintage": "2024 release",
+      "dataset": "PLACES: Local Data for Better Health - place/city release, 2025 (Socrata eav7-hnsx)",
+      "vintage": "2025 release (model years 2022-2023)",
       "geography": "City / place (Delaware)",
       "geo_level": "City / place",
       "access": "REST API (JSON), Socrata SODA 3.0",
       "url": "https://data.cdc.gov/resource/eav7-hnsx.json?%24where=statedesc%3D%27Delaware%27&%24limit=50000",
       "landing_page": "https://www.cdc.gov/places/index.html",
       "license": "Public domain (U.S. Government work)",
-      "file": "cdc_places_2024_de_city_raw.csv",
+      "file": "cdc_places_2025_de_city_raw.csv",
       "rows": 6320,
       "columns": 20,
       "sha256": "128fb2ee94408da3443c5e9cb2cc78747b5d6ad8f003bf11391dd089dc2030b7",
-      "retrieved_utc": "2026-10-02T16:48:04Z",
+      "retrieved_utc": "2026-10-05T16:37:27Z",
       "note": "Untouched API rows - one row per place x measure with the publisher's own field names. PLACES publishes place/city, county, census-tract and ZCTA files as SEPARATE datasets; this endpoint is the place/city release."
     },
     {
@@ -139,22 +139,22 @@
       "rows_downloaded_total": 3235
     },
     {
-      "id": "cdc_places_2024_de_zcta",
-      "label": "CDC PLACES 2024 ZCTA-Level (DE chronic disease & prevention)",
+      "id": "cdc_places_2025_de_zcta",
+      "label": "CDC PLACES 2025 ZCTA-Level (DE chronic disease & prevention)",
       "publisher": "U.S. Centers for Disease Control and Prevention",
-      "dataset": "PLACES: Local Data for Better Health - ZCTA release (Socrata 4r2x-hcfq)",
-      "vintage": "2024 release",
+      "dataset": "PLACES: Local Data for Better Health - ZCTA release, 2025 (Socrata qnzd-25i4)",
+      "vintage": "2025 release (model years 2022-2023)",
       "geography": "ZCTA (Delaware) - directly reported, NOT broadcast from a city file",
       "geo_level": "ZCTA",
       "access": "REST API (JSON), Socrata SODA 3.0",
-      "url": "https://data.cdc.gov/resource/4r2x-hcfq.json?%24where=locationname+like+%27197%25%27+OR+locationname+like+%27198%25%27+OR+locationname+like+%27199%25%27&%24limit=50000",
+      "url": "https://data.cdc.gov/resource/qnzd-25i4.json?%24where=locationname+like+%27197%25%27+OR+locationname+like+%27198%25%27+OR+locationname+like+%27199%25%27&%24limit=50000",
       "landing_page": "https://www.cdc.gov/places/index.html",
       "license": "Public domain (U.S. Government work)",
-      "file": "cdc_places_2024_de_zcta_raw.csv",
+      "file": "cdc_places_2025_de_zcta_raw.csv",
       "rows": 2597,
       "columns": 18,
-      "sha256": "f1b544e39d40b7d03a6afabbc9990f903a8c8b4f7bff5684666e6008e6e94d63",
-      "retrieved_utc": "2026-10-03T15:17:02Z",
+      "sha256": "9c91912436d8ac03cbb4125af11c9cb7bb9584a65f42fdf8d4a6384cc4ed64ec",
+      "retrieved_utc": "2026-10-05T16:35:29Z",
       "note": "Untouched API rows - one row per ZCTA x measure with the publisher's own field names. 65 Delaware ZCTAs x 40 measures. This is the ZCTA release of PLACES, so the chronic-disease measures (diabetes, hypertension, asthma, COPD, depression, ...) are reported ON the ZCTAs rather than being borrowed from a city-level file and broadcast.",
       "rows_downloaded_total": 2597
     }

@@ -23,7 +23,7 @@ PLACES values are model-based small-area estimates, not observed counts, so
 every measure keeps its published confidence limits.
 
 Input
-  raw/cdc_places_2024_de_city_raw.csv   PLACES place-level release, unmodified
+  raw/cdc_places_2025_de_city_raw.csv   PLACES place-level release, unmodified
 Output
   Delaware_City_Chronic_Disease.csv
 
@@ -36,7 +36,7 @@ import os
 import pandas as pd
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-PLACES_PATH = os.path.join(ROOT, "raw", "cdc_places_2024_de_city_raw.csv")
+PLACES_PATH = os.path.join(ROOT, "raw", "cdc_places_2025_de_city_raw.csv")
 OUTPUT_PATH = os.path.join(ROOT, "Delaware_City_Chronic_Disease.csv")
 
 DELAWARE_STATE = "Delaware"
@@ -155,7 +155,7 @@ def main() -> None:
     if not os.path.exists(PLACES_PATH):
         raise SystemExit(
             f"{os.path.relpath(PLACES_PATH, ROOT)} is missing - run "
-            "`python3 fetch_raw_data.py --only cdc_places_2024_de_city` first."
+            "`python3 fetch_raw_data.py --only cdc_places_2025_de_city` first."
         )
 
     de = load_delaware_places()
@@ -168,7 +168,7 @@ def main() -> None:
     print(f"{len(out)} cities x {len(out.columns)} columns, vintage {EXPECTED_VINTAGE}")
     print(
         f"Primary series: {PRIMARY_TYPE} (crude carried in *_Crude_Pct columns).\n"
-        "Every value verified identical to raw/cdc_places_2024_de_city_raw.csv\n"
+        "Every value verified identical to raw/cdc_places_2025_de_city_raw.csv\n"
     )
     print(
         out[

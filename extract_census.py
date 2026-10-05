@@ -162,9 +162,10 @@ def fetch_spatial_boundaries():
 # census-tract and ZCTA. The ZCTA release is the one that shares this master's
 # geography, so chronic-disease measures land on the same ZCTA rows as the ACS
 # demographics instead of being broadcast from a city or county geography.
-PLACES_ZCTA_URL = "https://data.cdc.gov/resource/4r2x-hcfq.json"
+# 2025 release = Socrata qnzd-25i4 (model years 2022-2023).
+PLACES_ZCTA_URL = "https://data.cdc.gov/resource/qnzd-25i4.json"
 PLACES_ZCTA_SNAPSHOT = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "raw", "cdc_places_2024_de_zcta_raw.csv"
+    os.path.dirname(os.path.abspath(__file__)), "raw", "cdc_places_2025_de_zcta_raw.csv"
 )
 
 
@@ -181,7 +182,7 @@ def load_places_zcta(filepath: str = PLACES_ZCTA_SNAPSHOT) -> pd.DataFrame:
     print("Loading CDC PLACES ZCTA-level chronic disease estimates...")
     if not os.path.exists(filepath):
         print(f"  WARNING: {filepath} not found - run "
-              "`python3 fetch_raw_data.py --only cdc_places_2024_de_zcta` first.")
+              "`python3 fetch_raw_data.py --only cdc_places_2025_de_zcta` first.")
         return pd.DataFrame(columns=["ZCTA"])
 
     raw = pd.read_csv(filepath, low_memory=False)
