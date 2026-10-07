@@ -1,6 +1,6 @@
 # METHODS — Measures, Naming, and Access Framework
 
-## 1. Access framework (mentor item #7)
+## 1. Access framework 
 
 Every measure is grouped under Penchansky & Thomas's five access dimensions
 plus need, so dashboards and write-ups follow one structure:
