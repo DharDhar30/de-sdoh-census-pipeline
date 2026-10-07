@@ -15,14 +15,6 @@ The pipeline outputs ready-to-use tabular and spatial datasets specifically form
 - Automated Transformations: Computes derived counts from published ACS `E` counts (never percent x population) and land density metrics directly in Python.
 - Multi-Format Export: Generates wide-format outputs in CSV, Excel, and spatial GeoJSON formats simultaneously.
 
-## Data Provenance & Licensing
-
-**Provider ratios and chronic-disease data are NOT paid or closed sources.** Every dataset
-here is a free, public-domain federal download (no login, no licence fee, no vendor
-contract). See **[PROVENANCE.md](PROVENANCE.md)** for the full source inventory, the
-licence of each, the AHRF-vs-CHR ratio reconciliation table, and a suggested reviewer
-response.
-
 To download every raw snapshot from the app: expand **All raw sources & citations** and
 use the **Download ALL snapshots (ZIP)** button, or use the per-source *Download raw
 snapshot* button in each citation panel.
@@ -60,9 +52,11 @@ previously rebuilt this table by aggregating the ZCTA-level master back to count
 which corrupted published values: the master *used to broadcast* each county value
 onto every ZCTA in that county, so averaging an identical value against itself drifted
 `Pct_Poor_Fair_Health` from a published 16.4 to 19.9 in Kent, and summing a county count
-across its ZCTAs inflated Kent's premature deaths from a published 2,920 to 56,892
-(19.5×). CHR publishes these counties directly, so the table is now a straight
-projection of the raw release, and the master no longer carries county figures at all.
+across its ZCTAs inflated Kent's premature deaths from a published 3,195 to 56,892
+(17.9×). The correct published value is **3,195** (not the 2,920 in the earlier
+draft of this README): CHR publishes these counties directly, so the table is now a
+straight projection of the raw release, and the master no longer carries county
+figures at all.
 
 ### City table — `Delaware_City_Chronic_Disease.csv` (79 rows)
 
@@ -165,9 +159,10 @@ Exports are saved in `./exports/` so your workspace stays clean.
 ## Derived Metrics & Formulas
 
 - Population Density: Total Population / Land Area (Sq. Miles)
-- Uninsured Population Volume: (Pct No Health Insurance / 100) * Total Population
-- Poverty Population Volume: (Pct Below Poverty / 100) * Total Population
-- Senior Population Volume: (Pct Age 65 Plus / 100) * Total Population
+- Uninsured Population Volume: published `DP03_0099E` count (never `Pct_No_Health_Insurance` × population)
+- Poverty Population Volume: published `S1701_C02_001E` count (never `Pct_Below_Poverty` × population)
+- Senior Population Volume: published `DP05_0024E` count (never `Pct_Age_65_Plus` × population)
+- No Broadband Households: published `DP02_0152E` (household universe) − `DP02_0154E` (broadband count)
 
 ## Pipeline Output Schema
 
@@ -175,11 +170,11 @@ Exports are saved in `./exports/` so your workspace stays clean.
 - Demographics: Total_Population, Median_Age, Pct_Age_65_Plus (ACS population & age breakdown)
 - Socioeconomic: Median_Household_Income, Pct_Below_Poverty (Economic prosperity indicators)
 - Health Access: Pct_No_Health_Insurance, Pct_Broadband_Internet (Essential infrastructure access)
-- BRFSS (State Level): CDC BRFSS 2024 Delaware prevalence - smoking, vaping, binge/heavy drinking, obesity, physical inactivity, arthritis, asthma, COPD, heart disease, stroke, diabetes, kidney disease, depression, cancer, fair/poor health, mental/physical distress, uninsured, cost barriers, checkups, colorectal & mammography screening, flu & pneumonia vaccination, HIV testing, oral health, and disability indicators (each with sample size + 95% CI)
-- CHR - Health Outcomes: Pct_Poor_Fair_Health, Avg Poor Physical/Mental Health Days, CHR_YPLL_Rate, CHR_Pct_Low_Birthweight, CHR_STI_Chlamydia_Rate, CHR_Teen_Birth_Rate
-- CHR - Health Behaviors: Pct_Adult_Smoking, Pct_Adult_Obesity, Pct_Physical_Inactivity, Excessive_Drinking_Pct, CHR_Food_Environment_Index, CHR_Access_Exercise_Opportunities_Pct, CHR_Alcohol_Impaired_Driving_Deaths_Pct
-- CHR - Clinical Care: CHR_Uninsured_Pct, CHR_PCP_Ratio_Population, Dentist_Ratio_Population, Mental_Health_Provider_Ratio, CHR_Preventable_Hospital_Stays_Rate, CHR_Mammography_Screening_Pct, CHR_Flu_Vaccination_Pct
-- Calculated Metrics: Population_Density_SqMi, Uninsured_Population_Count, No_Broadband_Households_Estimate (Derived volume & density counts)
+- BRFSS (State Level): CDC BRFSS 2024 Delaware prevalence - smoking, vaping, binge/heavy drinking, obesity, physical inactivity, arthritis, asthma, COPD, heart disease, stroke, diabetes, kidney disease, depression, cancer, fair/poor health, mental/physical distress, uninsured, cost barriers, checkups, colorectal & mammography screening, flu & pneumonia vaccination, HIV testing, oral health, and disability indicators (each with sample size + 95% CI) — state reference table ONLY, never on ZCTA rows
+- CHR - Health Outcomes: Pct_Poor_Fair_Health, Avg Poor Physical/Mental Health Days, CHR_YPLL_Rate, CHR_Pct_Low_Birthweight, CHR_STI_Chlamydia_Rate, CHR_Teen_Birth_Rate — county reference table ONLY
+- CHR - Health Behaviors: Pct_Adult_Smoking, Pct_Adult_Obesity, Pct_Physical_Inactivity, Excessive_Drinking_Pct, CHR_Food_Environment_Index, CHR_Access_Exercise_Opportunities_Pct, CHR_Alcohol_Impaired_Driving_Deaths_Pct — county reference table ONLY
+- CHR - Clinical Care: CHR_Uninsured_Pct, CHR_PCP_Ratio_Population, Dentist_Ratio_Population, Mental_Health_Provider_Ratio, CHR_Preventable_Hospital_Stays_Rate, CHR_Mammography_Screening_Pct, CHR_Flu_Vaccination_Pct — county reference table ONLY
+- Calculated Metrics: Population_Density_SqMi, Uninsured_Population_Count, No_Broadband_Households_Estimate (Derived volume & density counts, from published ACS E counts)
 
 ## Raw data sources (all live, all verifiable)
 
