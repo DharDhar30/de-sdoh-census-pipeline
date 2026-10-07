@@ -33,12 +33,6 @@ plus need, so dashboards and write-ups follow one structure:
 - **Files:** `<level>_master_<release>.csv` / `.geojson`; no spaces; release
   year in the name.
 
-> **Migration status (Oct 2026):** the shipped master still carries legacy
-> names (`Pct_Below_Poverty`, `CHR_*`, `PLACES_Pct_*`) so the Streamlit app
-> and existing Tableau workbooks keep working. New columns MUST follow this
-> convention; the full rename ships as a versioned breaking change with a
-> compat view.
-
 ## 3. Derived-metric formulae (`calc_`)
 
 | Column | Formula | Inputs (published counts) |
