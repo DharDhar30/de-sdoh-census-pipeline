@@ -328,10 +328,10 @@ def main() -> None:
                 st.markdown(
                     "**Derived dataset** — built by `extract_census.py` from the raw sources "
                     "below (already checked into `./raw`), then transformed.\n\n"
-                    "- ZCTA-level: Census ACS 2024 5-year profile + TIGER 2020 boundaries\n"
-                    "- Broadcast onto ZCTA rows: CDC BRFSS 2024 (state) and County Health "
-                    "Rankings 2025 (county)\n"
-                    "- Added in Python: population counts and density\n\n"
+                    "- ZCTA-level only: Census ACS 2024 5-year profile + TIGER 2020 boundaries + CDC PLACES ZCTA release\n"
+                    "- NOT in the master: CDC BRFSS 2024 (state) and County Health "
+                    "Rankings 2025 (county) — kept in their own reference tables\n"
+                    "- Added in Python: published-count-based population counts and density\n\n"
                     "Per-column provenance ships with the master as "
                     "`Delaware_ZCTA_Health_Master_Column_Provenance.csv` and as the "
                     "`Column_Provenance` sheet of the master workbook."
@@ -356,18 +356,19 @@ def main() -> None:
                     "One column is not CHR's: `Total_Population`. CHR publishes no "
                     "county population total (its `High School Completion__Population` "
                     "and `Some College__Population` columns are education cohorts, not "
-                    "a population total), so the figure comes from the HRSA AHRF "
-                    "postcensal estimate (`pop_popn_est_23`) — the only published "
-                    "county total in `./raw`. `Population_Source` records this per row."
+                    "a population total), so the figure comes from the Census ACS "
+                    "2024 5-year county tables (`DP05_0001E`) — never by summing "
+                    "ZCTAs. `Population_Source` records this per row."
                 )
             with st.expander("\U0001f4ce Source & citation — derived master", expanded=False):
                 st.markdown(
                     "**Derived dataset** — built by `extract_census.py` from the raw sources "
                     "below (already checked into `./raw`), then transformed.\n\n"
-                    "- ZCTA-level: Census ACS 2024 5-year profile + TIGER 2020 boundaries\n"
-                    "- Broadcast onto ZCTA rows: CDC BRFSS 2024 (state) and County Health "
-                    "Rankings 2025 (county)\n"
-                    "- Added in Python: population counts and density\n\n"
+                    "- ZCTA-level only: Census ACS 2024 5-year profile + TIGER 2020 boundaries + CDC PLACES ZCTA release\n"
+                    "- NOT in the master: CDC BRFSS 2024 (state reference table) and County Health "
+                    "Rankings 2025 (county reference table) — single state/county figures "
+                    "are never broadcast onto ZCTA rows\n"
+                    "- Added in Python: published-count-based population counts and density\n\n"
                     "Per-column provenance ships with the master as "
                     "`Delaware_ZCTA_Health_Master_Column_Provenance.csv` and as the "
                     "`Column_Provenance` sheet of the master workbook."
@@ -449,9 +450,9 @@ def main() -> None:
             GEO_LEVELS,
             default=[],
             help=(
-                "Only Census ACS and the TIGER boundaries are genuinely ZCTA-level here. "
-                "CDC BRFSS is a statewide survey and County Health Rankings reports by "
-                "county, so those figures repeat across every ZCTA in the state or county. "
+                "Only Census ACS, TIGER boundaries, and CDC PLACES ZCTA estimates are genuinely ZCTA-level here. "
+                "CDC BRFSS (state) and County Health Rankings (county) live in their own "
+                "reference tables and are not on ZCTA rows. "
                 "Leave empty to include everything."
             ),
         )

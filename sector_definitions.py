@@ -1,11 +1,17 @@
-"""Sector definitions for the Delaware ZCTA Health Master dataset.
+"""Sector definitions for the Delaware health datasets.
 
-Every column in the master dataset belongs to one themed sector so the UI can
-offer "pick a sector -> export" workflows that mirror the README schema:
+The ZCTA master (Delaware_ZCTA_Health_Master_Wide.csv) holds ONLY genuinely
+ZCTA-level sectors: Geographic / Demographics / Socioeconomic / Health Access
+(ACS + TIGER) / CDC PLACES (ZCTA-Level) / Calculated Metrics.
 
-    Geographic / Demographics / Socioeconomic / Health Access /
-    BRFSS (State Level) / CHR (Health Outcomes, Behaviors, Clinical Care) /
-    Calculated Metrics
+BRFSS (state) and CHR (county) live in their own reference tables
+(BRFSS_Delaware.csv, Delaware_County_CHR.csv) and are NEVER broadcast onto
+ZCTA rows (mentor issue #5). Their column stems are kept here as
+REFERENCE_SECTORS so the UI/exporter can label those tables, but
+all_sector_columns() (the master export path) excludes them.
+
+Provider supply (HRSA AHRF) is OUT OF SCOPE (mentor item #3) and has no
+sector at all.
 
 BRFSS columns carry a "_Sample_Size", "_CI_Low" and "_CI_High" companion for
 every measure so confidence intervals stay exportable without polluting other
@@ -67,7 +73,9 @@ BRFSS_COLUMNS = [
     for suffix in ("_Sample_Size", "", "_CI_Low", "_CI_High")
 ]
 
-# Sector name -> expected columns in the master dataset.
+# Sector name -> expected columns in the ZCTA master dataset.
+# (BRFSS/CHR sectors moved to REFERENCE_SECTORS below - they describe the
+# standalone state/county tables, not ZCTA rows.)
 SECTORS: dict[str, list[str]] = {
     "Geographic": [
         "ZCTA",
@@ -95,6 +103,66 @@ SECTORS: dict[str, list[str]] = {
         "Pct_Broadband_Internet",
         "No_Broadband_Households_Estimate",
     ],
+    "Calculated Metrics": [
+        "Population_Density_SqMi",
+        "Uninsured_Population_Count",
+        "Poverty_Population_Count",
+        "Seniors_65_Plus_Count",
+        "No_Broadband_Households_Estimate",
+    ],
+    # CDC PLACES, ZCTA release. Genuinely ZCTA-level model-based estimates,
+    # merged onto the same ZCTA rows as the ACS demographics.
+    "CDC PLACES (ZCTA-Level)": [
+        "PLACES_Pct_Teeth_Lost_65Plus",
+        "PLACES_Pct_Arthritis",
+        "PLACES_Pct_Cancer_NonSkin",
+        "PLACES_Pct_COPD",
+        "PLACES_Pct_Coronary_Heart_Disease",
+        "PLACES_Pct_Current_Asthma",
+        "PLACES_Pct_Depression",
+        "PLACES_Pct_Diabetes",
+        "PLACES_Pct_High_Blood_Pressure",
+        "PLACES_Pct_High_Cholesterol",
+        "PLACES_Pct_Obesity",
+        "PLACES_Pct_Stroke",
+        "PLACES_Pct_Binge_Drinking",
+        "PLACES_Pct_Current_Smoking",
+        "PLACES_Pct_Physical_Inactivity",
+        "PLACES_Pct_Short_Sleep",
+        "PLACES_Pct_Fair_Poor_Health",
+        "PLACES_Pct_Frequent_Mental_Distress",
+        "PLACES_Pct_Frequent_Physical_Distress",
+        "PLACES_Pct_Cholesterol_Screening",
+        "PLACES_Pct_Colorectal_Screening",
+        "PLACES_Pct_Uninsured_18_64",
+        "PLACES_Pct_Mammography",
+        "PLACES_Pct_BP_Medication",
+        "PLACES_Pct_Dental_Visit",
+        "PLACES_Pct_Routine_Checkup",
+        "PLACES_Pct_Any_Disability",
+        "PLACES_Pct_Cognitive_Disability",
+        "PLACES_Pct_Hearing_Disability",
+        "PLACES_Pct_Independent_Living_Disability",
+        "PLACES_Pct_Mobility_Disability",
+        "PLACES_Pct_Self_Care_Disability",
+        "PLACES_Pct_Vision_Disability",
+        "PLACES_Pct_Food_Insecurity",
+        "PLACES_Pct_Housing_Insecurity",
+        "PLACES_Pct_Transportation_Barrier",
+        "PLACES_Pct_Lack_Social_Support",
+        "PLACES_Pct_Loneliness",
+        "PLACES_Pct_Food_Stamps",
+        "PLACES_Pct_Utility_Shutoff_Threat",
+    ],
+}
+
+
+# ---------------------------------------------------------------------------
+# Reference sectors: column layouts of the standalone state/county tables.
+# NOT part of the ZCTA master (mentor issue #5). The UI/exporter uses these
+# to label BRFSS_Delaware.csv (state) and Delaware_County_CHR.csv (county).
+# ---------------------------------------------------------------------------
+REFERENCE_SECTORS: dict[str, list[str]] = {
     "BRFSS (State Level)": BRFSS_COLUMNS,
     "CHR - Health Outcomes": [
         "Pct_Poor_Fair_Health",
@@ -151,104 +219,6 @@ SECTORS: dict[str, list[str]] = {
         "CHR_Flu_Vaccination_Pct",
         "CHR_Flu_Vaccination_Pct_Quartile",
     ],
-    "Calculated Metrics": [
-        "Population_Density_SqMi",
-    ],
-    # CDC PLACES, ZCTA release. Genuinely ZCTA-level model-based estimates,
-    # merged onto the same ZCTA rows as the ACS demographics.
-    "CDC PLACES (ZCTA-Level)": [
-        "PLACES_Pct_Teeth_Lost_65Plus",
-        "PLACES_Pct_Arthritis",
-        "PLACES_Pct_Cancer_NonSkin",
-        "PLACES_Pct_COPD",
-        "PLACES_Pct_Coronary_Heart_Disease",
-        "PLACES_Pct_Current_Asthma",
-        "PLACES_Pct_Depression",
-        "PLACES_Pct_Diabetes",
-        "PLACES_Pct_High_Blood_Pressure",
-        "PLACES_Pct_High_Cholesterol",
-        "PLACES_Pct_Obesity",
-        "PLACES_Pct_Stroke",
-        "PLACES_Pct_Binge_Drinking",
-        "PLACES_Pct_Current_Smoking",
-        "PLACES_Pct_Physical_Inactivity",
-        "PLACES_Pct_Short_Sleep",
-        "PLACES_Pct_Fair_Poor_Health",
-        "PLACES_Pct_Frequent_Mental_Distress",
-        "PLACES_Pct_Frequent_Physical_Distress",
-        "PLACES_Pct_Cholesterol_Screening",
-        "PLACES_Pct_Colorectal_Screening",
-        "PLACES_Pct_Uninsured_18_64",
-        "PLACES_Pct_Mammography",
-        "PLACES_Pct_BP_Medication",
-        "PLACES_Pct_Dental_Visit",
-        "PLACES_Pct_Routine_Checkup",
-        "PLACES_Pct_Any_Disability",
-        "PLACES_Pct_Cognitive_Disability",
-        "PLACES_Pct_Hearing_Disability",
-        "PLACES_Pct_Independent_Living_Disability",
-        "PLACES_Pct_Mobility_Disability",
-        "PLACES_Pct_Self_Care_Disability",
-        "PLACES_Pct_Vision_Disability",
-        "PLACES_Pct_Food_Insecurity",
-        "PLACES_Pct_Housing_Insecurity",
-        "PLACES_Pct_Transportation_Barrier",
-        "PLACES_Pct_Lack_Social_Support",
-        "PLACES_Pct_Loneliness",
-        "PLACES_Pct_Food_Stamps",
-        "PLACES_Pct_Utility_Shutoff_Threat",
-    ],
-    "CHR - County Level": [
-        "Pct_Poor_Fair_Health",
-        "Pct_Poor_Fair_Health_LowCI",
-        "Pct_Poor_Fair_Health_HighCI",
-        "Pct_Poor_Fair_Health_Quartile",
-        "Avg_Poor_Physical_Health_Days",
-        "Avg_Poor_Physical_Health_Days_LowCI",
-        "Avg_Poor_Physical_Health_Days_HighCI",
-        "Avg_Poor_Physical_Health_Days_Quartile",
-        "Avg_Poor_Mental_Health_Days",
-        "Avg_Poor_Mental_Health_Days_LowCI",
-        "Avg_Poor_Mental_Health_Days_HighCI",
-        "Avg_Poor_Mental_Health_Days_Quartile",
-        "CHR_YPLL_Rate",
-        "CHR_Premature_Deaths_Count",
-        "CHR_Pct_Low_Birthweight",
-        "CHR_Pct_Low_Birthweight_Quartile",
-        "CHR_STI_Chlamydia_Rate",
-        "CHR_Teen_Birth_Rate",
-        "Pct_Adult_Smoking",
-        "Pct_Adult_Smoking_LowCI",
-        "Pct_Adult_Smoking_HighCI",
-        "Pct_Adult_Smoking_Quartile",
-        "Pct_Adult_Obesity",
-        "Pct_Adult_Obesity_LowCI",
-        "Pct_Adult_Obesity_HighCI",
-        "Pct_Adult_Obesity_Quartile",
-        "Pct_Physical_Inactivity",
-        "Pct_Physical_Inactivity_LowCI",
-        "Pct_Physical_Inactivity_HighCI",
-        "Pct_Physical_Inactivity_Quartile",
-        "Excessive_Drinking_Pct",
-        "Excessive_Drinking_Pct_LowCI",
-        "Excessive_Drinking_Pct_HighCI",
-        "Excessive_Drinking_Pct_Quartile",
-        "CHR_Food_Environment_Index",
-        "CHR_Access_Exercise_Opportunities_Pct",
-        "CHR_Alcohol_Impaired_Driving_Deaths_Pct",
-        "CHR_Uninsured_Pct",
-        "CHR_Uninsured_Pct_LowCI",
-        "CHR_Uninsured_Pct_HighCI",
-        "CHR_Uninsured_Pct_Quartile",
-        "CHR_PCP_Ratio_Population",
-        "Dentist_Ratio_Population",
-        "Mental_Health_Provider_Ratio",
-        "CHR_Preventable_Hospital_Stays_Rate",
-        "CHR_Mammography_Screening_Pct",
-        "CHR_Mammography_Screening_Pct_Quartile",
-        "CHR_Flu_Vaccination_Pct",
-        "CHR_Flu_Vaccination_Pct_Quartile",
-    ],
 }
 
 # ---------------------------------------------------------------------------
@@ -256,23 +226,22 @@ SECTORS: dict[str, list[str]] = {
 # geography of that source. See ./raw/SOURCES.md for the citations and
 # ./fetch_raw_data.py for the download/verification code.
 #
-# This matters because only ACS and the TIGER boundaries are genuinely
-# ZCTA-level. CDC BRFSS is a statewide survey and County Health Rankings
-# reports by county, so those figures are broadcast onto every ZCTA row in the
-# state / county respectively.
+# This matters because only ACS, the TIGER boundaries, and the CDC PLACES
+# ZCTA release are genuinely ZCTA-level. BRFSS lives in the standalone
+# state table (BRFSS_Delaware.csv) and CHR in the county tables
+# (CHR_Delaware.csv / Delaware_County_CHR.csv) - Issue 5: they are no
+# longer broadcast onto ZCTA rows, where a single state/county figure
+# masqueraded as local data on ZCTA maps.
 # ---------------------------------------------------------------------------
 SECTOR_SOURCES: dict[str, tuple[str | None, str]] = {
     "Geographic": ("census_tiger_2020_de_zctas", "ZCTA"),
     "Demographics (ACS)": ("census_acs_2024_zcta_de", "ZCTA"),
     "Socioeconomic (ACS)": ("census_acs_2024_zcta_de", "ZCTA"),
     "Health Access (ACS)": ("census_acs_2024_zcta_de", "ZCTA"),
-    "BRFSS (State Level)": ("cdc_brfss_2024_de", "State"),
-    "CHR - Health Outcomes": ("chr_2025_de_counties", "County"),
-    "CHR - Health Behaviors": ("chr_2025_de_counties", "County"),
-    "CHR - Clinical Care": ("chr_2025_de_counties", "County"),
-    "CHR - County Level": ("chr_2025_de_counties", "County"),
+    # NOTE: BRFSS/CHR sectors live in REFERENCE_SECTORS (standalone
+    # state/county tables), not here - they must never resolve as ZCTA-master
+    # columns. AHRF has no sector (out of scope, mentor #3).
     "CDC PLACES (ZCTA-Level)": ("cdc_places_2025_de_zcta", "ZCTA"),
-    "Provider Supply (HRSA AHRF)": ("hrsa_ahrf_2025_de_counties", "County"),
     "PLACES Chronic Disease (ZCTA)": ("cdc_places_2025_de_zcta", "ZCTA"),
     "Calculated Metrics": (None, "Derived from ZCTA-level ACS"),
 }
@@ -308,7 +277,12 @@ CALCULATED_COLUMNS = [
 
 
 def _build_provenance_maps() -> tuple[dict, dict, dict]:
-    """Derive column -> source id / geography / sector from SECTORS once."""
+    """Derive column -> source id / geography / sector from SECTORS once.
+
+    REFERENCE_SECTORS (BRFSS state table, CHR county tables) are registered
+    with their TRUE geography so any stray broadcast column is labelled
+    State/County, never ZCTA.
+    """
     by_source, by_level, by_sector = {}, {}, {}
     for sector, columns in SECTORS.items():
         source_id, geo_level = SECTOR_SOURCES.get(sector, (None, "Unknown"))
@@ -322,6 +296,19 @@ def _build_provenance_maps() -> tuple[dict, dict, dict]:
                 by_level[column] = "Derived from ZCTA-level ACS"
                 continue
             by_level[column] = geo_level
+    ref_geo = {
+        "BRFSS (State Level)": ("cdc_brfss_2024_de", "State"),
+        "CHR - Health Outcomes": ("chr_2025_de_counties", "County"),
+        "CHR - Health Behaviors": ("chr_2025_de_counties", "County"),
+        "CHR - Clinical Care": ("chr_2025_de_counties", "County"),
+        "CHR - County Level": ("chr_2025_de_counties", "County"),
+    }
+    for sector, columns in REFERENCE_SECTORS.items():
+        source_id, geo_level = ref_geo.get(sector, (None, "Unknown"))
+        for column in columns:
+            by_source.setdefault(column, source_id)
+            by_sector.setdefault(column, sector)
+            by_level.setdefault(column, geo_level)
     for column in CALCULATED_COLUMNS:
         by_source.setdefault(column, None)
         by_level[column] = "Derived from ZCTA-level ACS"
@@ -395,6 +382,9 @@ COUNTY_KEY_COLUMNS = ["County_Name", "County_FIPS"]
 def sector_of(column: str) -> str | None:
     """Return the sector a column belongs to, or None if it is ungrouped."""
     for sector, columns in SECTORS.items():
+        if column in columns:
+            return sector
+    for sector, columns in REFERENCE_SECTORS.items():
         if column in columns:
             return sector
     return None

@@ -73,23 +73,27 @@ MEASURE_COLUMNS = {
 
 def fetch_places_delaware(limit: int = 50000) -> list[dict]:
     """Fetch CDC PLACES city-level health data for Delaware.
-    
+
+    Uses the /resource/eav7-hnsx.json endpoint with $where=stateabbr='DE'
+    (Issue 6): the v3 query.json root ignores $where/$limit and would dump
+    the whole national file.
+
     Args:
         limit: Maximum number of rows to fetch
-        
+
     Returns:
         List of dictionaries with PLACES health data
     """
     print("Fetching CDC PLACES city-level health data for Delaware...")
-    
+
     params = {
-        "$where": f"statedesc='{DELAWARE_STATE}'",
+        "$where": "stateabbr='DE'",
         "$limit": limit,
     }
-    
+
     response = requests.get(PLACES_API_BASE, params=params, timeout=180)
     response.raise_for_status()
-    
+
     data = response.json()
     print(f"  Fetched {len(data)} PLACES records")
     return data
@@ -97,20 +101,37 @@ def fetch_places_delaware(limit: int = 50000) -> list[dict]:
 
 def process_places_data(raw_data: list[dict]) -> pd.DataFrame:
     """Process raw PLACES data into a clean city-level DataFrame.
-    
+
+    Keeps only crude rows (datavaluetypeid == 'CrdPrv') before pivoting
+    (Issue 6): the API returns every city x measure twice (crude +
+    age-adjusted), and pivoting both makes the result ambiguous. Requires
+    exactly one row per location x measure.
+
     Pivots measure names into separate columns with clean names.
     Converts data values to numeric percentages.
-    
+
     Args:
         raw_data: Raw list of dictionaries from CDC PLACES API
-        
+
     Returns:
         Clean DataFrame with one row per city and columns for each measure
     """
     df = pd.DataFrame(raw_data)
-    
+
     # Filter to measures we want
     df = df[df["measure"].isin(MEASURE_COLUMNS.keys())].copy()
+
+    # Issue 6: keep crude prevalence only (CrdPrv), drop age-adjusted.
+    if "datavaluetypeid" in df.columns:
+        n_before = len(df)
+        df = df[df["datavaluetypeid"].eq("CrdPrv")].copy()
+        print(f"  Kept {len(df)}/{n_before} crude rows (dropped age-adjusted).")
+    dupes = df.duplicated(subset=["locationname", "measure"], keep=False)
+    if dupes.any():
+        bad = sorted(df.loc[dupes, "measure"].unique())[:5]
+        raise ValueError(
+            f"PLACES city data has >1 row per location x measure for: {bad}."
+        )
     
     # Convert data_value to numeric (percentages)
     df["data_value"] = pd.to_numeric(df["data_value"], errors="coerce")

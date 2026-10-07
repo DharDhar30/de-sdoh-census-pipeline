@@ -16,6 +16,7 @@ load_dotenv()
 CENSUS_API_KEY = os.getenv("CENSUS_API_KEY", "")
 
 ACS_VARS = {
+    # --- ZCTA-master display columns (kept stable so the app/Tableau keep working)
     "DP05_0001E": "Total_Population",
     "DP05_0018E": "Median_Age",
     "DP05_0024PE": "Pct_Age_65_Plus",
@@ -25,52 +26,37 @@ ACS_VARS = {
     "DP03_0021PE": "Pct_Commute_Public_Transit",
     "DP02_0154PE": "Pct_Broadband_Internet",
     "DP02_0114PE": "Pct_NonEnglish_Language_Home",
+    # --- Published counts + denominators (Issue 7: never back-calculate from
+    # percentages). S1701_C02_001E/C01_001E the poverty count + universe
+    # (DP03_0128E only duplicates the percent); DP03_0095E/DP03_0099E the
+    # insurance universe/count; DP02_0152E/DP02_0154E broadband universe/count;
+    # DP03_0018E/DP03_0021E commute universe/count; DP02_0113E/DP02_0114E the
+    # language universe/count; DP05_0024E the 65+ count.
+    "DP05_0024E": "Count_Age_65_Plus",
+    "DP03_0095E": "Count_Insurance_Universe",
+    "DP03_0099E": "Count_No_Health_Insurance",
+    "DP03_0018E": "Count_Workers_16_Plus",
+    "DP03_0021E": "Count_Commute_Public_Transit",
+    "DP02_0152E": "Count_Households_Broadband_Universe",
+    "DP02_0154E": "Count_Broadband_Internet",
+    "DP02_0113E": "Count_English_Only_5Plus",
+    "DP02_0114E": "Count_NonEnglish_Language_Home",
+    "DP02_0001E": "Count_Total_Households",
+    # NOTE: DP03_0128E intentionally NOT mapped - it duplicates the poverty
+    # percent (and is suppressed at ZCTA level). Counts come from S1701.
 }
 
-NULL_CODES = ["-666666666", "-888888888", "-999999999", "(X)", "N", "null", "None"]
+# Census missing-value sentinels. The API returns them as *numbers* (e.g.
+# -666666666), so they must be masked AFTER pd.to_numeric, not by string
+# match. Any value <= -111111111 is a sentinel (covers -666666666,
+# -888888888, -999999999, -222222222, -333333333, -555555555).
+CENSUS_SENTINEL_MAX = -111111111
+NULL_CODES = ["(X)", "N", "null", "None"]
 
-# BRFSS state-level indicators pulled from the CDC BRFSS Prevalence dataset
-# (Chronic disease / PUBLIC HEALTH measures only - no demographics, education,
-# employment, income, or commute noise).
-BRFSS_MEASURES = [
-    ("BRFSS_Pct_Cigarette_Smoking", "Adults who are current smokers", "Yes"),
-    ("BRFSS_Pct_Smoke_Every_Day", "Four Level Smoking Status", "Smoke everyday"),
-    ("BRFSS_Pct_Ecigarette_Use", "Adults who are current e-cigarette users", "Current E-cigarette user"),
-    ("BRFSS_Pct_Binge_Drinking", "Binge drinkers", "Yes"),
-    ("BRFSS_Pct_Heavy_Drinking", "Heavy drinkers", "Meet criteria for heavy drinking"),
-    ("BRFSS_Pct_Adult_Obesity", "Weight classification by Body Mass Index", "Obese (BMI 30.0 - 99.8)"),
-    ("BRFSS_Pct_Adult_Overweight", "Weight classification by Body Mass Index", "Overweight (BMI 25.0-29.9)"),
-    ("BRFSS_Pct_No_Physical_Activity", "During the past month, did you participate in any physical activities", "No"),
-    ("BRFSS_Pct_Arthritis", "Adults who have been told they have arthritis", "Yes"),
-    ("BRFSS_Pct_Current_Asthma", "Adults who have been told they currently have asthma", "Yes"),
-    ("BRFSS_Pct_Ever_Asthma", "Adults who have ever been told they have asthma", "Yes"),
-    ("BRFSS_Pct_COPD", "Ever told you have COPD?", "Yes"),
-    ("BRFSS_Pct_Coronary_Heart_Disease", "Respondents that have ever reported having coronary heart disease", "Reported having MI or CHD"),
-    ("BRFSS_Pct_Had_Stroke", "Ever told you had a stroke?", "Yes"),
-    ("BRFSS_Pct_Diabetes", "Have you ever been told by a doctor that you have diabetes?", "Yes"),
-    ("BRFSS_Pct_Kidney_Disease", "Ever told you have kidney disease?", "Yes"),
-    ("BRFSS_Pct_Depression", "Ever told you that you have a form of depression?", "Yes"),
-    ("BRFSS_Pct_Skin_Cancer", "Ever told you had skin cancer?", "Yes"),
-    ("BRFSS_Pct_Other_Cancer", "Ever told you had any other types of cancer?", "Yes"),
-    ("BRFSS_Pct_Fair_Poor_Health", "Health Status", "Fair or Poor Health"),
-    ("BRFSS_Pct_Frequent_Mental_Distress", "Days when mental health status not good", "14+ days when mental health not good"),
-    ("BRFSS_Pct_Frequent_Physical_Distress", "Days when physical health status not good", "14+ days when physical health not good"),
-    ("BRFSS_Pct_Uninsured", "Adults who had some form of health insurance", "Do not have some form of health insurance"),
-    ("BRFSS_Pct_Uninsured_18_64", "Adults aged 18-64 who have any kind of health care coverage", "Do not have some form of health insurance"),
-    ("BRFSS_Pct_Cost_Barrier_Medical_Care", "Was there a time in the past 12 months when you needed to see a doctor", "Yes"),
-    ("BRFSS_Pct_No_Personal_Doctor", "Do you have one person (or a group of doctors)", "No"),
-    ("BRFSS_Pct_Routine_Checkup_Past_Year", "About how long has it been since you last visited a doctor for a routine checkup?", "Within the past year"),
-    ("BRFSS_Pct_Colorectal_Screening_45_75", "Respondents aged 45-75 who have fully met the USPSTF recommendation", "Received one or more of the recommended CRC tests within the recommended time interval"),
-    ("BRFSS_Pct_Mammography_40_74", "Women aged 40-74 who have had a mammogram within the past two years", "Received a mammogram within the past 2 years"),
-    ("BRFSS_Pct_Flu_Vaccinated_65_Plus", "Adults aged 65+ who have had a flu shot within the past year", "Yes"),
-    ("BRFSS_Pct_Pneumonia_Vaccinated_65_Plus", "Adults aged 65+ who have ever had a pneumonia vaccination", "Yes"),
-    ("BRFSS_Pct_HIV_Tested_Ever", "Have you ever been tested for HIV?", "Yes"),
-    ("BRFSS_Pct_Permanent_Teeth_Removed", "Adults that have had any permanent teeth extracted", "Yes"),
-    ("BRFSS_Pct_All_Teeth_Removed_65_Plus", "Adults aged 65+ who have had all their natural teeth extracted", "Yes"),
-    ("BRFSS_Pct_Walking_Difficulty", "Do you have serious difficulty walking or climbing stairs?", "Yes"),
-    ("BRFSS_Pct_Seeing_Difficulty", "Are you blind or do you have serious difficulty seeing", "Yes"),
-    ("BRFSS_Pct_Cognitive_Difficulty", "Do you have serious difficulty concentrating, remembering, or making decisions?", "Yes"),
-]
+# NOTE (mentor issue #5): BRFSS lives in the standalone state table
+# (BRFSS_Delaware.csv, built by gen_health_data.py) and is never merged onto
+# ZCTA rows. The BRFSS_MEASURES query spec below was retired with the
+# broadcast helpers; the canonical spec is gen_health_data.BRFSS_MEASURES.
 
 # ---------------------------------------------------------------------------
 # 2. SPATIAL BOUNDARIES (PYGRIS)
@@ -78,82 +64,147 @@ BRFSS_MEASURES = [
 # Delaware ZIPs are exactly 197xx / 198xx / 199xx.
 DE_ZCTA_PREFIXES = ("197", "198", "199")
 
+# 2020 Census ZCTA-to-county relationship file (archived in raw/). The
+# authoritative source for "which ZCTAs belong to Delaware" and "which county
+# is each ZCTA primarily in" (Issues 1+2). Never assign counties from ZIP
+# prefixes, hand-made lists, or spatial intersects.
+ZCTA_COUNTY_REL_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "raw", "census_zcta_county_rel_2020_raw.txt"
+)
+DE_COUNTY_FIPS = ("10001", "10003", "10005")
+
+
+def load_zcta_county_crosswalk(rel_path: str = ZCTA_COUNTY_REL_PATH) -> pd.DataFrame:
+    """Primary-county assignment from the 2020 Census relationship file.
+
+    Returns one row per ZCTA whose LARGEST land-area share lies in a Delaware
+    county: ZCTA, County_FIPS, County_Name, primary_share, multi_county flag.
+    ZCTAs such as 19952/19977/19938/19950/19963 span >1 county and are
+    flagged; their county is the largest-share one (19952 -> Kent, not
+    Sussex; 19734 -> New Castle, not Kent).
+    """
+    rel = pd.read_csv(rel_path, sep="|", dtype=str)
+    rel["AREALAND_PART"] = pd.to_numeric(rel["AREALAND_PART"], errors="coerce")
+    # Largest-share county per ZCTA, nationally first (so out-of-state ZCTAs
+    # like 21842/08014/19350 resolve to their true home county, not Delaware).
+    idx = rel.groupby("GEOID_ZCTA5_20")["AREALAND_PART"].idxmax()
+    primary = rel.loc[idx].copy()
+    primary = primary.rename(
+        columns={"GEOID_ZCTA5_20": "ZCTA", "GEOID_COUNTY_20": "County_FIPS"}
+    )
+    primary["ZCTA"] = primary["ZCTA"].astype(str).str.zfill(5)
+    primary["County_FIPS"] = primary["County_FIPS"].astype(str).str.zfill(5)
+    # Multi-county flag: ZCTAs appearing on >1 county row.
+    n_counties = rel.groupby("GEOID_ZCTA5_20").size()
+    primary["multi_county"] = primary["ZCTA"].map(n_counties) > 1
+    # Land-area share of the primary county within the ZCTA.
+    zcta_land = rel.groupby("GEOID_ZCTA5_20")["AREALAND_PART"].sum()
+    primary["primary_share"] = primary.apply(
+        lambda r: (r["AREALAND_PART"] / zcta_land.get(r["ZCTA"], float("nan"))),
+        axis=1,
+    )
+    fips_to_name = {"10001": "Kent", "10003": "New Castle", "10005": "Sussex"}
+    primary["County_Name"] = primary["County_FIPS"].map(fips_to_name).fillna(
+        primary["NAMELSAD_COUNTY_20"].str.replace(" County", "", regex=False).str.strip()
+    )
+    de = primary[primary["County_FIPS"].isin(DE_COUNTY_FIPS)].copy()
+    return de[["ZCTA", "County_FIPS", "County_Name", "primary_share", "multi_county"]]
+
 
 def _de_zctas_only(de_zctas, zcta_col: str):
-    """Restrict clipped ZCTA polygons to ZCTAs that genuinely belong to Delaware.
+    """Restrict clipped ZCTA polygons to true Delaware ZCTAs (Issue 1).
 
     ``gpd.clip`` to the Delaware state boundary keeps any ZCTA that *touches*
-    Delaware, and border ZCTAs retain their full multi-state polygon. Delaware's
-    north-east corner touches Maryland and Pennsylvania, so 30 MD/PA/NJ ZCTAs
-    (including 21921 / Annapolis, MD) survived the clip and their ACS
-    populations were merged into the master, inflating Delaware's total
-    population by ~21%. Two filters are required together:
-
-    1. the ZCTA's centroid must fall inside the Delaware state polygon; and
-    2. the ZCTA's ZIP must be a Delaware ZIP (197/198/199).
-
-    Filter 1 alone is not sufficient; filter 2 alone would keep ZCTAs that are
-    Delaware ZIPs but whose centroid the clip moved.
+    Delaware, and border ZCTAs retain their full multi-state polygon. The
+    authoritative fix is the 2020 Census ZCTA-to-county relationship file:
+    only ZCTAs whose largest land-area share lies in a Delaware county are
+    kept (68 ZCTAs). Out-of-state ZCTAs such as 21842/08014/19350 resolve to
+    their true home county and are excluded.
     """
-    projected = de_zctas.to_crs(epsg=3857)
-    centroids = projected.set_geometry(projected.geometry.centroid)
-    de_state = pygris.states(cb=True, resolution="20m").query("STUSPS == 'DE'")
-    if de_state.crs != centroids.crs:
-        de_state = de_state.to_crs(centroids.crs)
-    inside = gpd.sjoin(
-        centroids, de_state[["geometry"]], how="left", predicate="within"
-    )
-    keep = inside.dropna(subset=["index_right"]).index.unique()
-
-    out = de_zctas.loc[de_zctas.index.intersection(keep)].copy()
-    before = len(out)
-    out = out.loc[out[zcta_col].astype(str).str.zfill(5).str.startswith(DE_ZCTA_PREFIXES)]
-    dropped = before - len(out)
-    if dropped:
-        print(f"  Dropped {dropped} non-Delaware ZCTAs (centroid inside DE, ZIP not 197/198/199).")
+    de_zctas = de_zctas.copy()
+    de_zctas["ZCTA"] = de_zctas[zcta_col].astype(str).str.zfill(5)
+    try:
+        crosswalk = load_zcta_county_crosswalk()
+    except FileNotFoundError:
+        crosswalk = None
+    if crosswalk is None:
+        # Offline fallback: centroid-in-DE + Delaware ZIP prefix.
+        projected = de_zctas.to_crs(epsg=3857)
+        centroids = projected.set_geometry(projected.geometry.centroid)
+        de_state = pygris.states(cb=True, resolution="20m").query("STUSPS == 'DE'")
+        if de_state.crs != centroids.crs:
+            de_state = de_state.to_crs(centroids.crs)
+        inside = gpd.sjoin(
+            centroids, de_state[["geometry"]], how="left", predicate="within"
+        )
+        keep = inside.dropna(subset=["index_right"]).index.unique()
+        out = de_zctas.loc[de_zctas.index.intersection(keep)].copy()
+        out = out.loc[
+            out["ZCTA"].astype(str).str.zfill(5).str.startswith(DE_ZCTA_PREFIXES)
+        ]
+        print("  WARNING: relationship file missing; used centroid+ZIP fallback.")
+    else:
+        keep = set(crosswalk["ZCTA"])
+        before = de_zctas["ZCTA"].nunique()
+        out = de_zctas[de_zctas["ZCTA"].isin(keep)].copy()
+        dropped = before - out["ZCTA"].nunique()
+        if dropped:
+            print(f"  Dropped {dropped} non-Delaware ZCTAs via relationship file.")
+        # Safety net: never let an out-of-state ZCTA through even if the
+        # relationship file changes upstream.
+        out = out.loc[
+            out["ZCTA"].astype(str).str.zfill(5).str.startswith(DE_ZCTA_PREFIXES)
+        ]
     if out.empty:
         raise RuntimeError("The Delaware ZCTA filter removed every ZCTA; aborting.")
     return out
 
 
 def fetch_spatial_boundaries():
-    """Downloads Delaware state & ZCTA boundaries and computes area metrics."""
+    """Downloads Delaware state & ZCTA boundaries and computes area metrics.
+
+    County assignment comes from the 2020 Census ZCTA-to-county relationship
+    file (largest land-area share; Issue 2) - never from spatial intersects,
+    ZIP prefixes, or hand-made lists. 19734 -> New Castle, 19952 -> Kent.
+    """
     print("Fetching spatial boundaries via pygris...")
     de_state = pygris.states(cb=True, resolution="20m").query("STUSPS == 'DE'")
     zctas = pygris.zctas(year=2020, cb=True)
-    
+
     if zctas.crs != de_state.crs:
         zctas = zctas.to_crs(de_state.crs)
-        
+
     de_zctas = gpd.clip(zctas, de_state)
-    
+
     aland_col = "ALAND20" if "ALAND20" in de_zctas.columns else "ALAND"
     awater_col = "AWATER20" if "AWATER20" in de_zctas.columns else "AWATER"
     zcta_col = "ZCTA5CE20" if "ZCTA5CE20" in de_zctas.columns else ("GEOID20" if "GEOID20" in de_zctas.columns else "GEOID")
-    
+
     de_zctas = de_zctas[de_zctas[aland_col] > 0].copy()
     # Drop out-of-state border ZCTAs before any population is attached.
     de_zctas = _de_zctas_only(de_zctas, zcta_col)
     de_zctas["ZCTA"] = de_zctas[zcta_col].astype(str).str.zfill(5)
     de_zctas["Land_Area_SqMi"] = de_zctas[aland_col] / 2589988.11
     de_zctas["Water_Area_SqMi"] = de_zctas[awater_col] / 2589988.11
-    
-    de_counties = pygris.counties(state="DE", cb=True)
-    if de_counties.crs != de_zctas.crs:
-        de_counties = de_counties.to_crs(de_zctas.crs)
-        
-    de_counties["County_FIPS"] = de_counties["GEOID"].astype(str).str.zfill(5)
-    de_counties["County_Name"] = de_counties["NAME"]
-    
-    joined = gpd.sjoin(
-        de_zctas, 
-        de_counties[["County_FIPS", "County_Name", "geometry"]], 
-        how="left", 
-        predicate="intersects"
+
+    crosswalk = load_zcta_county_crosswalk()
+    de_zctas_final = de_zctas.merge(
+        crosswalk[["ZCTA", "County_FIPS", "County_Name", "multi_county"]],
+        on="ZCTA",
+        how="left",
     )
-    
-    de_zctas_final = joined.drop_duplicates(subset=["ZCTA"]).drop(columns=["index_right"])
-    return de_zctas_final
+    n_multi = int(de_zctas_final["multi_county"].fillna(False).sum())
+    if n_multi:
+        flagged = sorted(
+            de_zctas_final.loc[de_zctas_final["multi_county"].fillna(False), "ZCTA"].unique()
+        )
+        print(f"  Flagged {n_multi} multi-county ZCTA(s): {', '.join(flagged)}.")
+    missing = de_zctas_final["County_FIPS"].isna().sum()
+    if missing:
+        raise RuntimeError(
+            f"{missing} ZCTA(s) have no county in the relationship file; aborting."
+        )
+    return de_zctas_final.drop(columns=["multi_county"])
 
 # ---------------------------------------------------------------------------
 # 2b. CDC PLACES ZCTA-LEVEL CHRONIC DISEASE (model-based estimates)
@@ -192,6 +243,20 @@ def load_places_zcta(filepath: str = PLACES_ZCTA_SNAPSHOT) -> pd.DataFrame:
 
     raw["ZCTA"] = raw["locationname"].astype(str).str.zfill(5)
 
+    # Issue 6: keep only crude rows (datavaluetypeid == 'CrdPrv') before
+    # pivoting, and require exactly one row per location x measure.
+    if "datavaluetypeid" in raw.columns:
+        n_before = len(raw)
+        raw = raw[raw["datavaluetypeid"].eq("CrdPrv")].copy()
+        print(f"  Kept {len(raw)}/{n_before} crude PLACES rows (dropped age-adjusted).")
+    dupes = raw.duplicated(subset=["ZCTA", "measure"], keep=False)
+    if dupes.any():
+        bad = sorted(raw.loc[dupes, "measure"].unique())[:5]
+        raise ValueError(
+            f"PLACES ZCTA has >1 row per location x measure for: {bad}. "
+            "Refusing to pivot ambiguously."
+        )
+
     wide = raw.pivot_table(
         index="ZCTA", columns="measure", values="data_value", aggfunc="first"
     )
@@ -222,103 +287,92 @@ def load_places_zcta(filepath: str = PLACES_ZCTA_SNAPSHOT) -> pd.DataFrame:
 
 # ---------------------------------------------------------------------------
 # 3. CENSUS ACS DEMOGRAPHIC DATA API
+# S1701 subject-table variables merged into fetch_acs_data: the Data
+# Profile's DP03_0128E duplicates the poverty percent (suppressed at ZCTA
+# level), so the true published count + universe come from S1701.
+S1701_VARS = {
+    "S1701_C02_001E": "Count_Below_Poverty",
+    "S1701_C01_001E": "Count_Poverty_Universe",
+}
+
+
 # ---------------------------------------------------------------------------
 def fetch_acs_data(api_key):
-    """Fetches 5-Year ACS profile metrics from the Census API (2024 5-year)."""
+    """Fetches 5-Year ACS profile metrics from the Census API (2024 5-year).
+
+    Issue 3: the API returns missing-value sentinels as NUMBERS
+    (-666666666, -888888888, ...). Columns are converted with pd.to_numeric
+    FIRST, then any value <= -111111111 is set to NaN. A string match can
+    never catch them because they already arrive as ints.
+
+    Issue 7: poverty counts come from subject table S1701 (published count),
+    not DP03_0128E (a duplicate of the percent).
+    """
     print("Fetching Census ACS 2024 5-Year demographic metrics...")
     var_string = ",".join(ACS_VARS.keys())
     url = f"https://api.census.gov/data/2024/acs/acs5/profile?get={var_string}&for=zip%20code%20tabulation%20area:*&key={api_key}"
-    
+
     response = requests.get(url)
     if response.status_code != 200:
         raise ValueError(f"Census API request failed with status code {response.status_code}: {response.text}")
-    
+
     data = response.json()
     df = pd.DataFrame(data[1:], columns=data[0])
     df = df.rename(columns=ACS_VARS)
     df["ZCTA"] = df["zip code tabulation area"].astype(str).str.zfill(5)
-    
-    for col in ACS_VARS.values():
+
+    print("Fetching ACS subject table S1701 (poverty count + universe)...")
+    svar_string = ",".join(S1701_VARS.keys())
+    surl = f"https://api.census.gov/data/2024/acs/acs5/subject?get={svar_string}&for=zip%20code%20tabulation%20area:*&key={api_key}"
+    sresp = requests.get(surl, timeout=120)
+    if sresp.status_code != 200:
+        raise ValueError(f"Census S1701 request failed: {sresp.status_code}: {sresp.text[:300]}")
+    sdata = sresp.json()
+    sdf = pd.DataFrame(sdata[1:], columns=sdata[0])
+    sdf["ZCTA"] = sdf["zip code tabulation area"].astype(str).str.zfill(5)
+    sdf = sdf.rename(columns=S1701_VARS)
+    df = df.merge(sdf[["ZCTA"] + list(S1701_VARS.values())], on="ZCTA", how="left")
+
+    for col in list(ACS_VARS.values()) + list(S1701_VARS.values()):
+        # Rare non-numeric tokens first ("(X)", "N"), then numeric coercion.
         df[col] = df[col].replace(NULL_CODES, pd.NA)
         df[col] = pd.to_numeric(df[col], errors="coerce")
-        
+        # Numeric sentinel mask (Issue 3): covers -666666666, -888888888,
+        # -999999999, -222222222, -333333333, -555555555.
+        n_masked = int((df[col] <= CENSUS_SENTINEL_MAX).sum())
+        df.loc[df[col] <= CENSUS_SENTINEL_MAX, col] = pd.NA
+        if n_masked:
+            print(f"  Masked {n_masked} Census sentinel(s) in {col}.")
+
+    # Issue 3 guard: no published measure may be negative after cleaning.
+    nonneg = [c for c in ACS_VARS.values() if not c.startswith("Count_") or True]
+    neg = {c: int((df[c] < 0).sum()) for c in ACS_VARS.values() if (df[c] < 0).any()}
+    if neg:
+        raise ValueError(f"Negative published ACS values remain after cleaning: {neg}")
+
     return df
 
-# ---------------------------------------------------------------------------
-# 4. COUNTY HEALTH RANKINGS (CHR) INTEGRATION
-# ---------------------------------------------------------------------------
-def load_county_health_rankings(filepath="CHR_Delaware.csv"):
-    """Loads County Health Rankings dataset (medical / public-health outcomes,
-    behaviors, and clinical-care measures only).
 
-    Reads exclusively from the bundled CHR_Delaware.csv, which is generated
-    from the official County Health Rankings & Roadmaps 2025 release
-    (see gen_health_data.py for the full reproducible download script).
-    """
-    print("Loading County Health Rankings (CHR) 2025 metrics...")
-    if not os.path.exists(filepath):
-        raise FileNotFoundError(
-            f"{filepath} not found. Run gen_health_data.py first to download "
-            "the official County Health Rankings 2025 data."
-        )
-    chr_df = pd.read_csv(filepath)
-    chr_df["County_FIPS"] = chr_df["County_FIPS"].astype(str).str.zfill(5)
-    return chr_df
-
-
-# ---------------------------------------------------------------------------
-# 4b. CDC BRFSS STATE-LEVEL PREVALENCE (2024)
-# ---------------------------------------------------------------------------
-BRFSS_CSV_PATH = "BRFSS_Delaware.csv"
-BRFSS_API_URL = (
-    "https://chronicdata.cdc.gov/resource/dttw-5yxu.csv"
-    "?$where=locationabbr='DE' and break_out_category='Overall' and year=2024"
-    "&$limit=10000"
-)
-
-
-def _brfss_row_from_api() -> dict:
-    """Fetch Delaware overall-prevalence rows from the live CDC BRFSS API and
-    build a single state-level record matching the bundled BRFSS_Delaware.csv."""
-    print("Fetching CDC BRFSS 2024 Delaware prevalence from API...")
-    response = requests.get(BRFSS_API_URL, timeout=120)
+def fetch_acs_state_total(api_key) -> float:
+    """State-level ACS DP05_0001E for Delaware (Issue 1 population check)."""
+    url = (
+        "https://api.census.gov/data/2024/acs/acs5/profile"
+        f"?get=DP05_0001E&for=state:10&key={api_key}"
+    )
+    response = requests.get(url, timeout=60)
     response.raise_for_status()
-    import io
+    data = response.json()
+    return float(data[1][0])
 
-    df = pd.read_csv(io.StringIO(response.text))
-    df.columns = [c.lower() for c in df.columns]
-    out = {"State": "Delaware", "BRFSS_Year": 2024}
-    problems = []
-    for name, qsub, resp_exact in BRFSS_MEASURES:
-        q = df["question"].fillna("").astype(str).str.contains(qsub, case=False, regex=False)
-        r = df["response"].fillna("").astype(str).str.strip().str.lower().eq(resp_exact.lower())
-        hits = df[q & r]
-        if len(hits) != 1:
-            problems.append((name, len(hits)))
-            continue
-        row = hits.iloc[0]
-        out[f"{name}_Sample_Size"] = int(row["sample_size"])
-        for suffix, src in (
-            ("", "data_value"),
-            ("_CI_Low", "confidence_limit_low"),
-            ("_CI_High", "confidence_limit_high"),
-        ):
-            out[f"{name}{suffix}"] = round(float(row[src]), 1)
-    if problems:
-        raise ValueError(f"BRFSS API extract incomplete for: {problems}")
-    return out
-
-
-def fetch_brfss_state_data() -> pd.DataFrame:
-    """Return the Delaware state-level BRFSS 2024 record as a one-row frame.
-
-    Uses the bundled BRFSS_Delaware.csv when available; otherwise pulls the
-    same figures directly from the CDC BRFSS Prevalence API.
-    """
-    if os.path.exists(BRFSS_CSV_PATH):
-        print("Loading CDC BRFSS 2024 Delaware state prevalence...")
-        return pd.read_csv(BRFSS_CSV_PATH)
-    return pd.DataFrame([_brfss_row_from_api()])
+# ---------------------------------------------------------------------------
+# 4. REFERENCE TABLES (NOT merged onto ZCTA rows - mentor issue #5)
+#
+# County Health Rankings (CHR_Delaware.csv / Delaware_County_CHR.csv) and
+# CDC BRFSS (BRFSS_Delaware.csv) live in their own state/county tables.
+# The retired helpers that broadcast them onto every ZCTA row were removed:
+# use gen_health_data.py (BRFSS/CHR downloads) and generate_county_chr.py
+# (county table) instead.
+# ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
 # 5. MAIN ETL WORKFLOW & EXPORT
@@ -326,23 +380,32 @@ def fetch_brfss_state_data() -> pd.DataFrame:
 def main():
     spatial_gdf = fetch_spatial_boundaries()
     acs_df = fetch_acs_data(CENSUS_API_KEY)
-    chr_df = load_county_health_rankings()
-    brfss_df = fetch_brfss_state_data()
     places_df = load_places_zcta()
-    
+
+    # Issue 1: keep exactly the 68 Delaware ZCTAs from the relationship file.
+    crosswalk = load_zcta_county_crosswalk()
+    if len(crosswalk) != 68:
+        raise ValueError(
+            f"Relationship file yields {len(crosswalk)} DE ZCTAs, expected 68."
+        )
+    acs_df = acs_df[acs_df["ZCTA"].isin(set(crosswalk["ZCTA"]))].copy()
     master_gdf = spatial_gdf.merge(acs_df, on="ZCTA", how="inner")
-    
-    master_gdf = master_gdf.merge(chr_df.drop(columns=["County_Name"], errors="ignore"), on="County_FIPS", how="left")
+    if len(master_gdf) != 68:
+        raise ValueError(f"Master has {len(master_gdf)} ZCTAs, expected 68.")
 
-    # BRFSS is a single state-level record: broadcast every indicator to all ZCTA
-    # rows so maps still work, and keep the state key explicit in the output.
-    master_gdf["State"] = "Delaware"
-    master_gdf = master_gdf.merge(brfss_df, on="State", how="left")
-    master_gdf = master_gdf.drop(columns=["State"])
+    # Issue 1 check: ZCTA population total within ~1% of the state ACS total.
+    zcta_pop = float(master_gdf["Total_Population"].sum(skipna=True))
+    state_pop = fetch_acs_state_total(CENSUS_API_KEY)
+    if abs(zcta_pop - state_pop) / state_pop > 0.01:
+        raise ValueError(
+            f"ZCTA pop total {zcta_pop:,.0f} differs >1% from state ACS {state_pop:,.0f}."
+        )
+    print(f"  ZCTA pop {zcta_pop:,.0f} vs state ACS {state_pop:,.0f} (within 1%).")
 
-    # PLACES ZCTA: genuinely ZCTA-level model-based chronic-disease estimates.
-    # Merged with how="left" so ZCTAs PLACES does not cover keep a NULL measure
-    # rather than being dropped from the master.
+    # Issue 5: BRFSS (state) and CHR (county) are NOT merged onto ZCTA rows.
+    # They live in their own reference tables: BRFSS_Delaware.csv (state) and
+    # Delaware_County_CHR.csv / CHR_Delaware.csv (county). ZCTA maps use ACS +
+    # PLACES only, both genuinely ZCTA-level.
     places_cols = [c for c in places_df.columns if c != "ZCTA"]
     if places_cols:
         master_gdf = master_gdf.merge(places_df, on="ZCTA", how="left")
@@ -353,21 +416,39 @@ def main():
 
 
     master_gdf["Population_Density_SqMi"] = (master_gdf["Total_Population"] / master_gdf["Land_Area_SqMi"]).round(2)
-    master_gdf["Uninsured_Population_Count"] = ((master_gdf["Pct_No_Health_Insurance"] / 100) * master_gdf["Total_Population"]).round(0)
-    master_gdf["Poverty_Population_Count"] = ((master_gdf["Pct_Below_Poverty"] / 100) * master_gdf["Total_Population"]).round(0)
-    master_gdf["Seniors_65_Plus_Count"] = ((master_gdf["Pct_Age_65_Plus"] / 100) * master_gdf["Total_Population"]).round(0)
+    # Issue 7: use PUBLISHED ACS counts - never back-calculate from percents.
+    # DP03_0099E/DP03_0095E: uninsured count + civilian-noninstitutionalized
+    # universe. S1701_C02_001E/C01_001E: poverty count + poverty universe.
+    # DP05_0024E: 65+ count. DP02_0154E/DP02_0152E: broadband count +
+    # household universe, so the no-broadband figure is households (not people).
+    master_gdf["Uninsured_Population_Count"] = master_gdf["Count_No_Health_Insurance"]
+    master_gdf["Poverty_Population_Count"] = master_gdf["Count_Below_Poverty"]
+    master_gdf["Seniors_65_Plus_Count"] = master_gdf["Count_Age_65_Plus"]
     master_gdf["No_Broadband_Households_Estimate"] = (
-        ((100 - master_gdf["Pct_Broadband_Internet"]) / 100) * master_gdf["Total_Population"]
-    ).round(0)
+        master_gdf["Count_Households_Broadband_Universe"] - master_gdf["Count_Broadband_Internet"]
+    )
+
+    # Issue 3 guard on derived columns: no published measure may be negative.
+    for col in ("Uninsured_Population_Count", "Poverty_Population_Count",
+                "Seniors_65_Plus_Count", "No_Broadband_Households_Estimate"):
+        neg = master_gdf[col].dropna()
+        if (neg < 0).any():
+            raise ValueError(f"Derived column {col} has negative values.")
+
+    # Drop the Count_* helper denominators from the shipped master (they stay
+    # in the raw ACS snapshot); the four derived counts above are the outputs.
+    helpers = [c for c in master_gdf.columns if c.startswith("Count_")]
+    master_gdf = master_gdf.drop(columns=helpers)
 
 
     print("Exporting updated master datasets...")
     tabular_df = pd.DataFrame(master_gdf.drop(columns=["geometry"]))
 
-    # Provenance: the true geography of every measure. Only ACS + TIGER are
-    # genuinely ZCTA-level; BRFSS is a statewide survey and CHR reports by
-    # county, so those columns are broadcast onto ZCTA rows. Users who want
-    # ZCTA-only measures filter on Geography_Level == "ZCTA".
+    # Provenance: the true geography of every measure. The ZCTA master holds
+    # only genuinely ZCTA-level measures (ACS + TIGER + PLACES ZCTA); BRFSS
+    # (state) and CHR (county) live in their own reference tables, never on
+    # ZCTA rows. Users who want ZCTA-only measures filter on
+    # Geography_Level == "ZCTA".
     provenance_df = pd.DataFrame(provenance_rows(list(tabular_df.columns)))
     provenance_path = "Delaware_ZCTA_Health_Master_Column_Provenance.csv"
     provenance_df.to_csv(provenance_path, index=False)
@@ -379,7 +460,7 @@ def main():
 
     master_gdf.to_file("Delaware_ZCTA_Health_Master_Spatial.geojson", driver="GeoJSON")
     print(f"Wrote {provenance_path} ({len(provenance_df)} columns classified)")
-    print("Successfully exported all files with County Health Rankings added!")
+    print("Successfully exported the ZCTA master (ACS + PLACES ZCTA only).")
 
 if __name__ == "__main__":
     main()

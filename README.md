@@ -1,6 +1,6 @@
 # Delaware SDOH & Census Health Data Pipeline
 
-An automated Python ETL pipeline designed to extract, transform, and merge Delaware Social Determinants of Health (SDOH), Census ACS demographics, CDC BRFSS public-health indicators, and County Health Rankings (CHR) at the ZIP Code Tabulation Area (ZCTA) level.
+An automated Python ETL pipeline building curated need/access datasets for healthcare analysis in Delaware: Census ACS demographics, CDC PLACES ZCTA-level chronic-disease estimates, CDC BRFSS state benchmarks, and County Health Rankings county tables — each at its own true geography.
 
 The pipeline outputs ready-to-use tabular and spatial datasets specifically formatted for interactive mapping in Tableau, ArcGIS, and QGIS.
 
@@ -8,11 +8,11 @@ The pipeline outputs ready-to-use tabular and spatial datasets specifically form
 
 - Automated Spatial Extraction: Downloads official U.S. Census Bureau cartographic boundary files via pygris and clips boundaries specifically to Delaware ZCTAs.
 - Census ACS Integration: Pulls 2024 5-Year ACS Data Profile metrics (2020–2024; poverty, broadband, insurance, median income, age, language) directly via the Census API.
-- CDC BRFSS (Public Health): Merges real CDC Behavioral Risk Factor Surveillance System 2024 state-level prevalence for Delaware - chronic disease (diabetes, asthma, COPD, heart disease, cancer, arthritis, kidney disease), risk behaviors (smoking, vaping, binge/heavy drinking, obesity, physical inactivity), health-care access (uninsured, cost barriers, routine checkups), screenings (mammogram, colorectal, flu/pneumonia vaccination), oral health, and disability. Each measure includes its sample size and 95% confidence interval.
-- County Health Rankings (CHR): Merges medical / public-health indicators across Delaware's 3 counties (New Castle, Kent, Sussex) - health outcomes (poor/fair health, premature death, low birth weight, STIs, teen births), health behaviors (smoking, obesity, inactivity, excessive drinking, food environment, exercise access, alcohol-impaired driving deaths), and clinical care (uninsured, provider ratios, preventable hospital stays, screening & vaccination rates).
-- HRSA AHRF Provider Supply: Archives the free, public-domain Area Health Resources Files so provider counts and population denominators can be re-derived independently. `generate_provider_ratios.py` recomputes population-to-provider ratios from these raw counts and cross-checks them against CHR's published values.
-- CDC PLACES ZCTA-Level: Pulls the PLACES **ZCTA** release so chronic-disease and prevention measures are reported directly on the same ZCTAs as the master, rather than being broadcast from a city-level file.
-- Automated Transformations: Computes derived population counts and land density metrics directly in Python.
+- CDC BRFSS (Public Health): Keeps the CDC Behavioral Risk Factor Surveillance System 2024 state-level prevalence for Delaware as a **standalone state reference table** (`BRFSS_Delaware.csv`) - chronic disease, risk behaviors, health-care access, screenings, oral health, disability, each with sample size and 95% CI. Never broadcast onto ZCTA rows.
+- County Health Rankings (CHR): Keeps medical / public-health indicators across Delaware's 3 counties (New Castle, Kent, Sussex) in a **standalone county table** (`Delaware_County_CHR.csv`) - health outcomes, health behaviors, clinical care. Never broadcast onto ZCTA rows or re-aggregated.
+- Provider supply out of scope (mentor §3): the AHRF snapshot stays archived in `raw/` for reference but nothing consumes it — county-level counts would duplicate/conflict with the DE Health Force dashboard.
+- CDC PLACES ZCTA-Level: Pulls the PLACES **ZCTA** release so chronic-disease and prevention measures are reported directly on the same ZCTAs as the master (crude prevalence only, one row per ZCTA x measure).
+- Automated Transformations: Computes derived counts from published ACS `E` counts (never percent x population) and land density metrics directly in Python.
 - Multi-Format Export: Generates wide-format outputs in CSV, Excel, and spatial GeoJSON formats simultaneously.
 
 ## Data Provenance & Licensing
@@ -43,7 +43,7 @@ python3 build_city_chronic_disease_table.py   # -> Delaware_City_Chronic_Disease
 | Column | Source |
 |---|---|
 | `County_Name` | CHR 2025, published |
-| `Total_Population` | **HRSA AHRF `pop_popn_est_23`** (see below) |
+| `Total_Population` | **Census ACS 2024 5-year `DP05_0001E` (county)** — never summed from ZCTAs |
 | `Pct_Poor_Fair_Health` (+ `_LowCI` / `_HighCI`) | CHR 2025, published |
 | `CHR_PCP_Ratio_Population` | CHR 2025, published |
 | `Dentist_Ratio_Population` | CHR 2025, published |
@@ -51,23 +51,18 @@ python3 build_city_chronic_disease_table.py   # -> Delaware_City_Chronic_Disease
 
 `Total_Population` is the single column that is not CHR's. CHR publishes **no** county
 population total — its `High School Completion__Population` and
-`Some College__Population` columns are education cohorts, not a population total. Of
-the eight raw snapshots, only HRSA AHRF carries a published county total
-(`pop_popn_est_23` / `pop_popn_est_24`), so that is what is used. `Population_Source`
-records the provenance on every row.
-
-⚠️ **Vintage note.** AHRF's 2023 postcensal estimates sum to 1,031,890; the ACS 2024
-5-year ZCTA total in `raw/` sums to ~1M. Both are legitimate, different vintages.
-Do not mix them in one column, and label whichever you report.
+`Some College__Population` columns are education cohorts, not a population total. It
+comes from the Census ACS 2024 5-year county tables (`DP05_0001E`), never by summing
+ZCTAs. `Population_Source` records the provenance on every row.
 
 **A ZCTA→county aggregation was removed as unsound.** `generate_county_chr.py`
 previously rebuilt this table by aggregating the ZCTA-level master back to county,
-which corrupted published values: the master *broadcasts* each county value onto every
-ZCTA in that county, so averaging an identical value against itself drifted
+which corrupted published values: the master *used to broadcast* each county value
+onto every ZCTA in that county, so averaging an identical value against itself drifted
 `Pct_Poor_Fair_Health` from a published 16.4 to 19.9 in Kent, and summing a county count
 across its ZCTAs inflated Kent's premature deaths from a published 2,920 to 56,892
 (19.5×). CHR publishes these counties directly, so the table is now a straight
-projection of the raw release.
+projection of the raw release, and the master no longer carries county figures at all.
 
 ### City table — `Delaware_City_Chronic_Disease.csv` (79 rows)
 
@@ -98,10 +93,9 @@ common geography and must not be joined to each other.
 
 ## Project Structure
 
-- extract_census.py: Main ETL Pipeline Script (merges spatial, ACS, BRFSS, CHR, and calculated metrics)
+- extract_census.py: Main ETL Pipeline Script (ZCTA master: spatial + ACS + PLACES ZCTA + published-count derived metrics; BRFSS/CHR kept in their own state/county tables)
 - fetch_raw_data.py: Downloads and archives every raw public dataset into raw/ with citations + SHA-256 checksums (also `--verify`)
-- generate_provider_ratios.py: Recomputes population-to-provider ratios from the HRSA AHRF raw counts and reconciles them against the CHR published ratios
-- PROVENANCE.md: Data provenance & licensing reference (provider ratios, chronic disease, full source inventory)
+- PROVENANCE.md: Data provenance & licensing reference (full source inventory)
 - raw_sources.py: Read-only accessor for the archived raw manifest, used by the UI
 - raw/: Unmodified publisher snapshots + raw/sources.json manifest + raw/SOURCES.md citations
 - gen_health_data.py: Downloads BRFSS (CDC API) and CHR (County Health Rankings website) CSV files from official sources
@@ -109,7 +103,7 @@ common geography and must not be joined to each other.
 - build_city_chronic_disease_table.py: Rebuilds Delaware_City_Chronic_Disease.csv from the raw CDC PLACES snapshot (verifies every value against the snapshot)
 - BRFSS_Delaware.csv: CDC BRFSS 2024 Delaware state-level prevalence (public-health measures)
 - CHR_Delaware.csv: County Health Rankings 2025 medical/public-health indicators
-- Delaware_County_CHR.csv: 3-county table — published CHR figures + AHRF county population
+- Delaware_County_CHR.csv: 3-county table — published CHR figures + ACS county population
 - Delaware_City_Chronic_Disease.csv: 79-city table — published PLACES obesity / diabetes / coronary heart disease
 - .env: API key configuration
 - requirements.txt: Python dependencies
@@ -203,8 +197,8 @@ python3 fetch_raw_data.py --verify   # re-check live URLs + stored checksums (ex
 | 1 | TIGER/Line Cartographic Boundary File — 2020 ZCTA, clipped to DE | U.S. Census Bureau | 2020 | ZCTA | `raw/census_tiger_2020_de_zctas_raw.csv` |
 | 2 | TIGER/Line Cartographic Boundary File — 2020 counties, DE | U.S. Census Bureau | 2020 | County | `raw/census_tiger_2020_de_counties_raw.csv` |
 | 3 | American Community Survey 5-Year Data Profile (DP02/DP03/DP05) | U.S. Census Bureau | 2024 5-yr (2020–2024) | ZCTA | `raw/census_acs_2024_zcta_de_raw.csv` |
-| 4 | BRFSS Prevalence (Socrata `dttw-5yxu`) | CDC | 2024 | State (broadcast onto ZCTA rows) | `raw/cdc_brfss_2024_de_raw.csv` |
-| 5 | 2025 County Health Rankings Data v4, `Select Measure Data` + `Additional Measure Data` sheets merged on FIPS (clinical-care source year: 2022) | County Health Rankings & Roadmaps | 2025 release | County (broadcast onto ZCTA rows) | `raw/chr_2025_de_counties_raw.csv` |
+| 4 | BRFSS Prevalence (Socrata `dttw-5yxu`) | CDC | 2024 | State (standalone reference table) | `raw/cdc_brfss_2024_de_raw.csv` |
+| 5 | 2025 County Health Rankings Data v4, `Select Measure Data` + `Additional Measure Data` sheets merged on FIPS (clinical-care source year: 2022) | County Health Rankings & Roadmaps | 2025 release | County (standalone reference table) | `raw/chr_2025_de_counties_raw.csv` |
 | 6 | PLACES: Local Data for Better Health, place/city release (Socrata `eav7-hnsx`) | CDC | 2024 release | City / place | `raw/cdc_places_2024_de_city_raw.csv` |
 
 The per-column provenance file shipped with the master outputs

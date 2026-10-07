@@ -1,25 +1,13 @@
 """Rebuild the Delaware county CHR table as a faithful copy of the raw release.
 
-This script used to aggregate the ZCTA-level master back up to county level,
-averaging percentages, averaging ratios and summing counts. That was unsound
-and is why it was rewritten:
-
-- County Health Rankings publishes county measures directly. The master
-  broadcasts each county value onto every ZCTA in that county, so re-aggregating
-  ZCTA -> county averaged an identical value against itself.
-- Summing a county count across its ZCTAs multiplied it by the ZCTA count:
-  Kent's 2,920 premature deaths became 56,892 (19.5x too high).
-
-So nothing is aggregated any more. Every value here is lifted straight out of
-the archived publisher snapshot, unchanged. The only value from another source
-is Total_Population, because CHR publishes no county population total (its
-"High School Completion__Population" / "Some College__Population" columns are
-education cohorts, not a population total). That one comes from the HRSA AHRF
-postcensal estimate, the only published county total in ./raw.
+CHR is already published at county level, so this table uses
+CHR_Delaware.csv / raw/chr_2025_de_counties_raw.csv directly - nothing is
+re-aggregated from ZCTAs (Issue 4: copying a county value onto every ZCTA
+and summing it back inflated Kent premature deaths 19x). County population
+comes from the ACS county tables (DP05_0001E), never by summing ZCTAs.
 
 Inputs
   raw/chr_2025_de_counties_raw.csv        CHR 2025 release, unmodified
-  raw/hrsa_ahrf_2025_de_counties_raw.csv  county population denominators
 Output
   Delaware_County_CHR.csv
 
@@ -30,6 +18,8 @@ Run:
 import os
 
 import pandas as pd
+import requests
+from dotenv import load_dotenv
 
 # The CHR column mappings (output name -> source column in the raw snapshot)
 # are imported from gen_health_data.py so there is a single source of truth
@@ -39,14 +29,16 @@ from gen_health_data import CHR_TARGETS, _parse_chr_value
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CHR_PATH = os.path.join(ROOT, "raw", "chr_2025_de_counties_raw.csv")
-AHRF_PATH = os.path.join(ROOT, "raw", "hrsa_ahrf_2025_de_counties_raw.csv")
 OUTPUT_PATH = os.path.join(ROOT, "Delaware_County_CHR.csv")
+
+load_dotenv(os.path.join(ROOT, ".env"))
+CENSUS_API_KEY = os.getenv("CENSUS_API_KEY", "")
 
 DE_COUNTY_FIPS = ["10001", "10003", "10005"]
 
-# AHRF postcensal population estimate used as the county population total.
-POPULATION_SOURCE_COL = "pop_popn_est_23"
-POPULATION_SOURCE = "HRSA AHRF 2024-2025 (postcensal estimate, 2023 vintage)"
+# County population comes from the ACS county tables (Issue 4) - never by
+# summing ZCTAs, and no longer from AHRF postcensal estimates.
+POPULATION_SOURCE = "Census ACS 2024 5-Year (DP05_0001E, county)"
 
 
 def _fips(series: pd.Series) -> pd.Series:
@@ -57,15 +49,19 @@ def _fips(series: pd.Series) -> pd.Series:
 
 
 def load_county_population() -> pd.DataFrame:
-    """County population denominators straight from the AHRF snapshot."""
-    ahrf = pd.read_csv(AHRF_PATH, dtype=str, low_memory=False)
-    frame = pd.DataFrame(
-        {
-            "County_FIPS": _fips(ahrf["fips_st_cnty"]),
-            "Total_Population": pd.to_numeric(ahrf[POPULATION_SOURCE_COL], errors="coerce"),
-        }
+    """County population denominators from the ACS county tables (Issue 4)."""
+    url = (
+        "https://api.census.gov/data/2024/acs/acs5/profile"
+        "?get=DP05_0001E&for=county:*&in=state:10"
+        f"&key={CENSUS_API_KEY}"
     )
-    return frame.set_index("County_FIPS")
+    resp = requests.get(url, timeout=120)
+    resp.raise_for_status()
+    data = resp.json()
+    frame = pd.DataFrame(data[1:], columns=data[0])
+    frame["County_FIPS"] = frame["state"] + frame["county"]
+    frame["Total_Population"] = pd.to_numeric(frame["DP05_0001E"], errors="coerce")
+    return frame.set_index("County_FIPS")[["Total_Population"]]
 
 
 def build_county_chr() -> pd.DataFrame:
@@ -141,15 +137,11 @@ def verify_against_raw(out: pd.DataFrame) -> None:
 
 
 def main() -> None:
-    for path, hint in (
-        (CHR_PATH, "chr_2025_de_counties"),
-        (AHRF_PATH, "hrsa_ahrf_2025_de_counties"),
-    ):
-        if not os.path.exists(path):
-            raise SystemExit(
-                f"{os.path.relpath(path, ROOT)} is missing - run "
-                f"`python3 fetch_raw_data.py --only {hint}` first."
-            )
+    if not os.path.exists(CHR_PATH):
+        raise SystemExit(
+            f"{os.path.relpath(CHR_PATH, ROOT)} is missing - run "
+            "`python3 fetch_raw_data.py --only chr_2025_de_counties` first."
+        )
 
     out = build_county_chr()
     verify_against_raw(out)
@@ -171,7 +163,6 @@ def main() -> None:
         ].to_string(index=False)
     )
     print(f"\nTotal_Population source: {POPULATION_SOURCE}")
-    print(f"        column: {POPULATION_SOURCE_COL}")
     print(
         "\nProvider ratios and Fair/Poor Health are CHR's own published figures, "
         "unaltered.\nNo aggregation, averaging or summing was applied."

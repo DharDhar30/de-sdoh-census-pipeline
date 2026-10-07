@@ -21,17 +21,35 @@ CENSUS_API_KEY = os.getenv("CENSUS_API_KEY", "")
 
 # --- Source 1: Census ACS 5-Year Data Profile (same variables as the ETL) ----
 # Most-current vintage: 2024 5-year (2020-2024). Verified live 2026-10-05.
+# Includes the published E counts + denominators (Issue 7) so derived counts
+# are never back-calculated from percentages.
 ACS_PROFILE_URL = "https://api.census.gov/data/2024/acs/acs5/profile"
+ACS_SUBJECT_URL = "https://api.census.gov/data/2024/acs/acs5/subject"
+# Poverty counts are NOT in the Data Profile: DP03_0128E is a second copy of
+# the percent, suppressed (-888888888) at ZCTA level. The true count +
+# universe come from subject table S1701 (C01_001E = poverty universe,
+# C02_001E = below poverty).
+ACS_S1701_VARS = ["S1701_C01_001E", "S1701_C02_001E"]
 ACS_VARS = [
     "DP05_0001E",
     "DP05_0018E",
     "DP05_0024PE",
+    "DP05_0024E",
     "DP03_0062E",
     "DP03_0128PE",
     "DP03_0099PE",
+    "DP03_0095E",
+    "DP03_0099E",
+    "DP03_0018E",
     "DP03_0021PE",
+    "DP03_0021E",
     "DP02_0154PE",
+    "DP02_0152E",
+    "DP02_0154E",
     "DP02_0114PE",
+    "DP02_0113E",
+    "DP02_0114E",
+    "DP02_0001E",
 ]
 
 # --- Source 2: CDC BRFSS Prevalence (identical query to extract_census.py) ---
@@ -65,13 +83,26 @@ DE_COUNTY_FIPS = {"10001", "10003", "10005"}  # Kent, New Castle, Sussex
 # server-side). The v3 query.json root ignores $where/$limit, which would
 # dump the whole nation.
 PLACES_URL = "https://data.cdc.gov/resource/eav7-hnsx.json"
-PLACES_QUERY = {"$where": "statedesc='Delaware'", "$limit": 50000}
+PLACES_QUERY = {"$where": "stateabbr='DE'", "$limit": 50000}
 
 # --- Source 5/6: Census TIGER (cartographic boundary) via pygris -----------
 TIGER_LANDING = "https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html"
 
-# Delaware ZIPs are exactly 197xx / 198xx / 199xx, so a ZCTA prefix is a
-# reliable, publisher-intended test for "is this ZCTA in Delaware?".
+# Delaware ZCTA selection (Issues 1+2). The authoritative source is the 2020
+# Census ZCTA-to-county relationship file
+# (https://www2.census.gov/geo/docs/maps-data/data/rel2020/zcta520/tab20_zcta520_county20_natl.txt):
+# a ZCTA belongs to Delaware iff its LARGEST land-area share lies in a
+# Delaware county (10001/10003/10005). That yields exactly 68 ZCTAs and
+# assigns each its primary county (19952 -> Kent, 19734 -> New Castle),
+# flagging the 5 that span >1 county. gpd.clip / centroid tests alone keep
+# out-of-state border ZCTAs (21842, 08014, 19350, ...).
+ZCTA_COUNTY_REL_URL = (
+    "https://www2.census.gov/geo/docs/maps-data/data/rel2020/"
+    "zcta520/tab20_zcta520_county20_natl.txt"
+)
+
+# Delaware ZIPs are exactly 197xx / 198xx / 199xx - a safety net, never the
+# county-assignment mechanism.
 DE_ZCTA_PREFIXES = ("197", "198", "199")
 
 # --- Source 7: HRSA Area Health Resources Files (AHRF) --------------------
@@ -165,8 +196,61 @@ def _fips_series(series: pd.Series) -> pd.Series:
 # ---------------------------------------------------------------------------
 # Source 5/6 - Census TIGER cartographic boundaries (ZCTA + county)
 # ---------------------------------------------------------------------------
+def fetch_zcta_county_relationship() -> tuple:
+    """Archive the 2020 Census ZCTA-to-county relationship file (Issues 1+2)."""
+    print("Downloading 2020 Census ZCTA-to-county relationship file...")
+    resp = requests.get(ZCTA_COUNTY_REL_URL, timeout=TIMEOUT)
+    resp.raise_for_status()
+    path = os.path.join(RAW_DIR, "census_zcta_county_rel_2020_raw.txt")
+    with open(path, "wb") as fh:
+        fh.write(resp.content)
+    rel = pd.read_csv(io.BytesIO(resp.content), sep="|", dtype=str)
+    de_fips = {"10001", "10003", "10005"}
+    part = pd.to_numeric(rel["AREALAND_PART"], errors="coerce")
+    idx = rel.assign(_p=part).groupby("GEOID_ZCTA5_20")["_p"].idxmax()
+    n_de = int(rel.loc[idx, "GEOID_COUNTY_20"].isin(de_fips).sum())
+    return path, {
+        "url": ZCTA_COUNTY_REL_URL,
+        "rows_downloaded_total": len(rel),
+        "note": (
+            "National ZCTA-to-county relationship file (2020 vintage). "
+            f"{n_de} ZCTAs have their largest land-area share in a Delaware "
+            "county (expected 68). Primary-county assignment + multi-county "
+            "flags come from this file, never from spatial intersects."
+        ),
+    }
+
+
+def _delaware_zctas_from_relationship() -> set:
+    """The 68 Delaware ZCTAs from the archived relationship file (Issues 1+2).
+
+    A ZCTA belongs to Delaware iff its LARGEST land-area share lies in a
+    Delaware county. Falls back to the archived TIGER snapshot's IDs only if
+    the relationship file is missing (offline re-run).
+    """
+    rel_path = os.path.join(RAW_DIR, "census_zcta_county_rel_2020_raw.txt")
+    if os.path.exists(rel_path):
+        rel = pd.read_csv(rel_path, sep="|", dtype=str)
+        part = pd.to_numeric(rel["AREALAND_PART"], errors="coerce")
+        idx = rel.assign(_p=part).groupby("GEOID_ZCTA5_20")["_p"].idxmax()
+        primary = rel.loc[idx]
+        de = primary[primary["GEOID_COUNTY_20"].isin({"10001", "10003", "10005"})]
+        return set(de["GEOID_ZCTA5_20"].astype(str).str.zfill(5))
+    tiger_path = os.path.join(RAW_DIR, "census_tiger_2020_de_zctas_raw.csv")
+    frame = pd.read_csv(tiger_path, low_memory=False)
+    id_col = _zcta_id_column(frame)
+    return set(frame[id_col].astype(str).str.zfill(5))
+
+
 def fetch_tiger_de_zctas() -> tuple:
-    """TIGER/Line 2020 ZCTA cartographic boundaries clipped to Delaware."""
+    """TIGER/Line 2020 ZCTA cartographic boundaries clipped to Delaware.
+
+    Non-Delaware border ZCTAs are dropped via the 2020 Census ZCTA-to-county
+    relationship file (Issue 1): only ZCTAs whose largest land-area share
+    lies in a Delaware county are kept (68). gpd.clip / centroid tests alone
+    keep out-of-state border ZCTAs (21842, 08014, 19350, ...) and inflate
+    every population total.
+    """
     import geopandas as gpd
     import pygris
 
@@ -178,30 +262,25 @@ def fetch_tiger_de_zctas() -> tuple:
     de_zctas = gpd.clip(zctas, de_state)
 
     id_col = _zcta_id_column(de_zctas)
-    # gpd.clip splits polygons at the state border, which drags in pieces of
-    # ZCTAs from neighbouring states. Two filters are needed, because Delaware's
-    # north-east corner touches Maryland and Pennsylvania:
-    #   1. keep only ZCTAs whose CENTROID sits in Delaware (project first, so
-    #      the centroid math is done in metres, not degrees); and
-    #   2. keep only ZCTAs whose ZIP belongs to Delaware at all (197/198/199).
-    # The centroid test alone let 30 Maryland/Pennsylvania/New Jersey ZCTAs
-    # through - border ZCTAs keep their full multi-state polygon, so ZCTA 21921
-    # (Annapolis, MD) arrived with 245 km2 of land area and its ACS population
-    # was later merged into the master, inflating Delaware's total by ~21%.
-    projected = de_zctas.to_crs(epsg=3857)
-    centroids = projected.set_geometry(projected.geometry.centroid)
-    inside = gpd.sjoin(
-        centroids, de_state.to_crs(epsg=3857)[["geometry"]], how="left", predicate="within"
-    )
-    keep = inside.dropna(subset=["index_right"]).index.unique()
-    de_zctas = de_zctas.loc[keep].copy()
-
+    # Issue 1: drop non-Delaware border ZCTAs via the relationship file.
+    # gpd.clip keeps every ZCTA that touches Delaware; border ZCTAs retain
+    # their full multi-state polygon, so centroid tests alone let MD/PA/NJ
+    # ZCTAs (21842, 08014, 19350, ...) through and inflate every total.
+    keep_ids = _delaware_zctas_from_relationship()
+    before = len(de_zctas)
+    de_zctas = de_zctas[
+        de_zctas[id_col].astype(str).str.zfill(5).isin(keep_ids)
+    ].copy()
+    dropped = before - len(de_zctas)
+    if dropped:
+        print(f"  Dropped {dropped} non-Delaware ZCTAs via relationship file.")
+    # Safety net: never let an out-of-state ZCTA through.
     ids = de_zctas[id_col].astype(str).str.zfill(5)
     de_prefixed = ids.str.startswith(DE_ZCTA_PREFIXES)
-    dropped = int((~de_prefixed).sum())
+    dropped2 = int((~de_prefixed).sum())
     de_zctas = de_zctas.loc[de_prefixed].copy()
-    if dropped:
-        print(f"  Dropped {dropped} non-Delaware ZCTAs (centroid fell inside DE but ZIP is not 197/198/199).")
+    if dropped2:
+        print(f"  Dropped {dropped2} ZCTA(s) failing the Delaware-ZIP safety net.")
     if de_zctas.empty:
         raise RuntimeError("The Delaware ZCTA filter removed every ZCTA; aborting.")
 
@@ -212,10 +291,10 @@ def fetch_tiger_de_zctas() -> tuple:
         "zcta_ids": set(frame[id_col].astype(str).str.zfill(5)),
         "note": (
             "Every attribute column the TIGER ZCTA shapefile ships with, geometry dropped "
-            "so it can be archived as CSV. Clipped to the Delaware state boundary and "
-            "restricted to ZCTAs whose centroid is inside Delaware AND whose ZIP is a "
-            f"Delaware ZIP ({'/'.join(DE_ZCTA_PREFIXES)}). Both filters are required: the "
-            "centroid test alone keeps border ZCTAs belonging to MD/PA/NJ."
+            "so it can be archived as CSV. Restricted to the 68 ZCTAs whose largest "
+            "land-area share lies in a Delaware county (2020 Census ZCTA-to-county "
+            "relationship file). A Delaware-ZIP (197/198/199) safety net is applied, "
+            "but counties are never assigned from ZIP prefixes."
         ),
     }
 
@@ -238,7 +317,13 @@ def fetch_tiger_de_counties() -> tuple:
 # Source 1 - Census ACS 5-Year Data Profile
 # ---------------------------------------------------------------------------
 def fetch_census_acs_2024(de_zcta_ids: set) -> tuple:
-    """Raw ACS 2024 5-year profile response, filtered to the Delaware ZCTAs."""
+    """Raw ACS 2024 5-year profile response, filtered to the Delaware ZCTAs.
+
+    Poverty counts ride along from subject table S1701: the Data Profile's
+    DP03_0128E is a duplicate of the percent (suppressed at ZCTA level), so
+    S1701_C02_001E (below poverty) + S1701_C01_001E (poverty universe) are
+    merged on ZCTA.
+    """
     print("  Querying the Census ACS 2024 5-year profile API...")
     url = (
         f"{ACS_PROFILE_URL}?get={','.join(ACS_VARS)}"
@@ -257,6 +342,22 @@ def fetch_census_acs_2024(de_zcta_ids: set) -> tuple:
     frame = pd.DataFrame(payload[1:], columns=payload[0])
     downloaded = len(frame)
 
+    print("  Querying ACS subject table S1701 (poverty count + universe)...")
+    surl = (
+        f"{ACS_SUBJECT_URL}?get={','.join(ACS_S1701_VARS)}"
+        "&for=zip%20code%20tabulation%20area:*"
+    )
+    if CENSUS_API_KEY:
+        surl += f"&key={CENSUS_API_KEY}"
+    sresp = requests.get(surl, timeout=TIMEOUT)
+    if sresp.status_code != 200:
+        raise RuntimeError(
+            f"Census S1701 API returned HTTP {sresp.status_code}: {sresp.text[:300]}"
+        )
+    spayload = sresp.json()
+    sframe = pd.DataFrame(spayload[1:], columns=spayload[0])
+    frame = frame.merge(sframe, on="zip code tabulation area", how="left")
+
     # Keep the API's own ZCTA values untouched; use a throwaway series to filter.
     id_col = "zip code tabulation area"
     if id_col in frame.columns and de_zcta_ids:
@@ -267,7 +368,9 @@ def fetch_census_acs_2024(de_zcta_ids: set) -> tuple:
     return path, {
         "note": (
             f"API variable codes retained (no renaming). {downloaded:,} ZCTAs were returned "
-            "nationwide; the snapshot keeps the Delaware rows used by the pipeline."
+            "nationwide; the snapshot keeps the Delaware rows used by the pipeline. "
+            "Poverty count + universe merged from subject table S1701 "
+            "(S1701_C02_001E / S1701_C01_001E) because DP03_0128E duplicates the percent."
         ),
         "rows_downloaded_total": downloaded,
         "url": _redact(url),
@@ -493,6 +596,20 @@ def fetch_cdc_places_de_zcta() -> tuple:
 # ---------------------------------------------------------------------------
 SOURCES = [
     {
+        "id": "census_zcta_county_rel_2020",
+        "label": "Census ZCTA-to-County Relationship File 2020 (national)",
+        "publisher": "U.S. Census Bureau",
+        "dataset": "2020 Census ZCTA-to-county relationship file (tab20_zcta520_county20_natl)",
+        "vintage": "2020",
+        "geography": "National (ZCTA x county, land-area shares)",
+        "geo_level": "ZCTA",
+        "access": "Direct file download (.txt, pipe-delimited)",
+        "url": ZCTA_COUNTY_REL_URL,
+        "landing_page": "https://www.census.gov/geographies/reference-files/2020/geo/relationship-files.html",
+        "license": "Public domain (U.S. Government work)",
+        "fetch": fetch_zcta_county_relationship,
+    },
+    {
         "id": "census_tiger_2020_de_zctas",
         "label": "Census TIGER 2020 ZCTA Boundaries (DE)",
         "publisher": "U.S. Census Bureau",
@@ -544,7 +661,7 @@ SOURCES = [
         "publisher": "U.S. Centers for Disease Control and Prevention",
         "dataset": "Behavioral Risk Factor Surveillance System - Prevalence Data (Socrata resource dttw-5yxu)",
         "vintage": "2024",
-        "geography": "State (Delaware) - broadcast onto ZCTA rows downstream",
+        "geography": "State (Delaware) - standalone state reference table, never on ZCTA rows",
         "geo_level": "State",
         "access": "REST API (CSV), Socrata SODA",
         "url": BRFSS_URL,
@@ -558,7 +675,7 @@ SOURCES = [
         "publisher": "County Health Rankings & Roadmaps (Univ. of Wisconsin Population Health Institute)",
         "dataset": "2025 County Health Rankings Data v4 (`Select Measure Data` + `Additional Measure Data` sheets, merged on FIPS)",
         "vintage": "2025 release (clinical-care source year 2022; see Sources & Years sheets)",
-        "geography": "County (Kent, New Castle, Sussex) - broadcast onto ZCTA rows downstream",
+        "geography": "County (Kent, New Castle, Sussex) - standalone county table, never on ZCTA rows",
         "geo_level": "County",
         "access": "Direct file download (.xlsx)",
         "url": CHR_URL,
@@ -793,9 +910,10 @@ def _sources_md_footer() -> list:
         "  confidence limits are archived alongside every measure. PLACES does not publish an",
         "  estimate for every ZCTA; those rows are NULL rather than filled in.",
         "- BRFSS is a **state** survey, so its Delaware figures describe the whole state and",
-        "  are broadcast onto every ZCTA row downstream (identical across ZCTAs).",
-        "- CHR and the HRSA AHRF provider ratios report at **county** level, so their figures",
-        "  are broadcast onto the ZCTAs in that county via `County_FIPS`.",
+        "  live in the standalone state table `BRFSS_Delaware.csv` - never on ZCTA rows.",
+        "- CHR reports at **county** level, so its figures live in the standalone county",
+        "  tables (`CHR_Delaware.csv` / `Delaware_County_CHR.csv`) - never on ZCTA rows,",
+        "  never re-aggregated from ZCTAs. (Provider-supply AHRF is out of scope.)",
         "- The `Geography_Level` field in `Delaware_ZCTA_Health_Master_Column_Provenance.csv`",
         "  (also the `Column_Provenance` sheet of the master workbook) labels each measure,",
         "  and the UI's 'geography they were actually collected at' filter uses the same field,",
@@ -803,8 +921,11 @@ def _sources_md_footer() -> list:
         "",
         "## Delaware ZCTA selection",
         "",
-        "The master contains **68** ZCTAs. Getting that number right needed two filters, not",
-        "one. Clipping the TIGER ZCTAs to the Delaware state boundary keeps every ZCTA that",
+        "The master contains **68** ZCTAs - exactly the ZCTAs whose largest",
+        "land-area share lies in a Delaware county (2020 Census ZCTA-to-county",
+        "relationship file, archived as `raw/census_zcta_county_rel_2020_raw.txt`).",
+        "Getting that number right needed the relationship file, not clipping:",
+        "clipping the TIGER ZCTAs to the Delaware state boundary keeps every ZCTA that",
         "*touches* Delaware, and border ZCTAs keep their full multi-state polygon - Delaware's",
         "north-east corner touches Maryland and Pennsylvania. A centroid test alone therefore",
         "let 25 Maryland, Pennsylvania and New Jersey ZCTAs through, including ZCTA 21921",
@@ -812,12 +933,14 @@ def _sources_md_footer() -> list:
         "population from 982,285 to 1,190,837 - an overstatement of about 21%, with the NJ and",
         "Philadelphia-area rows assigned to Kent, New Castle and Sussex counties.",
         "",
-        "So `fetch_raw_data.py` and `extract_census.py` both require **both** conditions:",
+        "County assignment likewise comes from the relationship file (largest",
+        "land-area share): 19734 -> New Castle (not Kent), 19952 -> Kent (not",
+        "Sussex). Five ZCTAs span more than one county (19938, 19950, 19952,",
+        "19963, 19973, 19977) and are flagged. Counties are never assigned from",
+        "ZIP prefixes, hand-made lists, or spatial intersects.",
         "",
-        "1. the ZCTA's centroid falls inside the Delaware state polygon, and",
-        "2. the ZCTA's ZIP is a Delaware ZIP (`197`, `198` or `199`).",
-        "",
-        "Either test on its own is insufficient.",
+        "A ZCTA population-total check guards the selection: the summed ZCTA",
+        "population must sit within ~1% of the state ACS total.",
         "",
     ]
 
