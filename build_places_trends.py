@@ -251,8 +251,17 @@ def add_trends_sheets(wb, trends, zcta_county, summary):
 
     # ---- Sheet 2: PLACES_Trends_Summary ----
     ws_sum = wb.create_sheet("PLACES_Trends_Summary")
+
+    # Build dynamic headers based on available years (needed for merge width)
+    year_cols = sorted([c for c in summary.columns if c.startswith("Y") and c[1:].isdigit()])
+    year_labels = [c[1:] for c in year_cols]  # e.g. ["2022", "2023"]
+    n_header_cols = 4 + len(year_cols) + 6  # Measure, Years, Start, End + year cols + change/pct/slope/direction/zctas
+
+    # Title (merged across width for clean look)
     ws_sum["A1"] = "PLACES ZCTA Yearly Trends Summary"
     ws_sum["A1"].font = TITLE_FONT
+    ws_sum.merge_cells(start_row=1, start_column=1, end_row=1, end_column=n_header_cols)
+
     ws_sum["A2"] = (
         "State-wide average of CDC PLACES ZCTA-level model-based estimates. "
         "Years covered vary by measure (2021-2023 from CDC PLACES API releases). "
@@ -260,6 +269,9 @@ def add_trends_sheets(wb, trends, zcta_county, summary):
         "Trend direction: |slope| >= 0.1 = Increasing/Decreasing, otherwise Stable."
     )
     ws_sum["A2"].font = NOTE_FONT
+    ws_sum.merge_cells(start_row=2, start_column=1, end_row=2, end_column=n_header_cols)
+
+    # Row 3 = blank spacer so title doesn't crowd the blue header
 
     # Build dynamic headers based on available years
     year_cols = sorted([c for c in summary.columns if c.startswith("Y") and c[1:].isdigit()])
@@ -270,19 +282,22 @@ def add_trends_sheets(wb, trends, zcta_county, summary):
         headers.append(f"{yl} Avg (%)")
     headers += ["Total Change (pp)", "Pct Change (%)", "Slope / Year (pp)", "Trend Direction", "ZCTAs with Data"]
 
-    ws_sum.append(headers)
-    for c in range(1, len(headers) + 1):
-        cell = ws_sum.cell(row=4, column=c)
+    header_row = 4
+    for c, h in enumerate(headers, start=1):
+        cell = ws_sum.cell(row=header_row, column=c, value=h)
         cell.fill = HDR_FILL
         cell.font = HDR_FONT
         cell.border = BORDER
         cell.alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
 
-    start_row = 5
+    start_row = header_row + 1
     for i, (_, r) in enumerate(summary.iterrows()):
         row = start_row + i
         zcta_count_n = int(trends[trends["Measure"] == r["Measure"]]["ZCTA"].nunique())
-        year_vals = [round(float(r[yc]), 2) for yc in year_cols]
+        year_vals = []
+        for yc in year_cols:
+            v = r[yc]
+            year_vals.append(round(float(v), 2) if pd.notna(v) else "—")
         vals = [
             r["Measure_Display"],
             r["Years_Covered"],
@@ -302,6 +317,9 @@ def add_trends_sheets(wb, trends, zcta_county, summary):
             num_cols = [3, 4] + list(range(5, 5 + len(year_cols))) + [5 + len(year_cols), 6 + len(year_cols), 7 + len(year_cols)]
             if c in num_cols:
                 cell.number_format = "0.00" if c != 6 + len(year_cols) else "0.0"
+            # Fill blanks in year columns with em-dash
+            if c in list(range(5, 5 + len(year_cols))) and v == "—":
+                cell.alignment = Alignment(horizontal="center", vertical="center")
 
     end_row = start_row + len(summary) - 1
 
@@ -319,7 +337,8 @@ def add_trends_sheets(wb, trends, zcta_county, summary):
         row = chart_data_start + 2 + i
         ws_sum.cell(row=row, column=1, value=r["Measure_Display"]).border = BORDER
         for j, yc in enumerate(year_cols, start=2):
-            cell = ws_sum.cell(row=row, column=j, value=round(float(r[yc]), 2))
+            v = r[yc]
+            cell = ws_sum.cell(row=row, column=j, value=round(float(v), 2) if pd.notna(v) else None)
             cell.number_format = "0.00"
             cell.border = BORDER
         chart_rows[r["Measure_Display"]] = row
@@ -327,10 +346,12 @@ def add_trends_sheets(wb, trends, zcta_county, summary):
     for rr in range(chart_data_start, chart_data_start + 2 + len(summary)):
         ws_sum.row_dimensions[rr].hidden = True
 
-    # Charts for top 6 measures
+    # Charts for top 6 measures (placed below the data table to avoid overlap)
     top_measures = summary.head(6)["Measure_Display"].tolist()
     chart_start_col = 2
-    chart_row = 5
+    chart_row = end_row + 3
+    year_col_start = 5  # year avg columns start at column 5
+    year_col_end = 5 + len(year_cols) - 1
     for measure_name in top_measures:
         chart = LineChart()
         chart.title = measure_name
@@ -340,9 +361,9 @@ def add_trends_sheets(wb, trends, zcta_county, summary):
         chart.height = 7
         chart.width = 15
         data_row = chart_rows[measure_name]
-        cats = Reference(ws_sum, min_col=2, min_row=chart_data_start + 1, max_col=4, max_row=chart_data_start + 1)
+        cats = Reference(ws_sum, min_col=year_col_start, min_row=chart_data_start + 1, max_col=year_col_end, max_row=chart_data_start + 1)
         s = Series(
-            values=Reference(ws_sum, min_col=2, min_row=data_row, max_col=4, max_row=data_row),
+            values=Reference(ws_sum, min_col=year_col_start, min_row=data_row, max_col=year_col_end, max_row=data_row),
             title=measure_name,
         )
         chart.series = [s]
